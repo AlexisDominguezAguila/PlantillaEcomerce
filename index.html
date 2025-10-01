@@ -3,968 +3,420 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechStore - Tecnología de Vanguardia</title>
+    <title>TEC RIVERA - Tecnología y Servicios de Software</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #111344;
-            --secondary: #14213D;
-            --dark: #0F0F0F;
-            --accent-blue: #38B6FF;
-            --accent-orange: #FB8500;
-            --accent-red: #DC0000;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--dark);
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* Header Superior */
-        .top-header {
-            background: var(--primary);
-            padding: 10px 0;
-            font-size: 0.85rem;
-        }
-
-        .top-header .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .top-header a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s;
-        }
-
-        .top-header a:hover {
-            color: var(--accent-orange);
-        }
-
-        /* Header Principal */
-        .main-header {
-            background: var(--secondary);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            animation: slideDown 0.5s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--accent-blue);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo i {
-            animation: rotate 3s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .search-bar {
-            flex: 1;
-            max-width: 500px;
-            position: relative;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 12px 50px 12px 20px;
-            border: none;
-            border-radius: 50px;
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            background: rgba(255,255,255,0.15);
-            box-shadow: 0 0 20px rgba(56,182,255,0.3);
-        }
-
-        .search-bar button {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--accent-blue);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .search-bar button:hover {
-            background: var(--accent-orange);
-            transform: translateY(-50%) scale(1.05);
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 25px;
-        }
-
-        .icon-btn {
-            position: relative;
-            color: #fff;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .icon-btn:hover {
-            color: var(--accent-orange);
-            transform: translateY(-3px);
-        }
-
-        .icon-btn .badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--accent-red);
-            color: #fff;
-            font-size: 0.7rem;
-            padding: 2px 6px;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Navegación */
-        .navbar {
-            background: var(--primary);
-            padding: 15px 0;
-        }
-
-        .navbar .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-        }
-
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .navbar a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-orange);
-            transition: width 0.3s;
-        }
-
-        .navbar a:hover {
-            color: var(--accent-orange);
-        }
-
-        .navbar a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Slider */
-        .hero-slider {
-            position: relative;
-            height: 600px;
-            overflow: hidden;
-        }
-
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        .slide-1 {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        .slide-2 {
-            background: linear-gradient(135deg, var(--secondary), #1a2a4d);
-        }
-
-        .slide-3 {
-            background: linear-gradient(135deg, #1a2a4d, var(--primary));
-        }
-
-        .slide-content {
-            max-width: 1200px;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .slide-text {
-            flex: 1;
-            animation: slideInLeft 1s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                transform: translateX(-100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .slide-text h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--accent-blue);
-        }
-
-        .slide-text p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: rgba(255,255,255,0.8);
-        }
-
-        .btn-primary {
-            background: var(--accent-orange);
-            color: #fff;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-block;
-            text-decoration: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-red);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(251,133,0,0.4);
-        }
-
-        .slide-image {
-            flex: 1;
-            text-align: center;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .slide-image img {
-            max-width: 500px;
-            filter: drop-shadow(0 20px 40px rgba(56,182,255,0.3));
-        }
-
-        /* Categorías */
-        .categories {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            color: var(--accent-blue);
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: var(--accent-orange);
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .category-card {
-            background: var(--secondary);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(56,182,255,0.1) 0%, transparent 70%);
-            transform: scale(0);
-            transition: transform 0.6s;
-        }
-
-        .category-card:hover::before {
-            transform: scale(1);
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(56,182,255,0.2);
-        }
-
-        .category-card i {
-            font-size: 3rem;
-            color: var(--accent-blue);
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .category-card:hover i {
-            color: var(--accent-orange);
-            transform: scale(1.2);
-        }
-
-        .category-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-
-        /* Productos Destacados */
-        .products {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: linear-gradient(180deg, transparent, rgba(17,19,68,0.3));
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .product-card {
-            background: var(--secondary);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(56,182,255,0.3);
-        }
-
-        .product-image {
-            position: relative;
-            height: 280px;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .product-image img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-            transition: transform 0.4s;
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.1);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--accent-red);
-            color: #fff;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .product-actions {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            opacity: 0;
-            transform: translateX(20px);
-            transition: all 0.3s;
-        }
-
-        .product-card:hover .product-actions {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .action-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(56,182,255,0.9);
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .action-btn:hover {
-            background: var(--accent-orange);
-            transform: scale(1.1);
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-category {
-            color: var(--accent-blue);
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-        }
-
-        .product-title {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-
-        .stars {
-            color: var(--accent-orange);
-        }
-
-        .product-price {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-orange);
-        }
-
-        .old-price {
-            text-decoration: line-through;
-            color: rgba(255,255,255,0.5);
-            font-size: 1rem;
-        }
-
-        .add-to-cart {
-            background: var(--accent-blue);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .add-to-cart:hover {
-            background: var(--accent-orange);
-            transform: scale(1.05);
-        }
-
-        /* Ofertas Banner */
-        .deals-banner {
-            margin: 80px 20px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            background: linear-gradient(135deg, var(--accent-orange), var(--accent-red));
-            border-radius: 20px;
-            padding: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .deals-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .deals-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .deals-content p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .countdown {
-            display: flex;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .countdown-item {
-            background: rgba(255,255,255,0.2);
-            padding: 15px 25px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .countdown-number {
-            font-size: 2rem;
-            font-weight: bold;
-            display: block;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--primary);
-            padding: 60px 20px 20px;
-            margin-top: 80px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-section h3 {
-            color: var(--accent-blue);
-            margin-bottom: 20px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: var(--accent-orange);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-btn:hover {
-            background: var(--accent-orange);
-            transform: translateY(-5px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.5);
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .slide-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .slide-text h2 {
-                font-size: 2rem;
-            }
-
-            .deals-banner {
-                flex-direction: column;
-                text-align: center;
-                padding: 40px 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="public/assets/css/index.css" />
 </head>
 <body>
-    <!-- Top Header -->
-    <div class="top-header">
+    <header class="header">
         <div class="container">
-            <div>
-                <i class="fas fa-phone"></i> +51 999 888 777
-                <a href="mailto:info@techstore.com"><i class="fas fa-envelope"></i> info@techstore.com</a>
-            </div>
-            <div>
-                <a href="#"><i class="fas fa-user"></i> Mi Cuenta</a>
-                <a href="#"><i class="fas fa-heart"></i> Wishlist</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Header -->
-    <header class="main-header">
-        <div class="header-content">
-            <a href="#" class="logo">
-                <i class="fas fa-bolt"></i>
-                TechStore
-            </a>
-            
-            <div class="search-bar">
-                <input type="text" placeholder="Buscar productos, marcas y más...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
-
-            <div class="header-icons">
-                <div class="icon-btn">
-                    <i class="fas fa-heart"></i>
-                    <span class="badge">3</span>
+            <nav class="nav">
+                <div class="logo">
+                    <span class="logo-icon">▲</span>
+                    <span class="logo-text">TEC RIVERA</span>
                 </div>
-                <div class="icon-btn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="badge">5</span>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#soluciones">Soluciones</a></li>
+                    <li><a href="#empresa">Empresa</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="#contacto" class="btn-secondary">Cotizar</a>
+                    <a href="#" class="btn-primary">Iniciar Sesión</a>
                 </div>
-                <div class="icon-btn">
-                    <i class="fas fa-user"></i>
-                </div>
-            </div>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span><span></span><span></span>
+                </button>
+            </nav>
         </div>
     </header>
 
-    <!-- Navbar -->
-    <nav class="navbar">
+    <section class="hero">
         <div class="container">
-            <a href="#">Inicio</a>
-            <a href="#">Laptops</a>
-            <a href="#">Smartphones</a>
-            <a href="#">Accesorios</a>
-            <a href="#">Gaming</a>
-            <a href="#">Ofertas</a>
-            <a href="#">Contacto</a>
-        </div>
-    </nav>
-
-    <!-- Hero Slider -->
-    <div class="hero-slider">
-        <div class="slide slide-1 active">
-            <div class="slide-content">
-                <div class="slide-text">
-                    <h2>Nueva Era Gaming</h2>
-                    <p>Laptops de última generación con RTX 4090<br>Hasta 40% de descuento</p>
-                    <a href="#" class="btn-primary">Comprar Ahora</a>
+            <div class="hero-content">
+                <p class="hero-label">Tecnología Empresarial</p>
+                <h1 class="hero-title">La plataforma completa para impulsar tu negocio</h1>
+                <p class="hero-description">Soluciones tecnológicas integrales: desde productos de hardware hasta desarrollo de software personalizado, outsourcing y soporte técnico especializado.</p>
+                <div class="hero-actions">
+                    <a href="#contacto" class="btn-primary btn-large">Solicitar Demo</a>
+                    <a href="#servicios" class="btn-secondary btn-large">Explorar Servicios</a>
                 </div>
-                <div class="slide-image">
-                    <i class="fas fa-laptop" style="font-size: 300px; color: var(--accent-blue); opacity: 0.8;"></i>
-                </div>
-            </div>
-        </div>
-        <div class="slide slide-2">
-            <div class="slide-content">
-                <div class="slide-text">
-                    <h2>Smartphones Pro</h2>
-                    <p>Los mejores smartphones del mercado<br>Envío gratis en 24 horas</p>
-                    <a href="#" class="btn-primary">Ver Modelos</a>
-                </div>
-                <div class="slide-image">
-                    <i class="fas fa-mobile-alt" style="font-size: 300px; color: var(--accent-orange); opacity: 0.8;"></i>
-                </div>
-            </div>
-        </div>
-        <div class="slide slide-3">
-            <div class="slide-content">
-                <div class="slide-text">
-                    <h2>Audio Premium</h2>
-                    <p>Audífonos y parlantes de alta fidelidad<br>Experiencia sonora inmersiva</p>
-                    <a href="#" class="btn-primary">Descubrir</a>
-                </div>
-                <div class="slide-image">
-                    <i class="fas fa-headphones" style="font-size: 300px; color: var(--accent-blue); opacity: 0.8;"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Categories -->
-    <section class="categories">
-        <h2 class="section-title">Categorías Populares</h2>
-        <div class="category-grid">
-            <div class="category-card">
-                <i class="fas fa-laptop"></i>
-                <h3>Laptops</h3>
-                <p>+250 productos</p>
-            </div>
-            <div class="category-card">
-                <i class="fas fa-mobile-alt"></i>
-                <h3>Smartphones</h3>
-                <p>+180 productos</p>
-            </div>
-            <div class="category-card">
-                <i class="fas fa-headphones"></i>
-                <h3>Audio</h3>
-                <p>+95 productos</p>
-            </div>
-            <div class="category-card">
-                <i class="fas fa-gamepad"></i>
-                <h3>Gaming</h3>
-                <p>+120 productos</p>
-            </div>
-            <div class="category-card">
-                <i class="fas fa-tv"></i>
-                <h3>Monitores</h3>
-                <p>+75 productos</p>
-            </div>
-            <div class="category-card">
-                <i class="fas fa-keyboard"></i>
-                <h3>Accesorios</h3>
-                <p>+200 productos</p>
             </div>
         </div>
     </section>
 
-    <!-- Deals Banner -->
-    <div class="deals-banner">
-        <div class="deals-content">
-            <h2>Mega Ofertas Flash</h2>
-            <p>Descuentos de hasta 50% en productos seleccionados</p>
-            <a href="#" class="btn-primary">Ver Ofertas</a>
-            <div class="countdown">
-                <div class="countdown-item">
-                    <span class="countdown-number" id="hours">12</span>
-                    <span>Horas</span>
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Clientes Satisfechos</div>
+                    <div class="stat-company">Empresas Líderes</div>
                 </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="minutes">45</span>
-                    <span>Minutos</span>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Tasa de Satisfacción</div>
+                    <div class="stat-company">Soporte 24/7</div>
                 </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="seconds">30</span>
-                    <span>Segundos</span>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Años de Experiencia</div>
+                    <div class="stat-company">En el Mercado</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Proyectos Completados</div>
+                    <div class="stat-company">Con Éxito</div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Products -->
-    <section class="products">
+    <!-- PRODUCTS -->
+    <section class="products" id="productos">
+    <div class="container">
+        <div class="section-header">
         <h2 class="section-title">Productos Destacados</h2>
-        <div class="product-grid">
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="product-badge">-25%</span>
-                    <div class="product-actions">
-                        <button class="action-btn"><i class="fas fa-heart"></i></button>
-                        <button class="action-btn"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
-                    </div>
-                    <i class="fas fa-laptop" style="font-size: 120px; color: var(--accent-blue);"></i>
-                </div>
-                <div class="product-info">
-                    <div class="product-category">Laptops Gaming</div>
-                    <h3 class="product-title">ASUS ROG Strix G15</h3>
-                    <div class="product-rating">
-                        <span class="stars">★★★★★</span>
-                        <span>(124)</span>
-                    </div>
-                    <div class="product-price">
-                        <div>
-                            <span class="price">$1,499</span>
-                            <span class="old-price">$1,999</span>
-                        </div>
-                        <button class="add-to-cart"><i class="fas fa-cart-plus"></i></button>
-                    </div>
+        <p class="section-description">Equipos y tecnología de última generación para tu empresa</p>
+        </div>
+        <div class="products-grid">
+        <div class="product-card">
+            <div class="product-image">
+            <i class="fas fa-laptop"></i>
+            <span class="product-badge">Nuevo</span>
+            </div>
+            <div class="product-info">
+            <h3 class="product-title">Laptops Empresariales</h3>
+            <p class="product-description">Equipos de alto rendimiento para profesionales y empresas</p>
+            <div class="product-footer">
+                <span class="product-price">Desde $899</span>
+                <button class="btn-product">Ver Detalles</button>
+            </div>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-image">
+            <i class="fas fa-server"></i>
+            </div>
+            <div class="product-info">
+            <h3 class="product-title">Servidores y Storage</h3>
+            <p class="product-description">Infraestructura robusta para centros de datos</p>
+            <div class="product-footer">
+                <span class="product-price">Desde $2,499</span>
+                <button class="btn-product">Ver Detalles</button>
+            </div>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-image">
+            <i class="fas fa-network-wired"></i>
+            <span class="product-badge">Oferta</span>
+            </div>
+            <div class="product-info">
+            <h3 class="product-title">Equipos de Red</h3>
+            <p class="product-description">Switches, routers y soluciones de conectividad</p>
+            <div class="product-footer">
+                <span class="product-price">Desde $299</span>
+                <button class="btn-product">Ver Detalles</button>
+            </div>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-image">
+            <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="product-info">
+            <h3 class="product-title">Sistemas de Seguridad</h3>
+            <p class="product-description">Cámaras, control de acceso y monitoreo</p>
+            <div class="product-footer">
+                <span class="product-price">Desde $499</span>
+                <button class="btn-product">Ver Detalles</button>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="servicios">
+    <div class="container">
+        <div class="section-header">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <p class="section-description">Soluciones tecnológicas personalizadas para tu empresa</p>
+        </div>
+        <div class="services-grid">
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-code"></i></div>
+            <h3 class="service-title">Desarrollo de Software</h3>
+            <p class="service-description">Creamos aplicaciones web, móviles y de escritorio personalizadas. Desde MVPs hasta sistemas empresariales complejos.</p>
+            <ul class="service-features">
+            <li>Aplicaciones Web Modernas</li>
+            <li>Apps Móviles iOS/Android</li>
+            <li>Sistemas Empresariales</li>
+            <li>APIs y Microservicios</li>
+            </ul>
+            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
+        </div>
+        <div class="service-card featured">
+            <div class="service-badge">Más Popular</div>
+            <div class="service-icon"><i class="fas fa-users"></i></div>
+            <h3 class="service-title">Outsourcing IT</h3>
+            <p class="service-description">Amplía tu equipo con nuestros profesionales especializados. Talento calificado cuando lo necesites.</p>
+            <ul class="service-features">
+            <li>Desarrolladores Full Stack</li>
+            <li>DevOps Engineers</li>
+            <li>QA Testers</li>
+            <li>Project Managers</li>
+            </ul>
+            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-headset"></i></div>
+            <h3 class="service-title">Soporte Técnico</h3>
+            <p class="service-description">Soporte 24/7 para mantener tu infraestructura funcionando sin interrupciones.</p>
+            <ul class="service-features">
+            <li>Soporte 24/7/365</li>
+            <li>Mantenimiento Preventivo</li>
+            <li>Monitoreo Continuo</li>
+            <li>Respuesta Inmediata</li>
+            </ul>
+            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-cloud"></i></div>
+            <h3 class="service-title">Consultoría Cloud</h3>
+            <p class="service-description">Migración y optimización de infraestructura en la nube. AWS, Azure, Google Cloud.</p>
+            <ul class="service-features">
+            <li>Migración a la Nube</li>
+            <li>Arquitectura Cloud</li>
+            <li>Optimización de Costos</li>
+            <li>DevOps & CI/CD</li>
+            </ul>
+            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-lock"></i></div>
+            <h3 class="service-title">Ciberseguridad</h3>
+            <p class="service-description">Protege tu empresa con nuestras soluciones de seguridad informática avanzada.</p>
+            <ul class="service-features">
+            <li>Auditorías de Seguridad</li>
+            <li>Pentesting</li>
+            <li>Protección DDoS</li>
+            <li>Cumplimiento Normativo</li>
+            </ul>
+            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+            <h3 class="service-title">Análisis de Datos</h3>
+            <p class="service-description">Transforma tus datos en insights accionables con BI y Machine Learning.</p>
+            <ul class="service-features">
+            <li>Business Intelligence</li>
+            <li>Data Analytics</li>
+            <li>Machine Learning</li>
+            <li>Dashboards Personalizados</li>
+            </ul>
+            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- SOLUTIONS -->
+    <section class="solutions" id="soluciones">
+    <div class="container">
+        <div class="solutions-content">
+        <div class="solutions-text">
+            <p class="solutions-label">✦ Soluciones Empresariales</p>
+            <h2 class="solutions-title">Acelera tu transformación digital</h2>
+            <p class="solutions-description">
+            La plataforma para el progreso rápido. Deja que tu equipo se enfoque en innovar mientras nosotros manejamos la infraestructura con automatización, testing integrado y colaboración fluida.
+            </p>
+            <div class="solutions-features">
+            <div class="solution-feature">
+                <div class="feature-icon">✓</div>
+                <div>
+                <h4>Implementación Rápida</h4>
+                <p>Despliega tus proyectos en días, no en meses</p>
                 </div>
             </div>
-
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="product-badge">Nuevo</span>
-                    <div class="product-actions">
-                        <button class="action-btn"><i class="fas fa-heart"></i></button>
-                        <button class="action-btn"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
-                    </div>
-                    <i class="fas fa-mobile-alt" style="font-size: 120px; color: var(--accent-orange);"></i>
-                </div>
-                <div class="product-info">
-                    <div class="product-category">Smartphones</div>
-                    <h3 class="product-title">iPhone 15 Pro Max</h3>
-                    <div class="product-rating">
-                        <span class="stars">★★★★★</span>
-                        <span>(98)</span>
-                    </div>
-                    <div class="product-price">
-                        <div>
-                            <span class="price">$1,299</span>
-                        </div>
-                        <button class="add-to-cart"><i class="fas fa-cart-plus"></i></button>
-                    </div>
+            <div class="solution-feature">
+                <div class="feature-icon">✓</div>
+                <div>
+                <h4>Escalabilidad Garantizada</h4>
+                <p>Crece sin límites con nuestra infraestructura</p>
                 </div>
             </div>
-
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="product-badge">Hot</span>
-                    <div class="product-actions">
-                        <button class="action-btn"><i class="fas fa-heart"></i></button>
-                        <button class="action-btn"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
-                    </div>
-                    <i class="fas fa-headphones" style="font-size: 120px; color: var(--accent-blue);"></i>
-                </div>
-                <div class="product-info">
-                    <div class="product-category">Audio</div>
-                    <h3 class="product-title">Sony WH-1000XM5</h3>
-                    <div class="product-rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(87)</span>
-                    </div>
-                    <div class="product-price">
-                        <div>
-                            <span class="price">$399</span>
-                            <span class="old-price">$450</span>
-                        </div>
-                        <button class="add-to-cart"><i class="fas fa-cart-plus"></i></button>
-                    </div>
+            <div class="solution-feature">
+                <div class="feature-icon">✓</div>
+                <div>
+                <h4>Soporte Dedicado</h4>
+                <p>Equipo experto disponible 24/7 para ti</p>
                 </div>
             </div>
+            </div>
+        </div>
+        <div class="solutions-image">
+            <i class="fas fa-chart-network"></i>
+        </div>
+        </div>
+    </div>
+    </section>
 
-            <!-- Product 4 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="product-badge">-30%</span>
+    <!-- CTA -->
+    <section class="cta">
+    <div class="container">
+        <div class="cta-content">
+        <h2 class="cta-title">¿Listo para comenzar?</h2>
+        <p class="cta-description">
+            Únete a cientos de empresas que confían en TEC RIVERA para sus soluciones tecnológicas
+        </p>
+        <div class="cta-actions">
+            <a href="#contacto" class="btn-primary btn-large">Solicitar Consultoría Gratuita</a>
+            <a href="#" class="btn-secondary btn-large">Ver Casos de Éxito</a>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contacto">
+    <div class="container">
+        <div class="contact-grid">
+        <div class="contact-info">
+            <h2 class="contact-title">Contáctanos</h2>
+            <p class="contact-description">
+            Estamos aquí para ayudarte. Envíanos un mensaje y nos pondremos en contacto contigo pronto.
+            </p>
+            <div class="contact-details">
+            <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div>
+                <h4>Email</h4>
+                <p>contacto@tecrivera.com</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div>
+                <h4>Teléfono</h4>
+                <p>+1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div>
+                <h4>Oficina</h4>
+                <p>
+                    123 Tech Avenue, Suite 100<br />
+                    Silicon Valley, CA 94025
+                </p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <form class="contact-form" id="contactForm">
+            <div class="form-group">
+            <label for="name">Nombre Completo</label>
+            <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+            <label for="company">Empresa</label>
+            <input type="text" id="company" name="company" />
+            </div>
+            <div class="form-group">
+            <label for="service">Servicio de Interés</label>
+            <select id="service" name="service">
+                <option value="">Selecciona un servicio</option>
+                <option value="desarrollo">Desarrollo de Software</option>
+                <option value="outsourcing">Outsourcing IT</option>
+                <option value="soporte">Soporte Técnico</option>
+                <option value="cloud">Consultoría Cloud</option>
+                <option value="seguridad">Ciberseguridad</option>
+                <option value="datos">Análisis de Datos</option>
+                <option value="productos">Productos</option>
+            </select>
+            </div>
+            <div class="form-group">
+            <label for="message">Mensaje</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-large">Enviar Mensaje</button>
+        </form>
+        </div>
+    </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+        <div class="footer-column">
+            <div class="footer-logo">
+            <span class="logo-icon">▲</span>
+            <span class="logo-text">TEC RIVERA</span>
+            </div>
+            <p class="footer-description">
+            Soluciones tecnológicas integrales para empresas que buscan innovar y crecer.
+            </p>
+            <div class="social-links">
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Twitter">𝕏</a>
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="Instagram">📷</a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h4>Productos</h4>
+            <ul>
+            <li><a href="#">Laptops</a></li>
+            <li><a href="#">Servidores</a></li>
+            <li><a href="#">Networking</a></li>
+            <li><a href="#">Seguridad</a></li>
+            <li><a href="#">Accesorios</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Servicios</h4>
+            <ul>
+            <li><a href="#">Desarrollo Software</a></li>
+            <li><a href="#">Outsourcing IT</a></li>
+            <li><a href="#">Soporte Técnico</a></li>
+            <li><a href="#">Consultoría Cloud</a></li>
+            <li><a href="#">Ciberseguridad</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Empresa</h4>
+            <ul>
+            <li><a href="#">Nosotros</a></li>
+            <li><a href="#">Casos de Éxito</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Carreras</a></li>
+            <li><a href="#">Contacto</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Legal</h4>
+            <ul>
+            <li><a href="#">Privacidad</a></li>
+            <li><a href="#">Términos</a></li>
+            <li><a href="#">Cookies</a></li>
+            <li><a href="#">Licencias</a></li>
+            </ul>
+        </div>
+        </div>
+        <div class="footer-bottom">
+        <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
+        </div>
+    </div>
+    </footer>
+    </body>
+</html>
