@@ -1,339 +1,409 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEC RIVERA - Tecnología y Servicios de Software</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="public/assets/css/global.css" />
     <link rel="stylesheet" href="public/assets/css/index.css" />
-</head>
-<body>
+    <!-- Boxicons -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+  </head>
+  <body>
     <header class="header">
-        <div class="container">
-            <nav class="nav">
-                <div class="logo">
-                    <span class="logo-icon">▲</span>
-                    <span class="logo-text">TEC RIVERA</span>
-                </div>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="#productos">Productos</a></li>
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#soluciones">Soluciones</a></li>
-                    <li><a href="#empresa">Empresa</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
-                <div class="nav-actions">
-                    <a href="#contacto" class="btn-secondary">Cotizar</a>
-                    <a href="#" class="btn-primary">Iniciar Sesión</a>
-                </div>
-                <button class="mobile-toggle" id="mobileToggle">
-                    <span></span><span></span><span></span>
-                </button>
-            </nav>
-        </div>
+      <div class="container">
+        <nav class="nav">
+          <div class="logo">
+            <span class="logo-icon">▲</span>
+            <span class="logo-text">TEC RIVERA</span>
+          </div>
+          <ul class="nav-menu" id="navMenu">
+            <li><a class="active" href="#">Inicio</a></li>
+            <li><a href="public/views/productos.html">Productos</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#soluciones">Soluciones</a></li>
+            <li><a href="#empresa">Empresa</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+          <div class="nav-actions">
+            <a href="#contacto" class="btn-secondary">Cotizar</a>
+            <!-- <a href="#" class="btn-primary">Iniciar Sesión</a> -->
+            <button class="btn-secondary" id="wishlistBtn">
+              <span class="icon">♥</span>
+              <span class="badge" id="wishlistCount">0</span>
+            </button>
+            <button class="btn-secondary" id="cartBtn">
+              <span class="icon">🛒</span>
+              <span class="badge" id="cartCount">0</span>
+            </button>
+          </div>
+          <button class="mobile-toggle" id="mobileToggle">
+            <span></span><span></span><span></span>
+          </button>
+        </nav>
+      </div>
     </header>
 
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <p class="hero-label">Tecnología Empresarial</p>
-                <h1 class="hero-title">La plataforma completa para impulsar tu negocio</h1>
-                <p class="hero-description">Soluciones tecnológicas integrales: desde productos de hardware hasta desarrollo de software personalizado, outsourcing y soporte técnico especializado.</p>
-                <div class="hero-actions">
-                    <a href="#contacto" class="btn-primary btn-large">Solicitar Demo</a>
-                    <a href="#servicios" class="btn-secondary btn-large">Explorar Servicios</a>
-                </div>
-            </div>
+      <div class="container">
+        <div class="hero-content">
+          <p class="hero-label">Tecnología Empresarial</p>
+          <h1 class="hero-title">
+            La plataforma completa para impulsar tu negocio
+          </h1>
+          <p class="hero-description">
+            Soluciones tecnológicas integrales: desde productos de hardware
+            hasta desarrollo de software personalizado, outsourcing y soporte
+            técnico especializado.
+          </p>
+          <div class="hero-actions">
+            <a href="#contacto" class="btn-primary btn-large">Solicitar Demo</a>
+            <a href="#servicios" class="btn-secondary btn-large"
+              >Explorar Servicios</a
+            >
+          </div>
         </div>
+      </div>
     </section>
 
     <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Clientes Satisfechos</div>
-                    <div class="stat-company">Empresas Líderes</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">Tasa de Satisfacción</div>
-                    <div class="stat-company">Soporte 24/7</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">15+</div>
-                    <div class="stat-label">Años de Experiencia</div>
-                    <div class="stat-company">En el Mercado</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1000+</div>
-                    <div class="stat-label">Proyectos Completados</div>
-                    <div class="stat-company">Con Éxito</div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Clientes Satisfechos</div>
+            <div class="stat-company">Empresas Líderes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Tasa de Satisfacción</div>
+            <div class="stat-company">Soporte 24/7</div>
+          </div>
+          <!-- <div class="stat-card">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Años de Experiencia</div>
+            <div class="stat-company">En el Mercado</div>
+          </div> -->
+          <div class="stat-card">
+            <div class="stat-number">1000+</div>
+            <div class="stat-label">Proyectos Completados</div>
+            <div class="stat-company">Con Éxito</div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- PRODUCTS -->
     <section class="products" id="productos">
-    <div class="container">
+      <div class="container">
         <div class="section-header">
-        <h2 class="section-title">Productos Destacados</h2>
-        <p class="section-description">Equipos y tecnología de última generación para tu empresa</p>
+          <h2 class="section-title">Productos Destacados</h2>
+          <p class="section-description">
+            Equipos y tecnología de última generación para tu empresa
+          </p>
         </div>
         <div class="products-grid">
-        <div class="product-card">
+          <div class="product-card">
             <div class="product-image">
-            <i class="fas fa-laptop"></i>
-            <span class="product-badge">Nuevo</span>
+              <i class="fas fa-laptop"></i>
+              <span class="product-badge">Nuevo</span>
             </div>
             <div class="product-info">
-            <h3 class="product-title">Laptops Empresariales</h3>
-            <p class="product-description">Equipos de alto rendimiento para profesionales y empresas</p>
-            <div class="product-footer">
+              <h3 class="product-title">Laptops Empresariales</h3>
+              <p class="product-description">
+                Equipos de alto rendimiento para profesionales y empresas
+              </p>
+              <div class="product-footer">
                 <span class="product-price">Desde $899</span>
                 <button class="btn-product">Ver Detalles</button>
+              </div>
             </div>
-            </div>
-        </div>
-        <div class="product-card">
+          </div>
+          <div class="product-card">
             <div class="product-image">
-            <i class="fas fa-server"></i>
+              <i class="fas fa-server"></i>
             </div>
             <div class="product-info">
-            <h3 class="product-title">Servidores y Storage</h3>
-            <p class="product-description">Infraestructura robusta para centros de datos</p>
-            <div class="product-footer">
+              <h3 class="product-title">Servidores y Storage</h3>
+              <p class="product-description">
+                Infraestructura robusta para centros de datos
+              </p>
+              <div class="product-footer">
                 <span class="product-price">Desde $2,499</span>
                 <button class="btn-product">Ver Detalles</button>
+              </div>
             </div>
-            </div>
-        </div>
-        <div class="product-card">
+          </div>
+          <div class="product-card">
             <div class="product-image">
-            <i class="fas fa-network-wired"></i>
-            <span class="product-badge">Oferta</span>
+              <i class="fas fa-network-wired"></i>
+              <span class="product-badge">Oferta</span>
             </div>
             <div class="product-info">
-            <h3 class="product-title">Equipos de Red</h3>
-            <p class="product-description">Switches, routers y soluciones de conectividad</p>
-            <div class="product-footer">
+              <h3 class="product-title">Equipos de Red</h3>
+              <p class="product-description">
+                Switches, routers y soluciones de conectividad
+              </p>
+              <div class="product-footer">
                 <span class="product-price">Desde $299</span>
                 <button class="btn-product">Ver Detalles</button>
+              </div>
             </div>
-            </div>
-        </div>
-        <div class="product-card">
+          </div>
+          <div class="product-card">
             <div class="product-image">
-            <i class="fas fa-shield-alt"></i>
+              <i class="fas fa-shield-alt"></i>
             </div>
             <div class="product-info">
-            <h3 class="product-title">Sistemas de Seguridad</h3>
-            <p class="product-description">Cámaras, control de acceso y monitoreo</p>
-            <div class="product-footer">
+              <h3 class="product-title">Sistemas de Seguridad</h3>
+              <p class="product-description">
+                Cámaras, control de acceso y monitoreo
+              </p>
+              <div class="product-footer">
                 <span class="product-price">Desde $499</span>
                 <button class="btn-product">Ver Detalles</button>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
+        <div
+          class="products-actions"
+          style="text-align: center; margin-top: 2rem"
+        >
+          <a href="public/views/productos.html" class="btn-secondary btn-large"
+            >Ver Catálogo Completo</a
+          >
         </div>
-    </div>
+      </div>
     </section>
 
     <!-- SERVICES -->
     <section class="services" id="servicios">
-    <div class="container">
+      <div class="container">
         <div class="section-header">
-        <h2 class="section-title">Nuestros Servicios</h2>
-        <p class="section-description">Soluciones tecnológicas personalizadas para tu empresa</p>
+          <h2 class="section-title">Nuestros Servicios</h2>
+          <p class="section-description">
+            Soluciones tecnológicas personalizadas para tu empresa
+          </p>
         </div>
         <div class="services-grid">
-        <div class="service-card">
+          <div class="service-card">
             <div class="service-icon"><i class="fas fa-code"></i></div>
             <h3 class="service-title">Desarrollo de Software</h3>
-            <p class="service-description">Creamos aplicaciones web, móviles y de escritorio personalizadas. Desde MVPs hasta sistemas empresariales complejos.</p>
+            <p class="service-description">
+              Creamos aplicaciones web, móviles y de escritorio personalizadas.
+              Desde MVPs hasta sistemas empresariales complejos.
+            </p>
             <ul class="service-features">
-            <li>Aplicaciones Web Modernas</li>
-            <li>Apps Móviles iOS/Android</li>
-            <li>Sistemas Empresariales</li>
-            <li>APIs y Microservicios</li>
+              <li>Aplicaciones Web Modernas</li>
+              <li>Apps Móviles iOS/Android</li>
+              <li>Sistemas Empresariales</li>
+              <li>APIs y Microservicios</li>
             </ul>
             <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-        </div>
-        <div class="service-card featured">
+          </div>
+          <div class="service-card featured">
             <div class="service-badge">Más Popular</div>
             <div class="service-icon"><i class="fas fa-users"></i></div>
             <h3 class="service-title">Outsourcing IT</h3>
-            <p class="service-description">Amplía tu equipo con nuestros profesionales especializados. Talento calificado cuando lo necesites.</p>
+            <p class="service-description">
+              Amplía tu equipo con nuestros profesionales especializados.
+              Talento calificado cuando lo necesites.
+            </p>
             <ul class="service-features">
-            <li>Desarrolladores Full Stack</li>
-            <li>DevOps Engineers</li>
-            <li>QA Testers</li>
-            <li>Project Managers</li>
+              <li>Desarrolladores Full Stack</li>
+              <li>DevOps Engineers</li>
+              <li>QA Testers</li>
+              <li>Project Managers</li>
             </ul>
             <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-        </div>
-        <div class="service-card">
+          </div>
+          <div class="service-card">
             <div class="service-icon"><i class="fas fa-headset"></i></div>
             <h3 class="service-title">Soporte Técnico</h3>
-            <p class="service-description">Soporte 24/7 para mantener tu infraestructura funcionando sin interrupciones.</p>
+            <p class="service-description">
+              Soporte 24/7 para mantener tu infraestructura funcionando sin
+              interrupciones.
+            </p>
             <ul class="service-features">
-            <li>Soporte 24/7/365</li>
-            <li>Mantenimiento Preventivo</li>
-            <li>Monitoreo Continuo</li>
-            <li>Respuesta Inmediata</li>
+              <li>Soporte 24/7/365</li>
+              <li>Mantenimiento Preventivo</li>
+              <li>Monitoreo Continuo</li>
+              <li>Respuesta Inmediata</li>
             </ul>
             <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-        </div>
-        <div class="service-card">
+          </div>
+          <div class="service-card">
             <div class="service-icon"><i class="fas fa-cloud"></i></div>
             <h3 class="service-title">Consultoría Cloud</h3>
-            <p class="service-description">Migración y optimización de infraestructura en la nube. AWS, Azure, Google Cloud.</p>
+            <p class="service-description">
+              Migración y optimización de infraestructura en la nube. AWS,
+              Azure, Google Cloud.
+            </p>
             <ul class="service-features">
-            <li>Migración a la Nube</li>
-            <li>Arquitectura Cloud</li>
-            <li>Optimización de Costos</li>
-            <li>DevOps & CI/CD</li>
+              <li>Migración a la Nube</li>
+              <li>Arquitectura Cloud</li>
+              <li>Optimización de Costos</li>
+              <li>DevOps & CI/CD</li>
             </ul>
             <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-        </div>
-        <div class="service-card">
+          </div>
+          <div class="service-card">
             <div class="service-icon"><i class="fas fa-lock"></i></div>
             <h3 class="service-title">Ciberseguridad</h3>
-            <p class="service-description">Protege tu empresa con nuestras soluciones de seguridad informática avanzada.</p>
+            <p class="service-description">
+              Protege tu empresa con nuestras soluciones de seguridad
+              informática avanzada.
+            </p>
             <ul class="service-features">
-            <li>Auditorías de Seguridad</li>
-            <li>Pentesting</li>
-            <li>Protección DDoS</li>
-            <li>Cumplimiento Normativo</li>
+              <li>Auditorías de Seguridad</li>
+              <li>Pentesting</li>
+              <li>Protección DDoS</li>
+              <li>Cumplimiento Normativo</li>
             </ul>
             <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-        </div>
-        <div class="service-card">
+          </div>
+          <div class="service-card">
             <div class="service-icon"><i class="fas fa-chart-line"></i></div>
             <h3 class="service-title">Análisis de Datos</h3>
-            <p class="service-description">Transforma tus datos en insights accionables con BI y Machine Learning.</p>
+            <p class="service-description">
+              Transforma tus datos en insights accionables con BI y Machine
+              Learning.
+            </p>
             <ul class="service-features">
-            <li>Business Intelligence</li>
-            <li>Data Analytics</li>
-            <li>Machine Learning</li>
-            <li>Dashboards Personalizados</li>
+              <li>Business Intelligence</li>
+              <li>Data Analytics</li>
+              <li>Machine Learning</li>
+              <li>Dashboards Personalizados</li>
             </ul>
             <a href="#contacto" class="service-link">Solicitar Cotización →</a>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </section>
 
     <!-- SOLUTIONS -->
     <section class="solutions" id="soluciones">
-    <div class="container">
+      <div class="container">
         <div class="solutions-content">
-        <div class="solutions-text">
+          <div class="solutions-text">
             <p class="solutions-label">✦ Soluciones Empresariales</p>
             <h2 class="solutions-title">Acelera tu transformación digital</h2>
             <p class="solutions-description">
-            La plataforma para el progreso rápido. Deja que tu equipo se enfoque en innovar mientras nosotros manejamos la infraestructura con automatización, testing integrado y colaboración fluida.
+              La plataforma para el progreso rápido. Deja que tu equipo se
+              enfoque en innovar mientras nosotros manejamos la infraestructura
+              con automatización, testing integrado y colaboración fluida.
             </p>
             <div class="solutions-features">
-            <div class="solution-feature">
+              <div class="solution-feature">
                 <div class="feature-icon">✓</div>
                 <div>
-                <h4>Implementación Rápida</h4>
-                <p>Despliega tus proyectos en días, no en meses</p>
+                  <h4>Implementación Rápida</h4>
+                  <p>Despliega tus proyectos en días, no en meses</p>
                 </div>
-            </div>
-            <div class="solution-feature">
+              </div>
+              <div class="solution-feature">
                 <div class="feature-icon">✓</div>
                 <div>
-                <h4>Escalabilidad Garantizada</h4>
-                <p>Crece sin límites con nuestra infraestructura</p>
+                  <h4>Escalabilidad Garantizada</h4>
+                  <p>Crece sin límites con nuestra infraestructura</p>
                 </div>
-            </div>
-            <div class="solution-feature">
+              </div>
+              <div class="solution-feature">
                 <div class="feature-icon">✓</div>
                 <div>
-                <h4>Soporte Dedicado</h4>
-                <p>Equipo experto disponible 24/7 para ti</p>
+                  <h4>Soporte Dedicado</h4>
+                  <p>Equipo experto disponible 24/7 para ti</p>
                 </div>
+              </div>
             </div>
-            </div>
-        </div>
-        <div class="solutions-image">
+          </div>
+          <div class="solutions-image">
             <i class="fas fa-chart-network"></i>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </section>
 
     <!-- CTA -->
     <section class="cta">
-    <div class="container">
+      <div class="container">
         <div class="cta-content">
-        <h2 class="cta-title">¿Listo para comenzar?</h2>
-        <p class="cta-description">
-            Únete a cientos de empresas que confían en TEC RIVERA para sus soluciones tecnológicas
-        </p>
-        <div class="cta-actions">
-            <a href="#contacto" class="btn-primary btn-large">Solicitar Consultoría Gratuita</a>
+          <h2 class="cta-title">¿Listo para comenzar?</h2>
+          <p class="cta-description">
+            Únete a cientos de empresas que confían en TEC RIVERA para sus
+            soluciones tecnológicas
+          </p>
+          <div class="cta-actions">
+            <a href="#contacto" class="btn-primary btn-large"
+              >Solicitar Consultoría Gratuita</a
+            >
             <a href="#" class="btn-secondary btn-large">Ver Casos de Éxito</a>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </section>
 
     <!-- CONTACT -->
     <section class="contact" id="contacto">
-    <div class="container">
+      <div class="container">
         <div class="contact-grid">
-        <div class="contact-info">
+          <div class="contact-info">
             <h2 class="contact-title">Contáctanos</h2>
             <p class="contact-description">
-            Estamos aquí para ayudarte. Envíanos un mensaje y nos pondremos en contacto contigo pronto.
+              Estamos aquí para ayudarte. Envíanos un mensaje y nos pondremos en
+              contacto contigo pronto.
             </p>
             <div class="contact-details">
-            <div class="contact-item">
-                <div class="contact-icon">📧</div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="bx bx-envelope"></i></div>
                 <div>
-                <h4>Email</h4>
-                <p>contacto@tecrivera.com</p>
+                  <h4>Email</h4>
+                  <p>contacto@tecrivera.com</p>
                 </div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">📞</div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="bx bx-phone"></i></div>
                 <div>
-                <h4>Teléfono</h4>
-                <p>+1 (555) 123-4567</p>
+                  <h4>Teléfono</h4>
+                  <p>+1 (555) 123-4567</p>
                 </div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">📍</div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="bx bx-map"></i></div>
                 <div>
-                <h4>Oficina</h4>
-                <p>
+                  <h4>Oficina</h4>
+                  <p>
                     123 Tech Avenue, Suite 100<br />
                     Silicon Valley, CA 94025
-                </p>
+                  </p>
                 </div>
+              </div>
             </div>
-            </div>
-        </div>
-        <form class="contact-form" id="contactForm">
+          </div>
+          <form class="contact-form" id="contactForm">
             <div class="form-group">
-            <label for="name">Nombre Completo</label>
-            <input type="text" id="name" name="name" required />
-            </div>
-            <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
+              <label for="name">Nombre Completo</label>
+              <input type="text" id="name" name="name" required />
             </div>
             <div class="form-group">
-            <label for="company">Empresa</label>
-            <input type="text" id="company" name="company" />
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
             </div>
             <div class="form-group">
-            <label for="service">Servicio de Interés</label>
-            <select id="service" name="service">
+              <label for="company">Empresa</label>
+              <input type="text" id="company" name="company" />
+            </div>
+            <div class="form-group">
+              <label for="service">Servicio de Interés</label>
+              <select id="service" name="service">
                 <option value="">Selecciona un servicio</option>
                 <option value="desarrollo">Desarrollo de Software</option>
                 <option value="outsourcing">Outsourcing IT</option>
@@ -342,81 +412,89 @@
                 <option value="seguridad">Ciberseguridad</option>
                 <option value="datos">Análisis de Datos</option>
                 <option value="productos">Productos</option>
-            </select>
+              </select>
             </div>
             <div class="form-group">
-            <label for="message">Mensaje</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
+              <label for="message">Mensaje</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+              ></textarea>
             </div>
-            <button type="submit" class="btn-primary btn-large">Enviar Mensaje</button>
-        </form>
+            <button type="submit" class="btn-primary btn-large">
+              Enviar Mensaje
+            </button>
+          </form>
         </div>
-    </div>
+      </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="footer">
-    <div class="container">
+      <div class="container">
         <div class="footer-grid">
-        <div class="footer-column">
+          <div class="footer-column">
             <div class="footer-logo">
-            <span class="logo-icon">▲</span>
-            <span class="logo-text">TEC RIVERA</span>
+              <span class="logo-icon">▲</span>
+              <span class="logo-text">TEC RIVERA</span>
             </div>
             <p class="footer-description">
-            Soluciones tecnológicas integrales para empresas que buscan innovar y crecer.
+              Soluciones tecnológicas integrales para empresas que buscan
+              innovar y crecer.
             </p>
             <div class="social-links">
-            <a href="#" aria-label="LinkedIn">in</a>
-            <a href="#" aria-label="Twitter">𝕏</a>
-            <a href="#" aria-label="Facebook">f</a>
-            <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Twitter">𝕏</a>
+              <a href="#" aria-label="Facebook">f</a>
+              <a href="#" aria-label="Instagram">📷</a>
             </div>
-        </div>
-        <div class="footer-column">
+          </div>
+          <div class="footer-column">
             <h4>Productos</h4>
             <ul>
-            <li><a href="#">Laptops</a></li>
-            <li><a href="#">Servidores</a></li>
-            <li><a href="#">Networking</a></li>
-            <li><a href="#">Seguridad</a></li>
-            <li><a href="#">Accesorios</a></li>
+              <li><a href="#">Laptops</a></li>
+              <li><a href="#">Servidores</a></li>
+              <li><a href="#">Networking</a></li>
+              <li><a href="#">Seguridad</a></li>
+              <li><a href="#">Accesorios</a></li>
             </ul>
-        </div>
-        <div class="footer-column">
+          </div>
+          <div class="footer-column">
             <h4>Servicios</h4>
             <ul>
-            <li><a href="#">Desarrollo Software</a></li>
-            <li><a href="#">Outsourcing IT</a></li>
-            <li><a href="#">Soporte Técnico</a></li>
-            <li><a href="#">Consultoría Cloud</a></li>
-            <li><a href="#">Ciberseguridad</a></li>
+              <li><a href="#">Desarrollo Software</a></li>
+              <li><a href="#">Outsourcing IT</a></li>
+              <li><a href="#">Soporte Técnico</a></li>
+              <li><a href="#">Consultoría Cloud</a></li>
+              <li><a href="#">Ciberseguridad</a></li>
             </ul>
-        </div>
-        <div class="footer-column">
+          </div>
+          <div class="footer-column">
             <h4>Empresa</h4>
             <ul>
-            <li><a href="#">Nosotros</a></li>
-            <li><a href="#">Casos de Éxito</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Carreras</a></li>
-            <li><a href="#">Contacto</a></li>
+              <li><a href="#">Nosotros</a></li>
+              <li><a href="#">Casos de Éxito</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Carreras</a></li>
+              <li><a href="#">Contacto</a></li>
             </ul>
-        </div>
-        <div class="footer-column">
+          </div>
+          <div class="footer-column">
             <h4>Legal</h4>
             <ul>
-            <li><a href="#">Privacidad</a></li>
-            <li><a href="#">Términos</a></li>
-            <li><a href="#">Cookies</a></li>
-            <li><a href="#">Licencias</a></li>
+              <li><a href="#">Privacidad</a></li>
+              <li><a href="#">Términos</a></li>
+              <li><a href="#">Cookies</a></li>
+              <li><a href="#">Licencias</a></li>
             </ul>
-        </div>
+          </div>
         </div>
         <div class="footer-bottom">
-        <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
+          <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
         </div>
-    </div>
+      </div>
     </footer>
-    </body>
+  </body>
 </html>

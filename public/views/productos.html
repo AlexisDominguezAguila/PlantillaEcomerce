@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechStore - Catálogo de Productos</title>
+    <link rel="stylesheet" href="../assets/css/global.css" />
+    <link rel="stylesheet" href="../assets/css/index.css" />
+    <link rel="stylesheet" href="../assets/css/productos.css" />
+    <!-- Boxicons -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo">
+            <span class="logo-icon">▲</span>
+            <span class="logo-text">TEC RIVERA</span>
+          </div>
+          <ul class="nav-menu" id="navMenu">
+            <li><a href="../../index.html">Inicio</a></li>
+            <li><a class="active" href="#">Productos</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#soluciones">Soluciones</a></li>
+            <li><a href="#empresa">Empresa</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+
+          <div class="nav-actions">
+            <a href="#contacto" class="btn-secondary">Cotizar</a>
+            <!-- <a href="#" class="btn-primary">Iniciar Sesión</a> -->
+            <button class="btn-secondary" id="wishlistBtn">
+              <span class="icon"><i class="bx bx-heart"></i></span>
+              <span class="badge" id="wishlistCount">0</span>
+            </button>
+            <button class="btn-secondary" id="cartBtn">
+              <span class="icon"><i class="bx bx-cart"></i></span>
+              <span class="badge" id="cartCount">0</span>
+            </button>
+          </div>
+          <button class="mobile-toggle" id="mobileToggle">
+            <span></span><span></span><span></span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider">
+      <div class="slider-container">
+        <div class="hero-content-slide">
+          <div class="slider-track" id="sliderTrack">
+            <!-- Slides generados dinámicamente -->
+          </div>
+          <button class="slider-btn prev" id="prevBtn">‹</button>
+          <button class="slider-btn next" id="nextBtn">›</button>
+          <div class="slider-dots" id="sliderDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+      <div class="container">
+        <h2 class="section-title">Categorías</h2>
+        <div class="category-grid" id="categoryGrid">
+          <!-- Categorías generadas dinámicamente -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products">
+      <div class="container">
+        <div class="products-header">
+          <h2 class="section-title">Productos</h2>
+          <select class="category-filter" id="categoryFilter">
+            <option value="all">Todas las categorías</option>
+          </select>
+        </div>
+        <div class="product-grid" id="productGrid">
+          <!-- Productos generados dinámicamente -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal de Detalles -->
+    <div class="modal" id="productModal">
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-body" id="modalBody">
+          <!-- Contenido del modal -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Carrito -->
+    <div class="modal" id="cartModal">
+      <div class="modal-content">
+        <button class="modal-close" id="cartModalClose">&times;</button>
+        <div class="modal-body">
+          <h2>Carrito de Compras</h2>
+          <div id="cartItems"></div>
+          <div class="cart-total">
+            <h3>Total: $<span id="cartTotal">0</span></h3>
+            <button class="btn btn-primary">Proceder al Pago</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Lista de Deseos -->
+    <div class="modal" id="wishlistModal">
+      <div class="modal-content">
+        <button class="modal-close" id="wishlistModalClose">&times;</button>
+        <div class="modal-body">
+          <h2>Lista de Deseos</h2>
+          <div id="wishlistItems"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/js/productos.js"></script>
+  </body>
+</html>
