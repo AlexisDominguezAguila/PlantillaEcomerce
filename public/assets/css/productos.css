@@ -270,11 +270,11 @@
 
 .left-btn {
   top: 60%;
-  left: 10%;
+  left: 30px;
 }
 .right-btn {
   top: 60%;
-  right: 10%;
+  right: 30px;
 }
 
 @media (min-width: 992px) {
