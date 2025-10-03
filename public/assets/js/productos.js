@@ -55,9 +55,6 @@ const categories = [
   { name: "Impresoras", icon: "bx bx-printer" },
 ];
 
-// ==============================
-// Renderizado dinámico
-// ==============================
 function renderCategories() {
   const categorySlider = document.getElementById("categorySlider");
   const categoryFilter = document.getElementById("categoryFilter");
@@ -66,21 +63,14 @@ function renderCategories() {
     return console.warn("No existe #categorySlider en el HTML");
   }
 
-  // Limpia antes de renderizar (evita duplicados)
+  // Limpia antes de renderizar
   categorySlider.innerHTML = "";
   if (categoryFilter)
     categoryFilter.innerHTML = "<option value=''>Todas</option>";
 
+  // Renderizar categorías normales
   categories.forEach((category) => {
-    const card = document.createElement("div");
-    card.className = "category-card";
-    card.innerHTML = `
-      <i class="category-icon ${category.icon}"></i>
-      <h3>${category.name}</h3>
-    `;
-
-    // Click: aplicar filtro
-    card.addEventListener("click", () => filterByCategory(category.name));
+    const card = createCategoryCard(category);
     categorySlider.appendChild(card);
 
     // Añadir al select si existe
@@ -91,11 +81,25 @@ function renderCategories() {
       categoryFilter.appendChild(option);
     }
   });
+
+  // Clonar los primeros 3 elementos para efecto infinito
+  categories.slice(0, 3).forEach((category) => {
+    const card = createCategoryCard(category);
+    categorySlider.appendChild(card);
+  });
 }
 
-// ==============================
-// Navegación con botones (desktop)
-// ==============================
+function createCategoryCard(category) {
+  const card = document.createElement("div");
+  card.className = "category-card";
+  card.innerHTML = `
+    <i class="category-icon ${category.icon}"></i>
+    <h3>${category.name}</h3>
+  `;
+  card.addEventListener("click", () => filterByCategory(category.name));
+  return card;
+}
+
 function setupSliderNavigation() {
   const slider = document.getElementById("categorySlider");
   const leftBtn = document.querySelector(".left-btn");
@@ -103,12 +107,26 @@ function setupSliderNavigation() {
 
   if (!slider || !leftBtn || !rightBtn) return;
 
-  leftBtn.addEventListener("click", () => {
-    slider.scrollBy({ left: -200, behavior: "smooth" });
-  });
+  const cardWidth = 200; // ancho aprox de cada tarjeta
+  const totalCards = slider.children.length;
 
   rightBtn.addEventListener("click", () => {
-    slider.scrollBy({ left: 200, behavior: "smooth" });
+    slider.scrollBy({ left: cardWidth, behavior: "smooth" });
+
+    // Revisar si llegó al final
+    setTimeout(() => {
+      if (slider.scrollLeft >= (totalCards - 3) * cardWidth) {
+        slider.scrollTo({ left: 0 });
+      }
+    }, 400);
+  });
+
+  leftBtn.addEventListener("click", () => {
+    if (slider.scrollLeft <= 0) {
+      slider.scrollTo({ left: (totalCards - 3) * cardWidth });
+    } else {
+      slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
+    }
   });
 }
 
@@ -121,7 +139,7 @@ let currentSlide = 0;
 document.addEventListener("DOMContentLoaded", () => {
   renderCategories();
   setupSliderNavigation();
-  initSlider();
+  initSlider(); // <-- aquí llamas algo que no existe todavía
   renderProducts();
   setupEventListeners();
   loadFromLocalStorage();
