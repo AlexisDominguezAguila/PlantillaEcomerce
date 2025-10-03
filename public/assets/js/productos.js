@@ -139,7 +139,7 @@ let currentSlide = 0;
 document.addEventListener("DOMContentLoaded", () => {
   renderCategories();
   setupSliderNavigation();
-  initSlider(); // <-- aquí llamas algo que no existe todavía
+  initSlider();
   renderProducts();
   setupEventListeners();
   loadFromLocalStorage();
