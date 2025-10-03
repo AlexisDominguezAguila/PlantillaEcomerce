@@ -38,20 +38,79 @@ const products = [
   },
 ];
 
-// Categorías
+// ==============================
+// Categorías con íconos Boxicons
+// ==============================
 const categories = [
-  { name: "Laptops", icon: "💻" },
-  { name: "Smartphones", icon: "📱" },
-  { name: "Tablets", icon: "📱" },
-  { name: "Audio", icon: "🎧" },
-  { name: "Wearables", icon: "⌚" },
-  { name: "Cámaras", icon: "📷" },
-  { name: "Monitores", icon: "🖥️" },
-  { name: "Accesorios", icon: "⌨️" },
-  { name: "Drones", icon: "🚁" },
-  { name: "Gaming", icon: "🎮" },
-  { name: "Impresoras", icon: "🖨️" },
+  { name: "Laptops", icon: "bx bx-laptop" },
+  { name: "Smartphones", icon: "bx bx-mobile" },
+  { name: "Tablets", icon: "bx bx-tab" },
+  { name: "Audio", icon: "bx bx-headphone" },
+  { name: "Wearables", icon: "bx bx-clock" },
+  { name: "Cámaras", icon: "bx bx-camera" },
+  { name: "Monitores", icon: "bx bx-desktop" },
+  { name: "Accesorios", icon: "bx bx-keyboard" },
+  { name: "Drones", icon: "bx bx-cube" },
+  { name: "Gaming", icon: "bx bx-joystick" },
+  { name: "Impresoras", icon: "bx bx-printer" },
 ];
+
+// ==============================
+// Renderizado dinámico
+// ==============================
+function renderCategories() {
+  const categorySlider = document.getElementById("categorySlider");
+  const categoryFilter = document.getElementById("categoryFilter");
+
+  if (!categorySlider) {
+    return console.warn("No existe #categorySlider en el HTML");
+  }
+
+  // Limpia antes de renderizar (evita duplicados)
+  categorySlider.innerHTML = "";
+  if (categoryFilter)
+    categoryFilter.innerHTML = "<option value=''>Todas</option>";
+
+  categories.forEach((category) => {
+    const card = document.createElement("div");
+    card.className = "category-card";
+    card.innerHTML = `
+      <i class="category-icon ${category.icon}"></i>
+      <h3>${category.name}</h3>
+    `;
+
+    // Click: aplicar filtro
+    card.addEventListener("click", () => filterByCategory(category.name));
+    categorySlider.appendChild(card);
+
+    // Añadir al select si existe
+    if (categoryFilter) {
+      const option = document.createElement("option");
+      option.value = category.name;
+      option.textContent = category.name;
+      categoryFilter.appendChild(option);
+    }
+  });
+}
+
+// ==============================
+// Navegación con botones (desktop)
+// ==============================
+function setupSliderNavigation() {
+  const slider = document.getElementById("categorySlider");
+  const leftBtn = document.querySelector(".left-btn");
+  const rightBtn = document.querySelector(".right-btn");
+
+  if (!slider || !leftBtn || !rightBtn) return;
+
+  leftBtn.addEventListener("click", () => {
+    slider.scrollBy({ left: -200, behavior: "smooth" });
+  });
+
+  rightBtn.addEventListener("click", () => {
+    slider.scrollBy({ left: 200, behavior: "smooth" });
+  });
+}
 
 // Estado de la aplicación
 let cart = [];
@@ -60,8 +119,9 @@ let currentSlide = 0;
 
 // Inicialización
 document.addEventListener("DOMContentLoaded", () => {
-  initSlider();
   renderCategories();
+  setupSliderNavigation();
+  initSlider();
   renderProducts();
   setupEventListeners();
   loadFromLocalStorage();
@@ -127,28 +187,6 @@ function prevSlide() {
   const totalSlides = document.querySelectorAll(".dot").length;
   currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
   goToSlide(currentSlide);
-}
-
-// Categorías
-function renderCategories() {
-  const categoryGrid = document.getElementById("categoryGrid");
-  const categoryFilter = document.getElementById("categoryFilter");
-
-  categories.forEach((category) => {
-    const card = document.createElement("div");
-    card.className = "category-card";
-    card.innerHTML = `
-            <div class="category-icon">${category.icon}</div>
-            <h3>${category.name}</h3>
-        `;
-    card.addEventListener("click", () => filterByCategory(category.name));
-    categoryGrid.appendChild(card);
-
-    const option = document.createElement("option");
-    option.value = category.name;
-    option.textContent = category.name;
-    categoryFilter.appendChild(option);
-  });
 }
 
 // Productos
