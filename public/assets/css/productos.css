@@ -92,11 +92,11 @@
 }
 
 .slider-btn.prev {
-  left: 20px;
+  left: -20px;
 }
 
 .slider-btn.next {
-  right: 20px;
+  right: -20px;
 }
 
 .slider-dots {
