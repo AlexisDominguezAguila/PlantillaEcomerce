@@ -1,0 +1,539 @@
+/* Page Hero - Reusing from servicios but with variations */
+.page-hero {
+  padding: 140px 20px 80px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.page-hero::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(251, 133, 0, 0.15) 0%,
+    transparent 70%
+  );
+  animation: float 8s ease-in-out infinite;
+}
+
+.page-hero .hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(5deg);
+  }
+}
+
+.page-hero .hero-label {
+  color: var(--accent-orange);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.page-hero .hero-title {
+  font-size: 3.2rem;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.page-hero .hero-description {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Benefits Section */
+.benefits {
+  padding: 80px 20px;
+  background: var(--dark);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.benefit-card {
+  background: var(--secondary);
+  padding: 40px 30px;
+  border-radius: 20px;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.benefit-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(56, 182, 255, 0.1) 0%,
+    transparent 70%
+  );
+  transform: scale(0);
+  transition: transform 0.6s ease;
+}
+
+.benefit-card:hover::before {
+  transform: scale(1);
+}
+
+.benefit-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(56, 182, 255, 0.25);
+}
+
+.benefit-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(56, 182, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 25px;
+  font-size: 2.2rem;
+  color: var(--accent-blue);
+  transition: all 0.4s ease;
+}
+
+.benefit-card:hover .benefit-icon {
+  background: var(--accent-blue);
+  color: #fff;
+  transform: scale(1.15) rotate(10deg);
+}
+
+.benefit-card h3 {
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.benefit-card p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+}
+
+/* Industry Solutions Section */
+.industry-solutions {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, var(--dark), rgba(17, 19, 68, 0.05));
+}
+
+.solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.solution-card {
+  background: var(--secondary);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.solution-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(56, 182, 255, 0.05) 0%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.solution-card:hover::before {
+  opacity: 1;
+}
+
+.solution-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(56, 182, 255, 0.25);
+  border-color: var(--accent-blue);
+}
+
+.solution-image {
+  height: 200px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: var(--accent-blue);
+  position: relative;
+  overflow: hidden;
+}
+
+.solution-image::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-blue),
+    var(--accent-orange)
+  );
+}
+
+.solution-card:hover .solution-image i {
+  transform: scale(1.15);
+  transition: transform 0.4s ease;
+}
+
+.solution-content {
+  padding: 35px;
+}
+
+.solution-content h3 {
+  font-size: 1.6rem;
+  color: #fff;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.solution-content p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.solution-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 25px 0;
+}
+
+.solution-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.solution-features li:last-child {
+  border-bottom: none;
+}
+
+.solution-features li:hover {
+  padding-left: 10px;
+  color: #fff;
+}
+
+.solution-features li i {
+  color: var(--accent-orange);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.solution-link {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.solution-link:hover {
+  color: var(--accent-orange);
+  transform: translateX(5px);
+}
+
+/* Technology Stack Section */
+.tech-stack {
+  padding: 80px 20px;
+  background: var(--secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-stack::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -20%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(
+    circle,
+    rgba(17, 19, 68, 0.3) 0%,
+    transparent 70%
+  );
+  animation: float 10s ease-in-out infinite;
+}
+
+.tech-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+.tech-category {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 35px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+}
+
+.tech-category:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.tech-category h3 {
+  font-size: 1.5rem;
+  color: var(--accent-orange);
+  margin-bottom: 25px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.tech-category h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--accent-blue);
+  border-radius: 2px;
+}
+
+.tech-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  cursor: pointer;
+}
+
+.tech-item:hover {
+  background: rgba(56, 182, 255, 0.15);
+  transform: scale(1.1);
+}
+
+.tech-item i {
+  font-size: 3rem;
+  color: var(--accent-blue);
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover i {
+  color: var(--accent-orange);
+  transform: rotateY(180deg);
+}
+
+.tech-item span {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Process Section (if needed) */
+.process-section {
+  padding: 80px 20px;
+  background: var(--dark);
+}
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+  position: relative;
+}
+
+.process-step {
+  text-align: center;
+  position: relative;
+}
+
+.step-number {
+  width: 70px;
+  height: 70px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 30px rgba(56, 182, 255, 0.3);
+}
+
+.process-step h3 {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.process-step p {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .solutions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    padding: 120px 20px 60px;
+  }
+
+  .page-hero .hero-title {
+    font-size: 2.4rem;
+  }
+
+  .page-hero .hero-description {
+    font-size: 1.1rem;
+  }
+
+  .benefits {
+    padding: 60px 20px;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .industry-solutions {
+    padding: 60px 20px;
+  }
+
+  .solutions-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .solution-content {
+    padding: 25px;
+  }
+
+  .tech-stack {
+    padding: 60px 20px;
+  }
+
+  .tech-categories {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .tech-icons {
+    gap: 15px;
+  }
+
+  .tech-item {
+    min-width: 85px;
+    padding: 15px;
+  }
+
+  .tech-item i {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-hero .hero-title {
+    font-size: 2rem;
+  }
+
+  .benefit-card {
+    padding: 30px 20px;
+  }
+
+  .benefit-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+  }
+
+  .solution-image {
+    height: 160px;
+    font-size: 4rem;
+  }
+}
