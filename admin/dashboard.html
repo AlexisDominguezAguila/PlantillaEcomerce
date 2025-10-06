@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TEC RIVERA — Multitenant Manager</title>
+    <link
+      rel="shortcut icon"
+      href="../public/assets/images/iconoTEC.png"
+      type="image/x-icon"
+    />
+
+    <!-- Fuente e iconos -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/sidebar.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <div class="brand__logo">
+          <img
+            src="../public/assets/images/iconoTEC.png"
+            alt="Logo tecrivera"
+          />
+        </div>
+        <div class="brand__text">
+          <h1>TEC RIVERA</h1>
+          <span>Multi-Tenant</span>
+        </div>
+        <button
+          class="sidebar__toggle"
+          id="sidebarToggle"
+          aria-label="Alternar menú"
+        >
+          <i class="bx bx-chevrons-left"></i>
+        </button>
+      </div>
+
+      <div class="sidebar__section">
+        <label class="sidebar__label">Tenant actual</label>
+        <div class="tenant-switch">
+          <button class="tenant-switch__btn" id="currentTenantBtn">
+            <i class="bx bx-buildings"></i>
+            <span id="currentTenantName">—</span>
+            <i class="bx bx-chevron-down chevron"></i>
+          </button>
+          <div class="tenant-switch__dropdown" id="tenantDropdown" hidden>
+            <!-- Rellenado por JS -->
+          </div>
+        </div>
+        <button class="btn btn--ghost btn--sm mt-8" id="openCreateTenant">
+          <i class="bx bx-plus"></i> Nuevo tenant
+        </button>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a class="nav__item is-active" data-route="dashboard"
+          ><i class="bx bx-grid-alt"></i><span>Dashboard</span></a
+        >
+        <a class="nav__item" data-route="tenants"
+          ><i class="bx bx-buildings"></i><span>Tenants</span></a
+        >
+        <a class="nav__item" data-route="apps"
+          ><i class="bx bx-layer"></i><span>Aplicaciones</span></a
+        >
+        <a class="nav__item" data-route="menus"
+          ><i class="bx bx-restaurant"></i><span>Cartas</span></a
+        >
+        <a class="nav__item" data-route="orders"
+          ><i class="bx bx-receipt"></i><span>Pedidos</span></a
+        >
+        <a class="nav__item" data-route="billing"
+          ><i class="bx bx-credit-card"></i><span>Facturación</span></a
+        >
+        <a class="nav__item" data-route="settings"
+          ><i class="bx bx-cog"></i><span>Configuración</span></a
+        >
+        <a class="nav__item" data-route="support"
+          ><i class="bx bx-help-circle"></i><span>Soporte</span></a
+        >
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="kbd">?</div>
+        <span>Atajos</span>
+      </div>
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <form class="search" id="globalSearchForm" role="search">
+          <i class="bx bx-search"></i>
+          <input
+            type="search"
+            id="globalSearch"
+            placeholder="Buscar en todo…"
+            autocomplete="off"
+          />
+        </form>
+
+        <div class="topbar__actions">
+          <button class="icon-btn" id="quickCreate" title="Acción rápida">
+            <i class="bx bx-bolt-circle"></i>
+          </button>
+          <button class="icon-btn" id="notifBtn" title="Notificaciones">
+            <i class="bx bx-bell"></i><span class="dot" id="notifDot"></span>
+          </button>
+
+          <div class="user-menu">
+            <button class="user-btn" id="userBtn">
+              <img src="images/perfil.jpg" alt="Usuario" />
+              <span class="user__name">Admin</span>
+              <i class="bx bx-chevron-down"></i>
+            </button>
+            <div class="user-dropdown" id="userDropdown" hidden>
+              <button class="dropdown__item">
+                <i class="bx bx-id-card"></i> Perfil
+              </button>
+              <button class="dropdown__item">
+                <i class="bx bx-shield-quarter"></i> Seguridad
+              </button>
+              <hr />
+              <button class="dropdown__item" id="logoutBtn">
+                <i class="bx bx-log-out"></i> Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+    </main>
+
+    <!-- Modales -->
+    <dialog class="modal" id="modalTenant">
+      <form method="dialog" class="modal__card">
+        <h3>Crear tenant</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Nombre</label>
+            <input
+              id="tenantNameInput"
+              type="text"
+              placeholder="Ej. La Pizzería SRL"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label>Dominio / subdominio</label>
+            <input
+              id="tenantDomainInput"
+              type="text"
+              placeholder="pizza.tenant.tecrivera.com"
+              required
+            />
+          </div>
+        </div>
+        <menu class="modal__actions">
+          <button class="btn btn--ghost" value="cancel">Cancelar</button>
+          <button class="btn" id="createTenantConfirm" value="default">
+            Crear
+          </button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="modalApp">
+      <form method="dialog" class="modal__card">
+        <h3>Nueva aplicación</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Tipo</label>
+            <select id="appTypeSelect">
+              <option value="restaurant">Restaurante</option>
+              <option value="menu">Carta</option>
+              <option value="other">Otro</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Nombre</label>
+            <input
+              id="appNameInput"
+              type="text"
+              placeholder="Ej. RoosFood"
+              required
+            />
+          </div>
+        </div>
+        <menu class="modal__actions">
+          <button class="btn btn--ghost" value="cancel">Cancelar</button>
+          <button class="btn" id="createAppConfirm" value="default">
+            Crear
+          </button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="modalItem">
+      <form method="dialog" class="modal__card">
+        <h3>Agregar ítem</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Nombre</label>
+            <input
+              id="itemNameInput"
+              type="text"
+              placeholder="Ej. Lomo saltado"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label>Precio (S/)</label>
+            <input
+              id="itemPriceInput"
+              type="number"
+              min="0"
+              step="0.1"
+              placeholder="25.9"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label>Categoría</label>
+            <input id="itemCatInput" type="text" placeholder="Platos fuertes" />
+          </div>
+        </div>
+        <menu class="modal__actions">
+          <button class="btn btn--ghost" value="cancel">Cancelar</button>
+          <button class="btn" id="addItemConfirm" value="default">
+            Agregar
+          </button>
+        </menu>
+      </form>
+    </dialog>
+
+    <!-- Toasts -->
+    <div
+      class="toast-wrap"
+      id="toastWrap"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+    <!-- Loader -->
+    <div class="loader" id="globalLoader" hidden>
+      <div class="spinner"></div>
+    </div>
+    <script src="js/sidebar.js"></script>
+  </body>
+</html>

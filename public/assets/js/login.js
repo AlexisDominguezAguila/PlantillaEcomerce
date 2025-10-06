@@ -58,7 +58,7 @@ form.addEventListener("submit", async (e) => {
       // Guarda selección para tu SPA
       localStorage.setItem("tr_current_tenant", tenant);
       // Redirige a tu app principal
-      window.location.href = "index.html"; // cámbialo si usas otra ruta
+      window.location.href = "../../admin/dashboard.html"; // cámbialo si usas otra ruta
     } else {
       showAlert("Credenciales incorrectas o tenant inválido.");
     }
