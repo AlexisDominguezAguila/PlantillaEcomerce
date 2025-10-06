@@ -190,8 +190,8 @@ body {
 }
 
 .main {
-  margin-left: 280px;
-  padding: 24px;
+  margin-left: 260px;
+  padding: 10px;
   transition: margin-left 0.3s ease;
 }
 .sidebar.collapsed ~ .main {
@@ -350,26 +350,12 @@ body {
   padding: 10px 14px;
   border-radius: 14px;
 }
-.search {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 8px 12px;
-  min-width: 280px;
-}
-.search input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  width: 240px;
-  background: transparent;
-}
+
 .topbar__actions {
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: end;
   gap: 8px;
 }
 .icon-btn {
