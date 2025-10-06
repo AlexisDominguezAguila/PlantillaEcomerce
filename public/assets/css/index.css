@@ -1,16 +1,16 @@
 :root {
-  --primary: #111344;
-  --secondary: #14213d;
-  --dark: #ffffff;
-  --accent-blue: #38b6ff;
-  --accent-orange: #fb8500;
-  --accent-red: #dc0000;
+  --primary: #fafafa;
+  --secondary: #111344;
+  --dark: #d9d9d9;
+  --accent-blue: #126fa8;
+  --accent-orange: #497ac2;
+  --accent-red: #1b69c1;
 }
 
 /* Hero */
 .hero {
   padding: 120px 20px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--primary));
   position: relative;
   overflow: hidden;
 }
@@ -24,10 +24,32 @@
   height: 600px;
   background: radial-gradient(
     circle,
-    rgba(56, 182, 255, 0.1) 0%,
+    rgb(238, 244, 248) 0%,
     transparent 70%
   );
   animation: float 6s ease-in-out infinite;
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  position: relative;
+  z-index: 1; /* sobre el ::before animado */
+}
+
+.hero-media {
+  flex: 1 1 520px;
+  max-width: 520px;
+  animation: slideInRight 1s ease-out;
+}
+
+.hero-media img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 16px;          /* opcional */
 }
 
 @keyframes float {
@@ -40,9 +62,27 @@
   }
 }
 
+@keyframes slideInRight {
+  from { transform: translateX(100px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+/* Responsive: apila en móvil (texto arriba, imagen abajo) */
+@media (max-width: 768px) {
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-media {
+    max-width: 90%;
+  }
+}
+
+
 .hero-content {
   max-width: 800px;
   position: relative;
+  flex: 1 1 0;
   z-index: 1;
   animation: slideInLeft 1s ease-out;
 }
@@ -68,16 +108,24 @@
 }
 
 .hero-title {
-  font-size: 3.5rem;
+  font-size: 3.4rem;
   line-height: 1.2;
   margin-bottom: 25px;
-  color: #fff;
+  color: #126fa8;
+}
+
+.hero-title2 {
+  font-size: 3.4rem;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 25px;
+  color: #000000;
 }
 
 .hero-description {
   font-size: 1.2rem;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   margin-bottom: 40px;
 }
 
@@ -161,7 +209,7 @@
 .section-title {
   font-size: 2.5rem;
   margin-bottom: 15px;
-  color: darkblue;
+  color: #126fa8;
   position: relative;
   display: inline-block;
 }
@@ -593,7 +641,7 @@
 .contact-title {
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: darkblue;
+  color: #126fa8;
 }
 
 .contact-description {
@@ -682,9 +730,10 @@
 
 /* Footer */
 .footer {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--secondary));
   padding: 60px 20px 20px;
 }
+
 
 .footer-grid {
   display: grid;
@@ -728,7 +777,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
   transition: all 0.3s;
 }
@@ -793,6 +842,10 @@
   }
 
   .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-title2 {
     font-size: 2.5rem;
   }
 

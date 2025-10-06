@@ -1,5 +1,4 @@
 :root {
-  --primary: #111344;
   --primary-light: #1a1d5e;
   --primary-dark: #0a0c2a;
   --accent: #4a90e2;
@@ -59,6 +58,7 @@
 .slide-content h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  color: #126fa8;
 }
 
 .slide-content p {
@@ -191,7 +191,7 @@
 .section-title {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: var(--primary);
+  color: var(--text);
 }
 .catery-wrapper {
   background-color: #0a0c2a;

@@ -485,7 +485,6 @@
 .map-section .section-title {
   text-align: center;
   margin-bottom: 40px;
-  color: var(--primary);
 }
 
 .map-container {
@@ -575,14 +574,14 @@
 
 .faq-question h3 {
   font-size: 1.2rem;
-  color: var(--primary);
+  color: #126fa8;
   margin: 0;
   line-height: 1.4;
 }
 
 .faq-answer {
   font-size: 1rem;
-  color: var(--text-light);
+  color: #000000;
   line-height: 1.7;
   margin: 0;
   padding-left: 47px;
