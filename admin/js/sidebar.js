@@ -760,6 +760,65 @@ byId("createAppConfirm").addEventListener("click", () => {
   renderCharts();
 });
 
+// modal de perfil de usuario
+
+// Estado de usuario (si no existe)
+state.user ??= {
+  name: "Admin",
+  email: "admin@tecrivera.com",
+  avatar: "images/perfil.jpg",
+};
+
+// Abrir modal de perfil
+function openUserProfile() {
+  // Prefill
+  byId("userNameInput").value = state.user.name || "";
+  byId("userEmailInput").value = state.user.email || "";
+  byId("userPasswordInput").value = ""; // vacío a propósito
+
+  // Cerrar el dropdown de usuario si está abierto
+  const dd = byId("userDropdown");
+  if (dd && !dd.hidden) dd.hidden = true;
+
+  openDialog(byId("modalUserProfile"));
+}
+
+// Guardar perfil
+function saveUserProfile() {
+  const name = byId("userNameInput").value.trim();
+  const email = byId("userEmailInput").value.trim();
+  const pwd = byId("userPasswordInput").value; // opcional
+
+  if (!name || !email) {
+    toast("Completa nombre y email", "warn");
+    return;
+  }
+
+  // Actualiza estado
+  state.user.name = name;
+  state.user.email = email;
+
+  // Si ingresó una contraseña, aquí solo la simulamos (no persistimos)
+  if (pwd) {
+    addActivity("Se actualizó la contraseña del usuario");
+  }
+
+  // Refrescar nombre en la topbar (si tienes .user__name)
+  const nameEl = document.querySelector(".user__name");
+  if (nameEl) nameEl.textContent = state.user.name;
+
+  closeDialog(byId("modalUserProfile"));
+  toast("Perfil actualizado", "success");
+  addActivity("Perfil de usuario actualizado");
+}
+
+// Listeners
+byId("btnOpenProfile")?.addEventListener("click", openUserProfile);
+byId("btnSaveProfile")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  saveUserProfile();
+});
+
 // Export/Import JSON
 byId("btnExportConfig").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(state, null, 2)], {

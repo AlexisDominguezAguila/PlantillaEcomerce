@@ -140,7 +140,7 @@
               ><i class="bx bx-chevron-down"></i>
             </button>
             <div class="user-dropdown" id="userDropdown" hidden>
-              <button class="dropdown__item">
+              <button class="dropdown__item" id="btnOpenProfile">
                 <i class="bx bx-id-card"></i> Perfil
               </button>
               <button class="dropdown__item">
@@ -527,6 +527,49 @@
             style="background: linear-gradient(135deg, #b91c1c, #dc2626)"
           >
             Eliminar
+          </button>
+        </menu>
+      </form>
+    </dialog>
+
+    <!-- Modal de perfil de usuario -->
+    <dialog class="modal" id="modalUserProfile">
+      <form method="dialog" class="modal__card">
+        <h3>Perfil de usuario</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Nombre</label>
+            <input
+              id="userNameInput"
+              class="input"
+              type="text"
+              placeholder="Ej. Juan Pérez"
+            />
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input
+              id="userEmailInput"
+              class="input"
+              type="email"
+              placeholder="
+Ej. juan.perez@ejemplo.com"
+            />
+          </div>
+          <div class="form-field">
+            <label>Contraseña</label>
+            <input
+              id="userPasswordInput"
+              class="input"
+              type="password"
+              placeholder="Nueva contraseña"
+            />
+          </div>
+        </div>
+        <menu class="modal__actions">
+          <button class="btn btn--ghost" value="cancel">Cancelar</button>
+          <button class="btn" id="btnSaveProfile" value="default">
+            Guardar
           </button>
         </menu>
       </form>
