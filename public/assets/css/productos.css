@@ -38,11 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(
-    135deg,
-    var(--primary) 0%,
-    var(--primary-light) 100%
-  );
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
   color: var(--white);
   padding: 2rem;
   min-height: 500px;
@@ -91,13 +87,8 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-.slider-btn.prev {
-  left: -20px;
-}
-
-.slider-btn.next {
-  right: -20px;
-}
+.slider-btn.prev { left: -20px; }
+.slider-btn.next { right: -20px; }
 
 .slider-dots {
   position: absolute;
@@ -122,6 +113,7 @@
   width: 30px;
   border-radius: 6px;
 }
+
 .hero-content-slide {
   max-width: 100%;
   position: relative;
@@ -130,15 +122,10 @@
 }
 
 @keyframes slideInBottom {
-  from {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(100px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
 }
+
 /* Slide en dos columnas */
 .slide-inner {
   display: flex;
@@ -162,22 +149,17 @@
 }
 
 .slide-image img {
-  max-width: 80%;
+  width: 70%;
+  max-width: 100%;
   height: auto;
   animation: float 4s ease-in-out infinite;
 }
 
 /* Animación flotante */
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
 }
 
 /* ==============================
@@ -193,9 +175,8 @@
   margin-bottom: 2rem;
   color: var(--text);
 }
-.catery-wrapper {
-  background-color: #0a0c2a;
-}
+
+.catery-wrapper { background-color: #0a0c2a; }
 
 /* Contenedor slider */
 .category-slider {
@@ -206,9 +187,7 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
-.category-slider::-webkit-scrollbar {
-  display: none; /* Ocultar en Chrome, Safari */
-}
+.category-slider::-webkit-scrollbar { display: none; }
 
 /* Tarjetas */
 .category-card {
@@ -219,8 +198,7 @@
   border-radius: 12px;
   text-align: center;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease,
-    border-color 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   border: 2px solid transparent;
   scroll-snap-align: start;
 }
@@ -235,7 +213,7 @@
 .category-icon {
   font-size: 2.6rem;
   margin-bottom: 0.6rem;
-  color: var(--primary);
+  color: #111344;
   transition: transform 0.35s ease, color 0.25s ease;
 }
 .category-card h3 {
@@ -247,7 +225,7 @@
 /* Animación en hover */
 .category-card:hover .category-icon {
   transform: rotate(8deg) scale(1.15);
-  color: var(--secondary); /* cambia al color secundario */
+  color: var(--secondary);
 }
 
 /* Botones de navegación (solo desktop) */
@@ -268,30 +246,16 @@
   z-index: 10;
 }
 
-.left-btn {
-  top: 60%;
-  left: 30px;
-}
-.right-btn {
-  top: 60%;
-  right: 30px;
-}
+.left-btn  { top: 60%; left: 30px; }
+.right-btn { top: 60%; right: 30px; }
 
 @media (min-width: 992px) {
-  .cat-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .category-slider {
-    overflow-x: hidden; /* Deshabilitar scroll en PC */
-  }
+  .cat-btn { display: flex; align-items: center; justify-content: center; }
+  .category-slider { overflow-x: hidden; }
 }
 
 /* Products */
-.products {
-  padding: 3rem 0;
-}
+.products { padding: 3rem 0; }
 
 .products-header {
   display: flex;
@@ -334,13 +298,10 @@
 
 .product-image {
   width: 100%;
+  max-width: 100%;
   height: 250px;
   object-fit: cover;
-  background: linear-gradient(
-    135deg,
-    var(--primary-light) 0%,
-    var(--accent) 100%
-  );
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,9 +309,13 @@
   color: var(--white);
 }
 
-.product-info {
-  padding: 1.5rem;
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
 }
+.product-info { padding: 1.5rem; }
 
 .product-category {
   color: var(--accent);
@@ -386,10 +351,7 @@
   color: var(--primary);
 }
 
-.product-actions {
-  display: flex;
-  gap: 0.5rem;
-}
+.product-actions { display: flex; gap: 0.5rem; }
 
 .btn-icon {
   background: var(--bg);
@@ -411,77 +373,114 @@
   transform: scale(1.1);
 }
 
-.btn-icon.active {
-  background: var(--danger);
-  color: var(--white);
-}
+.btn-icon.active { background: var(--danger); color: var(--white); }
 
-/* Modal */
+/* ================================
+   MODAL general (unificado) + Responsive
+   ================================ */
 .modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   z-index: 1000;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px;
 }
 
-.modal.active {
-  display: flex;
-}
+.modal.active { display: flex; }
 
 .modal-content {
-  background: var(--white);
+  background: #fff;
   border-radius: 16px;
-  max-width: 800px;
   width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  animation: modalSlideIn 0.3s ease;
+  max-width: 720px;            /* tamaño default */
+  max-height: 92vh;
+  overflow: hidden;            /* header/footer pegajosos */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  animation: modalSlideIn .3s ease;
 }
 
 @keyframes modalSlideIn {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(-50px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
 }
 
+/* Tamaños opcionales */
+.modal-sm { max-width: 420px; }
+.modal-lg { max-width: 900px; }
+
+/* Cerrar */
 .modal-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: var(--bg);
+  top: 12px;
+  right: 12px;
+  background: #f3f4f6;
   border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 1.25rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   z-index: 10;
+  color: #111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+.modal-close:hover { background: #e5e7eb; color: #111; transform: none; }
 
-.modal-close:hover {
-  background: var(--danger);
-  color: var(--white);
-  transform: rotate(90deg);
-}
-
+/* Cuerpo scrollable */
 .modal-body {
-  padding: 2rem;
+  padding: 1.25rem;
+  overflow: auto;
 }
 
+/* Full-screen en móviles */
+@media (max-width: 768px) {
+  .modal { padding: 0; }
+  .modal-content {
+    border-radius: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+  }
+  .modal-close {
+    position: fixed;
+    top: 12px; right: 12px;
+    z-index: 3;
+  }
+  .modal-body { padding: 1rem 1rem 5.5rem; }
+}
+
+/* Desktop refinements */
+@media (min-width: 1024px) {
+  .modal-content { max-height: 88vh; }
+  #checkoutModal .modal-content.modal-lg { max-width: 960px; }
+}
+
+/* Accesibilidad motion */
+@media (prefers-reduced-motion: reduce) {
+  .modal-content { animation: none !important; }
+  .slider-track { transition: none !important; }
+}
+
+/* Scroll lock al abrir modal (lo maneja JS) */
+body.modal-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* ================================
+   PRODUCT DETAIL
+   ================================ */
 .product-detail {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -489,13 +488,10 @@
 }
 
 .product-detail-image {
-  width: 100%;
+  width: 400px;
+  max-width: 100%;
   height: 400px;
-  background: linear-gradient(
-    135deg,
-    var(--primary-light) 0%,
-    var(--accent) 100%
-  );
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -503,16 +499,20 @@
   font-size: 6rem;
   color: var(--white);
 }
+.product-detail-image img {
+  width: 400px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
 .product-detail-info h2 {
   font-size: 2rem;
-  color: var(--primary);
+  color: #000000;
   margin-bottom: 1rem;
 }
 
-.product-detail-info .product-category {
-  margin-bottom: 1rem;
-}
+.product-detail-info .product-category { margin-bottom: 1rem; }
 
 .product-detail-info .product-description {
   margin-bottom: 1.5rem;
@@ -522,14 +522,11 @@
 .product-detail-price {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--primary);
+  color: #000000;
   margin-bottom: 2rem;
 }
 
-.product-detail-actions {
-  display: flex;
-  gap: 1rem;
-}
+.product-detail-actions { display: flex; gap: 1rem; }
 
 .btn {
   padding: 1rem 2rem;
@@ -544,7 +541,7 @@
   gap: 0.5rem;
 }
 
-/* Cart Items */
+/* Cart / Wishlist items */
 .cart-item,
 .wishlist-item {
   display: flex;
@@ -558,13 +555,9 @@
 
 .cart-item-image,
 .wishlist-item-image {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(
-    135deg,
-    var(--primary-light) 0%,
-    var(--accent) 100%
-  );
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -574,17 +567,15 @@
   flex-shrink: 0;
 }
 
-.cart-item-image img{
+.cart-item-image img,.wishlist-item-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 3px;
 }
 
 .cart-item-info,
-.wishlist-item-info {
-  flex: 1;
-}
+.wishlist-item-info { flex: 1; }
 
 .cart-item-name,
 .wishlist-item-name {
@@ -599,11 +590,7 @@
   font-size: 1.1rem;
 }
 
-.cart-item-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+.cart-item-actions { display: flex; align-items: center; gap: 0.5rem; }
 
 .quantity-btn {
   background: #666;
@@ -615,10 +602,7 @@
   cursor: pointer;
   font-size: 1rem;
 }
-
-.quantity-btn:hover {
-  background: var(--primary-light);
-}
+.quantity-btn:hover { background: var(--primary-light); }
 
 .quantity {
   font-weight: 600;
@@ -636,10 +620,7 @@
   cursor: pointer;
   margin-left: 1rem;
 }
-
-.remove-btn:hover {
-  opacity: 0.8;
-}
+.remove-btn:hover { opacity: 0.8; }
 
 .cart-total {
   margin-top: 2rem;
@@ -647,7 +628,6 @@
   border-top: 2px solid var(--border);
   text-align: right;
 }
-
 .cart-total h3 {
   font-size: 1.8rem;
   color: #0a0c2a;
@@ -660,280 +640,415 @@
   color: var(--text-light);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .product-detail {
-    grid-template-columns: 1fr;
-  }
-  .slide-content {
-    display: none;
-  }
-
-  .slide-content h2 {
-    font-size: 1.8rem;
-  }
-
-  .slider-btn {
-    padding: 0.5rem 1rem;
-    font-size: 2rem;
-  }
-
-  .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-
-  .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-}
-
 /* ================================
-   Checkout modal: texto en negro
+  CHECKOUT — Estilos completos y responsivos (scoped)
    ================================ */
+/* =======================================================
+   CHECKOUT (PASOS 1–4) — Estilo Uiverse adaptado
+   Estructura existente: .steps, .step-panel, #checkoutSummary,
+   .payment-methods, #cardForm, .receipt-box, .steps-actions
+   ======================================================= */
+
+/* Caja del modal de checkout con sombra y radios “Uiverse” */
 #checkoutModal .modal-content {
-  background: #ffffff;         /* fondo blanco */
-  color: #111111;              /* color base de texto */
+  background: #FFFFFF;
+  color: #111344;
+  border-radius: 26px; /* más suave */
+  overflow: hidden;
+  box-shadow:
+    0px 187px 75px rgba(0, 0, 0, 0.01),
+    0px 105px 63px rgba(0, 0, 0, 0.05),
+    0px 47px 47px rgba(0, 0, 0, 0.09),
+    0px 12px 26px rgba(0, 0, 0, 0.10),
+    0px 0px 0px rgba(0, 0, 0, 0.10);
 }
 
-/* Colorea tipografías dentro del wizard */
-#checkoutModal .checkout,
-#checkoutModal .checkout h1,
-#checkoutModal .checkout h2,
-#checkoutModal .checkout h3,
-#checkoutModal .checkout h4,
-#checkoutModal .checkout h5,
-#checkoutModal .checkout h6,
-#checkoutModal .checkout p,
-#checkoutModal .checkout li,
-#checkoutModal .checkout label,
-#checkoutModal .checkout span,
-#checkoutModal .checkout .title,
-#checkoutModal .checkout .desc,
-#checkoutModal .checkout .co-name,
-#checkoutModal .checkout .co-qty,
-#checkoutModal .checkout .co-price,
-#checkoutModal .checkout .co-total,
-#checkoutModal .checkout .bank-title {
-  color: #111111;
-}
-
-/* Texto suave / ayudas */
-#checkoutModal .checkout .hint,
-#checkoutModal .checkout .desc {
-  color: #555555;
-}
-
-/* Steps: ya traen estilos, solo garantizamos legibilidad */
-#checkoutModal .step-indicator {
-  color: #111111;
-}
-#checkoutModal .step-indicator.active {
-  color: #ffffff;              /* sobre fondo oscuro del estado active */
-}
-#checkoutModal .step-indicator.done {
-  color: #111344;              /* acorde al estilo previo */
-}
-
-/* Tarjetas de método de pago */
-#checkoutModal .payment-card {
-  background: #ffffff;
-  border-color: #dfe3eb;
-}
-#checkoutModal .payment-card:hover {
-  border-color: #b9c5ff;
-}
-#checkoutModal .payment-card .title { color: #111111; }
-#checkoutModal .payment-card .desc  { color: #555555; }
-
-/* Resumen */
-#checkoutModal .co-item { background: #ffffff; }
-#checkoutModal .co-total span { color: #555555; }
-#checkoutModal .co-total strong { color: #111111; }
-
-/* Formularios */
-#checkoutModal .form-field label { color: #111111; }
-#checkoutModal .form-field input,
-#checkoutModal .form-field select,
-#checkoutModal .form-field textarea {
-  background: #ffffff;
-  color: #111111;
-  border: 1px solid #d0d5dd;
-}
-#checkoutModal .form-field input::placeholder,
-#checkoutModal .form-field textarea::placeholder {
-  color: #6b7280;
-}
-
-/* Wallet */
-#checkoutModal .wallet-info { color: #111111; }
-#checkoutModal .wallet-qr img {
-  background: #ffffff;
-  border: 1px solid #e3e6ef;
-}
-
-/* Transferencia */
-#checkoutModal .bank-card {
-  background: #ffffff;
-  border: 1px solid #e3e6ef;
-}
-#checkoutModal .voucher span { color: #111111; }
-
-/* Confirmación / recibo */
-#checkoutModal .receipt-box {
-  background: #f7f9ff;
-  border-color: #b9c5ff;
-  color: #111111;
-}
-
-/* ================================
-   Modal general + Responsive
-   (añadir al final de productos.css)
-   ================================ */
-
-/* Backdrop mejorado */
-.modal {
-  background: rgba(0,0,0,0.6);
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
-  padding: 24px;
-}
-
-/* Caja base */
-.modal-content {
-  background: #fff;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 720px;            /* tamaño default */
-  max-height: 92vh;
-  overflow: hidden;            /* cuidamos header/footer pegajosos */
+/* Contenedor del wizard */
+#checkoutModal .checkout {
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  gap: 16px;
 }
 
-/* Tamaños opcionales */
-.modal-sm { max-width: 420px; }
-.modal-lg { max-width: 900px; }
-
-/* Cabecera/cerrar */
-.modal-close {
-  top: 12px;
-  right: 12px;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: #f3f4f6;
-  color: #111;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-close:hover {
-  background: #e5e7eb;
-  color: #111;
-  transform: none;             /* evitamos rotación excesiva */
-}
-
-/* Cuerpo con scroll interno */
-.modal-body {
-  padding: 1.25rem;
-  overflow: auto;
-}
-
-/* ------- Checkout específicos de UX ------- */
-/* Encabezado de pasos pegajoso (si existe) */
+/* =========================================
+   Encabezado de pasos (píldoras)
+   ========================================= */
 #checkoutModal .steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
   position: sticky;
   top: 0;
   z-index: 2;
   background: #fff;
-  padding: .5rem;
-  border-bottom: 1px solid #eaeaea;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  padding: 12px;
+  border-bottom: 1px solid #ECEFF3;
 }
 
-/* Footer de acciones pegajoso */
+#checkoutModal .step-indicator {
+  text-align: center;
+  padding: 10px 8px;
+  border-radius: 12px;
+  background: #F2F4F7;
+  color: #475467;
+  font-weight: 800;
+  border: 1px solid #E3E6EF;
+  font-size: .95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#checkoutModal .step-indicator.active {
+  background: #111344;
+  color: #fff;
+  border-color: #111344;
+}
+#checkoutModal .step-indicator.done {
+  background: #E8EFFF;
+  color: #111344;
+  border-color: #C7D4FF;
+}
+
+/* =========================================
+   Cuerpo / tipografía
+   ========================================= */
+#checkoutModal .steps-body { padding: 16px 18px 0; min-height: 320px; }
+#checkoutModal .step-panel.hidden { display: none; }
+#checkoutModal h2 {
+  margin: 6px 0 14px;
+  font-size: 1.6rem;
+  line-height: 1.25;
+  color: #0F172A;
+  font-weight: 900;
+}
+#checkoutModal p, 
+#checkoutModal label, 
+#checkoutModal span,
+#checkoutModal li,
+#checkoutModal div { color: #111;}
+
+#checkoutModal .hint { color: #8B8E98; font-size: .92rem; }
+
+/* =======================================================
+   PASO 1 — RESUMEN
+   ======================================================= */
+#checkoutModal #checkoutSummary { display: grid; gap: 10px; }
+#checkoutModal .co-items { display: grid; gap: 10px; }
+
+/* Fila: nombre — qty — precio */
+#checkoutModal .co-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid #E9E9F1;
+  border-radius: 12px;
+  background: #FFFFFF;
+}
+
+#checkoutModal .co-item-info {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 0;
+}
+#checkoutModal .co-name {
+  font-weight: 800;
+  color: #0A0C2A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#checkoutModal .co-qty {
+  color: #667085;
+  font-size: .95rem;
+  background: #F2F2F2;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+#checkoutModal .co-price {
+  font-weight: 900;
+  color: #0A0C2A;
+}
+
+/* Total */
+#checkoutModal .co-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  margin-top: 4px;
+  border-top: 1px dashed #D8DDE7;
+  font-size: 1.1rem;
+}
+#checkoutModal .co-total span { color: #555; }
+#checkoutModal .co-total strong { color: #0A0C2A; }
+
+/* =======================================================
+   PASO 2 — MÉTODOS DE PAGO (cards + radios ocultos)
+   ======================================================= */
+#checkoutModal .payment-methods {
+  --card-gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--card-gap);
+  margin-top: 6px;
+}
+
+/* Cada método es un <label> con input + .payment-card-body */
+#checkoutModal .payment-card {
+  display: grid;
+  grid-template-columns: 22px 1fr;  /* espacio para el radio */
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #E3E6EF;
+  border-radius: 12px;
+  padding: 12px;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: box-shadow .2s ease, border-color .2s ease, transform .1s ease;
+}
+#checkoutModal .payment-card:hover {
+  border-color: #B9C5FF;
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+  transform: translateY(-1px);
+}
+
+/* Oculta visualmente el radio, mantenemos accesibilidad */
+#checkoutModal .payment-card input {
+  appearance: none;
+  width: 18px; height: 18px;
+  border: 2px solid #C2C7D6;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+#checkoutModal .payment-card input:checked {
+  border-color: #111344;
+}
+#checkoutModal .payment-card input:checked::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: #111344;
+  border-radius: 50%;
+}
+
+/* Texto interno */
+#checkoutModal .payment-card .payment-card-body .title {
+  font-weight: 900;
+  color: #111;
+}
+#checkoutModal .payment-card .payment-card-body .desc {
+  color: #667085; 
+  font-size: .95rem;
+}
+
+/* Estado activo (fallback sin :has()) */
+#checkoutModal .payment-card input:checked + .payment-card-body .title { color: #111344; }
+#checkoutModal .payment-card input:checked ~ .payment-card-body {
+  outline: 2px solid #B9C5FF;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* =======================================================
+   PASO 3 — DETALLES (todas las variantes)
+   ======================================================= */
+
+/* (A) Tarjeta — ya estabas usando #cardForm, lo maquillamos Uiverse */
+#checkoutModal #cardForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  max-width: 100%;
+}
+#checkoutModal #cardForm .form-row {
+  display: grid;
+  grid-template-columns: 4fr 2fr; /* MM/AA : CVV */
+  gap: 15px;
+}
+#checkoutModal #cardForm .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#checkoutModal #cardForm .form-field label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8B8E98;
+  letter-spacing: .2px;
+}
+#checkoutModal #cardForm .form-field input,
+#checkoutModal #cardForm .form-field select,
+#checkoutModal #cardForm .form-field textarea {
+  height: 44px;
+  padding: 0 0 0 16px;
+  border-radius: 9px;
+  outline: none;
+  background-color: #F2F2F2;
+  border: 1px solid transparent;
+  color: #111;
+  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+#checkoutModal #cardForm .form-field input::placeholder { color: #9aa0a6; }
+#checkoutModal #cardForm .form-field input:focus,
+#checkoutModal #cardForm .form-field select:focus,
+#checkoutModal #cardForm .form-field textarea:focus {
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 2px #242424;
+  background-color: #fff;
+}
+
+/* Botón pagar (gradiente Uiverse) */
+#checkoutModal #payCardBtn {
+  height: 55px;
+  border-radius: 11px;
+  border: 0;
+  outline: none;
+  color: #fff;
+  font-size: 13px !important;
+  font-weight: 800;
+  background: linear-gradient(180deg, #363636 0%, #1B1B1B 50%, #000000 100%);
+  box-shadow: 0 0 0 0 #FFFFFF, 0 0 0 0 #000000;
+  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+#checkoutModal #payCardBtn:hover {
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #0000003a;
+}
+
+/* Reset numérico si cambias tipos */
+#checkoutModal #cardForm .form-field input::-webkit-outer-spin-button,
+#checkoutModal #cardForm .form-field input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+#checkoutModal #cardForm .form-field input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* (B) Wallet (Yape/Plin) */
+#checkoutModal .wallet-chooser {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 14px;
+  margin: 6px 0 12px;
+}
+#checkoutModal .wallet-chooser label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #F2F2F2;
+  font-weight: 700;
+}
+#checkoutModal .wallet-box {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 16px;
+  align-items: center;
+}
+#checkoutModal .wallet-info div { margin-bottom: 4px; }
+#checkoutModal .wallet-qr img {
+  width: 180px; height: 180px;
+  border-radius: 12px;
+  border: 1px solid #E3E6EF;
+  background: #fff;
+}
+
+/* (C) Transferencias */
+#checkoutModal .bank-card {
+  border: 1px solid #E3E6EF;
+  border-radius: 12px;
+  padding: 12px;
+  background: #FFFFFF;
+  margin-bottom: 10px;
+}
+#checkoutModal .bank-title { font-weight: 900; margin-bottom: 4px; }
+#checkoutModal .voucher {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  background: #F2F2F2;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+/* (D) WhatsApp */
+#checkoutModal .wa-wrap p { margin-bottom: 12px; }
+
+/* =======================================================
+   PASO 4 — CONFIRMACIÓN
+   ======================================================= */
+#checkoutModal .receipt-box {
+  margin-top: 12px;
+  border: 1px dashed #B9C5FF;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #F7F9FF;
+}
+
+/* =======================================================
+   Footer de acciones (pegajoso) + botones
+   ======================================================= */
 #checkoutModal .steps-actions {
   position: sticky;
   bottom: 0;
-  z-index: 2;
+  z-index: 3;
   background: #fff;
-  border-top: 1px solid #eaeaea;
-  padding: .75rem;
+  border-top: 1px solid #ECEFF3;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-/* Botones en móvil: apilados */
-@media (max-width: 640px) {
-  #checkoutModal .steps-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: .5rem;
-  }
-  #checkoutModal .steps-actions .btn-primary,
-  #checkoutModal .steps-actions .btn-secondary {
-    width: 100%;
-    justify-content: center;
-  }
+/* Botones “Uiverse” */
+#checkoutModal .steps-actions .btn-primary {
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 11px;
+  border: 0;
+  outline: none;
+  color: #fff;
+  font-weight: 900;
+  background: linear-gradient(180deg, #111344 0%, #111344 50%, #111344 100%);
+  transition: box-shadow .25s ease;
+}
+#checkoutModal .steps-actions .btn-primary:hover {
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #0000003a;
 }
 
-/* Imagenes dentro de modales responsivas */
-.modal-body img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+#checkoutModal .steps-actions .btn-secondary {
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 11px;
+  border: 0;
+  outline: none;
+  background: #F2F2F2;
+  color: #111;
+  font-weight: 900;
+  transition: background .2s ease;
+}
+#checkoutModal .steps-actions .btn-secondary:hover {
+  background: #E7E7E7;
 }
 
-/* --------- Full-screen en móviles --------- */
-@media (max-width: 768px) {
-  .modal { padding: 0; }
-  .modal-content {
-    border-radius: 0;
-    width: 100%;
-    max-width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-  }
-  .modal-close {
-    position: fixed;           /* que siempre sea accesible */
-    top: 12px;
-    right: 12px;
-    z-index: 3;
-  }
-  .modal-body {
-    padding: 1rem 1rem 5.5rem; /* espacio extra para footer pegajoso */
-  }
-
-  /* Checkout: columnas a una sola */
-  #checkoutModal .wallet-box {
-    grid-template-columns: 1fr; 
-  }
+/* =======================================================
+   Responsive
+   ======================================================= */
+@media (max-width: 900px) {
+  #checkoutModal .wallet-box { grid-template-columns: 1fr; }
 }
-
-/* --------- Desktop refinements --------- */
-@media (min-width: 1024px) {
-  .modal-content { max-height: 88vh; }
-  #checkoutModal .modal-content.modal-lg { max-width: 960px; }
+@media (max-width: 720px) {
+  #checkoutModal .steps { grid-template-columns: repeat(2, 1fr); }
+  #checkoutModal .co-item { grid-template-columns: 1fr auto; }
+  #checkoutModal .co-price { justify-self: end; }
 }
-
-/* --------- Accesibilidad --------- */
-@media (prefers-reduced-motion: reduce) {
-  .modal-content { animation: none !important; }
-  .slider-track { transition: none !important; }
+@media (max-width: 520px) {
+  #checkoutModal #cardForm .form-row { grid-template-columns: 1fr; }
 }
-
-/* --------- Scroll lock (opcional) ---------
-   Si desde JS añades `modal-open` al <body> cuando hay un modal activo,
-   esto bloqueará el scroll del fondo. */
-body.modal-open {
-  overflow: hidden;
-  touch-action: none;
-}
-
-/* --------- Ajustes visuales menores --------- */
-.modal .section-title { margin-top: .25rem; }
-#checkoutModal .wallet-qr img { border-radius: 12px; }
-#checkoutModal .bank-card { border-radius: 12px; }
-#checkoutModal .form-field input,
-#checkoutModal .form-field select,
-#checkoutModal .form-field textarea { border-radius: 10px; }

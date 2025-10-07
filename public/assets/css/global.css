@@ -196,7 +196,7 @@ body {
 .btn-primary:hover {
   background: var(--accent-red);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(251, 133, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .btn-large {

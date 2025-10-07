@@ -1,4 +1,33 @@
-// Datos de productos
+/* =====================================================================
+   PRODUCTO.JS – versión saneada y profesional
+   TEC RIVERA · Catálogo + Carrito + Checkout (frontend)
+   ===================================================================== */
+
+/* -------------------------
+   Configuración / Constantes
+------------------------- */
+const CURRENCY = "S/";
+const WHATSAPP_NUMBER = "51985468074"; // WhatsApp para coordinar efectivo
+const YAPE_PHONE = "985468074";
+const PLIN_PHONE = "985468074";
+const BANK_ACCOUNTS = [
+  {
+    bank: "BCP",
+    holder: "TEC RIVERA.",
+    account: "53504461818006",
+    cci: "00253510446181800638",
+  },
+  {
+    bank: "INTERBANK",
+    holder: "TEC RIVERA.",
+    account: "898 3369307748",
+    cci: "00389801336930774848",
+  },
+];
+
+/* -------------------------
+   Datos (demo)
+------------------------- */
 const products = [
   {
     id: 1,
@@ -38,9 +67,7 @@ const products = [
   },
 ];
 
-// ==============================
-// Categorías con íconos Boxicons
-// ==============================
+// Categorías con iconos (Boxicons)
 const categories = [
   { name: "Laptops", icon: "bx bx-laptop" },
   { name: "Smartphones", icon: "bx bx-mobile" },
@@ -55,114 +82,160 @@ const categories = [
   { name: "Impresoras", icon: "bx bx-printer" },
 ];
 
-function renderCategories() {
-  const categorySlider = document.getElementById("categorySlider");
-  const categoryFilter = document.getElementById("categoryFilter");
+/* -------------------------
+   Estado de la app
+------------------------- */
+let cart = [];
+let wishlist = [];
+let currentSlide = 0;
+let sliderTimer = null;
 
-  if (!categorySlider) {
-    return console.warn("No existe #categorySlider en el HTML");
-  }
+let checkoutStep = 1;
+let selectedPaymentMethod = null;
 
-  // Limpia antes de renderizar
-  categorySlider.innerHTML = "";
-  if (categoryFilter)
-    categoryFilter.innerHTML = "<option value=''>Todas</option>";
+/* -------------------------
+   Utilidades
+------------------------- */
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => document.querySelectorAll(sel);
+const fmtMoney = (n) => `${CURRENCY}${Number(n).toFixed(2)}`;
 
-  // Renderizar categorías normales
-  categories.forEach((category) => {
-    const card = createCategoryCard(category);
-    categorySlider.appendChild(card);
-
-    // Añadir al select si existe
-    if (categoryFilter) {
-      const option = document.createElement("option");
-      option.value = category.name;
-      option.textContent = category.name;
-      categoryFilter.appendChild(option);
-    }
-  });
-
-  // Clonar los primeros 3 elementos para efecto infinito
-  categories.slice(0, 3).forEach((category) => {
-    const card = createCategoryCard(category);
-    categorySlider.appendChild(card);
-  });
+function openModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.add("active");
+  document.body.classList.add("modal-open");
 }
 
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.remove("active");
+  if (!document.querySelector(".modal.active")) {
+    document.body.classList.remove("modal-open");
+  }
+}
+
+function showNotification(message) {
+  const notification = document.createElement("div");
+  notification.style.cssText = `
+    position: fixed; bottom: 20px; right: 20px;
+    background: #111344; color: #fff;
+    padding: 1rem 1.25rem; border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    z-index: 10000; animation: slideIn .25s ease;
+    font-weight: 600;
+  `;
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  setTimeout(() => {
+    notification.style.animation = "slideOut .25s ease";
+    setTimeout(() => notification.remove(), 250);
+  }, 2500);
+}
+
+/* -------------------------
+   Persistencia
+------------------------- */
+function saveToLocalStorage() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+
+function loadFromLocalStorage() {
+  try {
+    const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const savedWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    cart = Array.isArray(savedCart) ? savedCart : [];
+    wishlist = Array.isArray(savedWishlist) ? savedWishlist : [];
+  } catch {
+    cart = [];
+    wishlist = [];
+  }
+  updateCartCount();
+  updateWishlistCount();
+}
+
+/* -------------------------
+   Categorías
+------------------------- */
 function createCategoryCard(category) {
   const card = document.createElement("div");
   card.className = "category-card";
   card.innerHTML = `
-    <i class="category-icon ${category.icon}"></i>
+    <i class="category-icon ${category.icon}" aria-hidden="true"></i>
     <h3>${category.name}</h3>
   `;
   card.addEventListener("click", () => filterByCategory(category.name));
   return card;
 }
 
-function setupSliderNavigation() {
-  const slider = document.getElementById("categorySlider");
-  const leftBtn = document.querySelector(".left-btn");
-  const rightBtn = document.querySelector(".right-btn");
+function renderCategories() {
+  const categorySlider = document.getElementById("categorySlider");
+  const categoryFilter = document.getElementById("categoryFilter");
+  if (!categorySlider) return;
 
-  if (!slider || !leftBtn || !rightBtn) return;
+  categorySlider.innerHTML = "";
+  if (categoryFilter) {
+    categoryFilter.innerHTML = `<option value="all">Todas las categorías</option>`;
+  }
 
-  const cardWidth = 200; // ancho aprox de cada tarjeta
-  const totalCards = slider.children.length;
+  categories.forEach((category) => {
+    const card = createCategoryCard(category);
+    categorySlider.appendChild(card);
 
-  rightBtn.addEventListener("click", () => {
-    slider.scrollBy({ left: cardWidth, behavior: "smooth" });
-
-    // Revisar si llegó al final
-    setTimeout(() => {
-      if (slider.scrollLeft >= (totalCards - 3) * cardWidth) {
-        slider.scrollTo({ left: 0 });
-      }
-    }, 400);
-  });
-
-  leftBtn.addEventListener("click", () => {
-    if (slider.scrollLeft <= 0) {
-      slider.scrollTo({ left: (totalCards - 3) * cardWidth });
-    } else {
-      slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
+    if (categoryFilter) {
+      const opt = document.createElement("option");
+      opt.value = category.name;
+      opt.textContent = category.name;
+      categoryFilter.appendChild(opt);
     }
   });
 }
 
-// Estado de la aplicación
-let cart = [];
-let wishlist = [];
-let currentSlide = 0;
+function setupSliderNavigation() {
+  const slider = document.getElementById("categorySlider");
+  const leftBtn = document.querySelector(".left-btn");
+  const rightBtn = document.querySelector(".right-btn");
+  if (!slider || !leftBtn || !rightBtn) return;
 
-// Inicialización
-document.addEventListener("DOMContentLoaded", () => {
-  renderCategories();
-  setupSliderNavigation();
-  initSlider();
-  renderProducts();
-  setupEventListeners();
-  loadFromLocalStorage();
-});
+  const step = 220; // desplazamiento aprox por tarjeta
 
-// Slider
+  rightBtn.addEventListener("click", () => {
+    const max = slider.scrollWidth - slider.clientWidth;
+    const next = Math.min(slider.scrollLeft + step, max);
+    slider.scrollTo({ left: next, behavior: "smooth" });
+  });
+
+  leftBtn.addEventListener("click", () => {
+    const next = Math.max(slider.scrollLeft - step, 0);
+    slider.scrollTo({ left: next, behavior: "smooth" });
+  });
+}
+
+/* -------------------------
+   Slider (Hero)
+------------------------- */
 function initSlider() {
   const sliderTrack = document.getElementById("sliderTrack");
   const sliderDots = document.getElementById("sliderDots");
-  const featuredProducts = products.slice(0, 5);
+  if (!sliderTrack || !sliderDots) return;
 
-  featuredProducts.forEach((product, index) => {
+  sliderTrack.innerHTML = "";
+  sliderDots.innerHTML = "";
+  currentSlide = 0;
+
+  const featured = products.slice(0, Math.min(5, products.length));
+  featured.forEach((product, index) => {
     const slide = document.createElement("div");
     slide.className = "slide";
     slide.innerHTML = `
       <div class="slide-inner">
-        <!-- Texto -->
         <div class="slide-content">
           <h2>${product.name}</h2>
           <p>${product.description}</p>
-          <div class="price">S/${product.price}</div>
+          <div class="price">${fmtMoney(product.price)}</div>
         </div>
-        <!-- Imagen -->
         <div class="slide-image">
           <img src="../assets/uploads/${product.image}" alt="${product.name}" />
         </div>
@@ -176,448 +249,307 @@ function initSlider() {
     sliderDots.appendChild(dot);
   });
 
-  document.getElementById("prevBtn").addEventListener("click", prevSlide);
-  document.getElementById("nextBtn").addEventListener("click", nextSlide);
+  const prev = document.getElementById("prevBtn");
+  const next = document.getElementById("nextBtn");
+  prev?.addEventListener("click", prevSlide);
+  next?.addEventListener("click", nextSlide);
 
-  setInterval(nextSlide, 5000);
+  if (sliderTimer) clearInterval(sliderTimer);
+  sliderTimer = setInterval(nextSlide, 5000);
 }
 
 function goToSlide(index) {
   const sliderTrack = document.getElementById("sliderTrack");
   const dots = document.querySelectorAll(".dot");
-  const totalSlides = dots.length;
+  if (!sliderTrack || dots.length === 0) return;
 
-  currentSlide = index;
+  const total = dots.length;
+  currentSlide = Math.max(0, Math.min(index, total - 1));
   sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("active", i === currentSlide);
-  });
+  dots.forEach((dot, i) => dot.classList.toggle("active", i === currentSlide));
 }
 
 function nextSlide() {
-  const totalSlides = document.querySelectorAll(".dot").length;
-  currentSlide = (currentSlide + 1) % totalSlides;
+  const total = document.querySelectorAll(".dot").length;
+  if (!total) return;
+  currentSlide = (currentSlide + 1) % total;
   goToSlide(currentSlide);
 }
 
 function prevSlide() {
-  const totalSlides = document.querySelectorAll(".dot").length;
-  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  const total = document.querySelectorAll(".dot").length;
+  if (!total) return;
+  currentSlide = (currentSlide - 1 + total) % total;
   goToSlide(currentSlide);
 }
 
-// Productos
+/* -------------------------
+   Render de productos
+------------------------- */
 function renderProducts(filter = "all") {
-  const productGrid = document.getElementById("productGrid");
-  productGrid.innerHTML = "";
+  const grid = document.getElementById("productGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
 
-  const filteredProducts =
+  const list =
     filter === "all" ? products : products.filter((p) => p.category === filter);
 
-  filteredProducts.forEach((product) => {
+  list.forEach((product) => {
     const card = document.createElement("div");
     card.className = "product-card";
 
-    const isInWishlist = wishlist.some((item) => item.id === product.id);
+    const isInWishlist = wishlist.some((w) => w.id === product.id);
 
     card.innerHTML = `
-            <div class="product-image"><img src="../assets/uploads/${
-              product.image
-            }" alt="${product.name}" /></div>
-            <div class="product-info">
-                <div class="product-category">${product.category}</div>
-                <h3 class="product-name">${product.name}</h3>
-                <p class="product-description">${product.description}</p>
-                <div class="product-footer">
-                    <div class="product-price">S/${product.price}</div>
-                    <div class="product-actions">
-                        <button class="btn-icon wishlist-btn ${
-                          isInWishlist ? "active" : ""
-                        }" data-id="${product.id}">
-                            ♥
-                        </button>
-                        <button class="btn-icon cart-btn" data-id="${
-                          product.id
-                        }">
-                            🛒
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
+      <div class="product-image">
+        <img src="../assets/uploads/${product.image}" alt="${product.name}" />
+      </div>
+      <div class="product-info">
+        <div class="product-category">${product.category}</div>
+        <h3 class="product-name" data-action="open-detail" data-id="${product.id}">${product.name}</h3>
+        <p class="product-description">${product.description}</p>
+        <div class="product-footer">
+          <div class="product-price">${fmtMoney(product.price)}</div>
+          <div class="product-actions">
+            <button class="btn-icon wishlist-btn ${isInWishlist ? "active" : ""}" data-action="toggle-wishlist" data-id="${product.id}" aria-label="Añadir a deseos">♥</button>
+            <button class="btn-icon cart-btn" data-action="add-cart" data-id="${product.id}" aria-label="Agregar al carrito">🛒</button>
+          </div>
+        </div>
+      </div>
+    `;
 
-    card
-      .querySelector(".product-image")
-      .addEventListener("click", () => showProductDetail(product));
-    card
-      .querySelector(".product-name")
-      .addEventListener("click", () => showProductDetail(product));
-    card.querySelector(".wishlist-btn").addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggleWishlist(product);
-    });
-    card.querySelector(".cart-btn").addEventListener("click", (e) => {
-      e.stopPropagation();
-      addToCart(product);
+    // Click en imagen abre detalle
+    card.querySelector(".product-image")?.addEventListener("click", () =>
+      showProductDetail(product)
+    );
+    // Delegación de acciones
+    card.addEventListener("click", (e) => {
+      const t = e.target;
+      if (!(t instanceof HTMLElement)) return;
+      const action = t.getAttribute("data-action");
+      const id = Number(t.getAttribute("data-id"));
+      if (!action) return;
+
+      if (action === "open-detail") showProductDetail(product);
+      if (action === "toggle-wishlist") toggleWishlist(product);
+      if (action === "add-cart") addToCart(product);
     });
 
-    productGrid.appendChild(card);
+    grid.appendChild(card);
   });
 }
 
 function filterByCategory(category) {
-  document.getElementById("categoryFilter").value = category;
-  renderProducts(category);
+  const sel = document.getElementById("categoryFilter");
+  if (sel) sel.value = category || "all";
+  renderProducts(category || "all");
 }
 
-// Detalle del producto
+/* -------------------------
+   Detalle de producto
+------------------------- */
 function showProductDetail(product) {
-  const modal = document.getElementById("productModal");
   const modalBody = document.getElementById("modalBody");
+  if (!modalBody) return;
 
-  const isInWishlist = wishlist.some((item) => item.id === product.id);
+  const isInWishlist = wishlist.some((i) => i.id === product.id);
 
   modalBody.innerHTML = `
-        <div class="product-detail">
-            <div class="product-detail-image"><img src="../assets/uploads/${
-              product.image
-            }" alt="${product.name}" /></div>
-            <div class="product-detail-info">
-                <div class="product-category">${product.category}</div>
-                <h2>${product.name}</h2>
-                <p class="product-description">${product.description}</p>
-                <div class="product-detail-price">s/${product.price}</div>
-                <div class="product-detail-actions">
-                    <button class="btn btn-primary" onclick="addToCart(${JSON.stringify(
-                      product
-                    ).replace(/"/g, "&quot;")})">
-                        🛒 Agregar al Carrito
-                    </button>
-                    <button class="btn btn-secondary ${
-                      isInWishlist ? "active" : ""
-                    }" onclick="toggleWishlist(${JSON.stringify(
-    product
-  ).replace(/"/g, "&quot;")})">
-                        ♥ ${isInWishlist ? "En Lista" : "Deseos"}
-                    </button>
-                </div>
-            </div>
+    <div class="product-detail">
+      <div class="product-detail-image">
+        <img src="../assets/uploads/${product.image}" alt="${product.name}" />
+      </div>
+      <div class="product-detail-info">
+        <div class="product-category">${product.category}</div>
+        <h2>${product.name}</h2>
+        <p class="product-description">${product.description}</p>
+        <div class="product-detail-price">${fmtMoney(product.price)}</div>
+        <div class="product-detail-actions">
+          <button class="btn btn-primary" id="detailAddCartBtn">🛒 Agregar al Carrito</button>
+          <button class="btn btn-secondary ${isInWishlist ? "active" : ""}" id="detailWishlistBtn">
+            ♥ ${isInWishlist ? "En Lista" : "Deseos"}
+          </button>
         </div>
-    `;
+      </div>
+    </div>
+  `;
 
-  modal.classList.add("active");
+  // Listeners del detalle (sin inline JS)
+  $("#detailAddCartBtn")?.addEventListener("click", () => addToCart(product));
+  $("#detailWishlistBtn")?.addEventListener("click", () =>
+    toggleWishlist(product)
+  );
+
+  openModal("productModal");
 }
 
-// Carrito
+/* -------------------------
+   Carrito
+------------------------- */
 function addToCart(product) {
-  const existingItem = cart.find((item) => item.id === product.id);
-
-  if (existingItem) {
-    existingItem.quantity++;
+  const existing = cart.find((i) => i.id === product.id);
+  if (existing) {
+    existing.quantity += 1;
   } else {
     cart.push({ ...product, quantity: 1 });
   }
-
   updateCartCount();
   saveToLocalStorage();
   showNotification(`${product.name} agregado al carrito`);
 }
 
 function removeFromCart(productId) {
-  cart = cart.filter((item) => item.id !== productId);
+  cart = cart.filter((i) => i.id !== productId);
   updateCartCount();
   renderCart();
   saveToLocalStorage();
 }
 
 function updateQuantity(productId, change) {
-  const item = cart.find((item) => item.id === productId);
-  if (item) {
-    item.quantity += change;
-    if (item.quantity <= 0) {
-      removeFromCart(productId);
-    } else {
-      renderCart();
-      updateCartCount();
-      saveToLocalStorage();
-    }
+  const item = cart.find((i) => i.id === productId);
+  if (!item) return;
+  item.quantity += change;
+  if (item.quantity <= 0) {
+    removeFromCart(productId);
+  } else {
+    renderCart();
+    updateCartCount();
+    saveToLocalStorage();
   }
 }
 
 function renderCart() {
-  const cartItems = document.getElementById("cartItems");
-  const cartTotal = document.getElementById("cartTotal");
+  const wrap = document.getElementById("cartItems");
+  const totalEl = document.getElementById("cartTotal");
+  if (!wrap || !totalEl) return;
 
   if (cart.length === 0) {
-    cartItems.innerHTML =
-      '<div class="empty-message">Tu carrito está vacío</div>';
-    cartTotal.textContent = "0";
+    wrap.innerHTML = '<div class="empty-message">Tu carrito está vacío</div>';
+    totalEl.textContent = "0.00";
     return;
   }
 
-  cartItems.innerHTML = cart
+  wrap.innerHTML = cart
     .map(
       (item) => `
-        <div class="cart-item">
-            <div class="cart-item-image">
-                <img src="../assets/uploads/${item.image}" alt="${item.name}" />
-            </div>
-            <div class="cart-item-info">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">S/${item.price}</div>
-            </div>
-            <div class="cart-item-actions">
-                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-                <button class="remove-btn" onclick="removeFromCart(${item.id})">Eliminar</button>
-            </div>
+      <div class="cart-item">
+        <div class="cart-item-image">
+          <img src="../assets/uploads/${item.image}" alt="${item.name}" />
         </div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">${fmtMoney(item.price)}</div>
+        </div>
+        <div class="cart-item-actions">
+          <button class="quantity-btn" aria-label="Disminuir" data-action="qty-dec" data-id="${item.id}">-</button>
+          <span class="quantity">${item.quantity}</span>
+          <button class="quantity-btn" aria-label="Aumentar" data-action="qty-inc" data-id="${item.id}">+</button>
+          <button class="remove-btn" data-action="remove" data-id="${item.id}">Eliminar</button>
+        </div>
+      </div>
     `
     )
     .join("");
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  cartTotal.textContent = total.toFixed(2);
+  const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  totalEl.textContent = total.toFixed(2);
+
+  // Delegación de eventos para los botones del carrito
+  wrap.addEventListener("click", (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLElement)) return;
+    const id = Number(t.getAttribute("data-id"));
+    const action = t.getAttribute("data-action");
+    if (!action || Number.isNaN(id)) return;
+
+    if (action === "qty-dec") updateQuantity(id, -1);
+    if (action === "qty-inc") updateQuantity(id, 1);
+    if (action === "remove") removeFromCart(id);
+  }, { once: true });
 }
 
 function updateCartCount() {
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  document.getElementById("cartCount").textContent = count;
+  const count = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const b = document.getElementById("cartCount");
+  if (b) b.textContent = String(count);
 }
 
-// Lista de deseos
+/* -------------------------
+   Wishlist
+------------------------- */
 function toggleWishlist(product) {
-  const index = wishlist.findIndex((item) => item.id === product.id);
-
-  if (index > -1) {
-    wishlist.splice(index, 1);
+  const i = wishlist.findIndex((w) => w.id === product.id);
+  if (i > -1) {
+    wishlist.splice(i, 1);
     showNotification(`${product.name} eliminado de la lista de deseos`);
   } else {
     wishlist.push(product);
     showNotification(`${product.name} agregado a la lista de deseos`);
   }
-
   updateWishlistCount();
-  renderProducts(document.getElementById("categoryFilter").value);
+  renderProducts($("#categoryFilter")?.value || "all");
   saveToLocalStorage();
 }
 
 function removeFromWishlist(productId) {
-  wishlist = wishlist.filter((item) => item.id !== productId);
+  wishlist = wishlist.filter((w) => w.id !== productId);
   updateWishlistCount();
   renderWishlist();
-  renderProducts(document.getElementById("categoryFilter").value);
+  renderProducts($("#categoryFilter")?.value || "all");
   saveToLocalStorage();
 }
 
 function renderWishlist() {
-  const wishlistItems = document.getElementById("wishlistItems");
+  const wrap = document.getElementById("wishlistItems");
+  if (!wrap) return;
 
   if (wishlist.length === 0) {
-    wishlistItems.innerHTML =
-      '<div class="empty-message">Tu lista de deseos está vacía</div>';
+    wrap.innerHTML = '<div class="empty-message">Tu lista de deseos está vacía</div>';
     return;
   }
 
-  wishlistItems.innerHTML = wishlist
+  wrap.innerHTML = wishlist
     .map(
       (item) => `
-        <div class="wishlist-item">
-            <div class="wishlist-item-image"><img src="../assets/uploads/${
-              item.image
-            }" alt="${item.name}" /></div>
-            <div class="wishlist-item-info">
-                <div class="wishlist-item-name">${item.name}</div>
-                <div class="wishlist-item-price">S/${item.price}</div>
-            </div>
-            <div class="cart-item-actions">
-                <button class="btn btn-primary" onclick="addToCart(${JSON.stringify(
-                  item
-                ).replace(/"/g, "&quot;")})">
-                    Agregar al Carrito
-                </button>
-                <button class="remove-btn" onclick="removeFromWishlist(${
-                  item.id
-                })">Eliminar</button>
-            </div>
+      <div class="wishlist-item">
+        <div class="wishlist-item-image">
+          <img src="../assets/uploads/${item.image}" alt="${item.name}" />
         </div>
+        <div class="wishlist-item-info">
+          <div class="wishlist-item-name">${item.name}</div>
+          <div class="wishlist-item-price">${fmtMoney(item.price)}</div>
+        </div>
+        <div class="cart-item-actions">
+          <button class="btn btn-primary" data-action="wish-add-cart" data-id="${item.id}">Agregar al Carrito</button>
+          <button class="remove-btn" data-action="wish-remove" data-id="${item.id}">Eliminar</button>
+        </div>
+      </div>
     `
     )
     .join("");
+
+  wrap.addEventListener("click", (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLElement)) return;
+    const id = Number(t.getAttribute("data-id"));
+    const action = t.getAttribute("data-action");
+    if (!action || Number.isNaN(id)) return;
+
+    const product = products.find((p) => p.id === id);
+    if (!product) return;
+    if (action === "wish-add-cart") addToCart(product);
+    if (action === "wish-remove") removeFromWishlist(id);
+  }, { once: true });
 }
 
 function updateWishlistCount() {
-  document.getElementById("wishlistCount").textContent = wishlist.length;
+  const el = document.getElementById("wishlistCount");
+  if (el) el.textContent = String(wishlist.length);
 }
 
-// Event Listeners
-function setupEventListeners() {
-  document.getElementById("cartBtn").addEventListener("click", () => {
-    renderCart();
-    document.getElementById("cartModal").classList.add("active");
-  });
-
-  document.getElementById("wishlistBtn").addEventListener("click", () => {
-    renderWishlist();
-    document.getElementById("wishlistModal").classList.add("active");
-  });
-
-  document.getElementById("modalClose").addEventListener("click", () => {
-    document.getElementById("productModal").classList.remove("active");
-  });
-
-  document.getElementById("cartModalClose").addEventListener("click", () => {
-    document.getElementById("cartModal").classList.remove("active");
-  });
-
-  document
-    .getElementById("wishlistModalClose")
-    .addEventListener("click", () => {
-      document.getElementById("wishlistModal").classList.remove("active");
-    });
-
-  document.getElementById("categoryFilter").addEventListener("change", (e) => {
-    renderProducts(e.target.value);
-  });
-
-  // Cerrar modales al hacer click fuera
-  document.querySelectorAll(".modal").forEach((modal) => {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.remove("active");
-      }
-    });
-  });
-}
-
-// Notificaciones
-function showNotification(message) {
-  const notification = document.createElement("div");
-  notification.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #111344;
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 8px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        z-index: 10000;
-        animation: slideIn 0.3s ease;
-    `;
-  notification.textContent = message;
-  document.body.appendChild(notification);
-
-  setTimeout(() => {
-    notification.style.animation = "slideOut 0.3s ease";
-    setTimeout(() => notification.remove(), 300);
-  }, 3000);
-}
-
-// LocalStorage
-function saveToLocalStorage() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-}
-
-function loadFromLocalStorage() {
-  const savedCart = localStorage.getItem("cart");
-  const savedWishlist = localStorage.getItem("wishlist");
-
-  if (savedCart) {
-    cart = JSON.parse(savedCart);
-    updateCartCount();
-  }
-
-  if (savedWishlist) {
-    wishlist = JSON.parse(savedWishlist);
-    updateWishlistCount();
-  }
-}
-
-// Animaciones CSS
-const style = document.createElement("style");
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-/***********************
- * CHECKOUT PASO A PASO *
- ***********************/
-
-// ========= Configuración rápida (edítalo a tu gusto) =========
-const WHATSAPP_NUMBER = "51999999999"; // Número para coordinar pago en efectivo (formato internacional sin +)
-const YAPE_PHONE = "999999999";
-const PLIN_PHONE = "999888777";
-const BANK_ACCOUNTS = [
-  {
-    bank: "BCP",
-    holder: "TEC RIVERA S.A.C.",
-    account: "123-45678901-0-12",
-    cci: "002-123-004567890123-45",
-  },
-  {
-    bank: "INTERBANK",
-    holder: "TEC RIVERA S.A.C.",
-    account: "123-4567890123",
-    cci: "003-123-004567890123-45",
-  },
-];
-
-// ========= Estado interno del checkout =========
-let checkoutStep = 1;
-let selectedPaymentMethod = null;
-
-// Conecta el botón "Proceder al Pago" del carrito
-document.addEventListener("DOMContentLoaded", () => {
-  const checkoutBtn = document.getElementById("checkoutBtn");
-  if (checkoutBtn) checkoutBtn.addEventListener("click", openCheckout);
-
-  // Cerrar el checkout
-  const checkoutClose = document.getElementById("checkoutClose");
-  if (checkoutClose) {
-    checkoutClose.addEventListener("click", () => {
-      document.getElementById("checkoutModal").classList.remove("active");
-    });
-  }
-
-  // Botones de navegación del wizard
-  document.getElementById("prevStepBtn").addEventListener("click", prevStep);
-  document.getElementById("nextStepBtn").addEventListener("click", nextStep);
-
-  // Cerrar el modal clic fuera
-  const checkoutModal = document.getElementById("checkoutModal");
-  if (checkoutModal) {
-    checkoutModal.addEventListener("click", (e) => {
-      if (e.target === checkoutModal) checkoutModal.classList.remove("active");
-    });
-  }
-});
-
-// Abre el modal de checkout e inicia en el paso 1
+/* -------------------------
+   Checkout (Wizard)
+------------------------- */
 function openCheckout() {
   if (cart.length === 0) {
     showNotification("Tu carrito está vacío");
@@ -627,15 +559,14 @@ function openCheckout() {
   selectedPaymentMethod = null;
   updateStepUI();
   renderCheckoutSummary();
-
-  // Cierra el modal del carrito y abre checkout
-  document.getElementById("cartModal").classList.remove("active");
-  document.getElementById("checkoutModal").classList.add("active");
+  closeModal("cartModal");
+  openModal("checkoutModal");
 }
 
-// ------ Paso 1: resumen ------
 function renderCheckoutSummary() {
   const wrap = document.getElementById("checkoutSummary");
+  if (!wrap) return;
+
   const total = cart.reduce((s, it) => s + it.price * it.quantity, 0);
   const itemsHTML = cart
     .map(
@@ -645,7 +576,7 @@ function renderCheckoutSummary() {
           <div class="co-name">${it.name}</div>
           <div class="co-qty">x${it.quantity}</div>
         </div>
-        <div class="co-price">S/${(it.price * it.quantity).toFixed(2)}</div>
+        <div class="co-price">${fmtMoney(it.price * it.quantity)}</div>
       </div>
     `
     )
@@ -655,12 +586,11 @@ function renderCheckoutSummary() {
     <div class="co-items">${itemsHTML}</div>
     <div class="co-total">
       <span>Total a pagar</span>
-      <strong>S/${total.toFixed(2)}</strong>
+      <strong>${fmtMoney(total)}</strong>
     </div>
   `;
 }
 
-// ------ Paso 2: método de pago ------
 function readSelectedMethod() {
   const form = document.getElementById("paymentMethodForm");
   if (!form) return null;
@@ -668,11 +598,12 @@ function readSelectedMethod() {
   return fd.get("paymentMethod");
 }
 
-// ------ Paso 3: vista dinámica por método ------
 function renderPaymentMethodView() {
   const view = document.getElementById("paymentMethodView");
+  if (!view) return;
+
   const total = cart.reduce((s, it) => s + it.price * it.quantity, 0);
-  const totalText = `S/${total.toFixed(2)}`;
+  const totalText = fmtMoney(total);
 
   if (selectedPaymentMethod === "card") {
     document.getElementById("step3Title").textContent = "Pagar con tarjeta";
@@ -696,15 +627,10 @@ function renderPaymentMethodView() {
             <input type="password" inputmode="numeric" maxlength="4" placeholder="***" required />
           </div>
         </div>
-        <div class="hint">* Demo: este formulario no procesa pagos reales.</div>
-        <button class="btn-primary full" id="payCardBtn">Pagar ${totalText}</button>
+        <button class="btn-primary full" id="##payCardBtn">Pagar ${totalText}</button>
       </form>
     `;
-
-    // Handler del botón
-    document.getElementById("payCardBtn").addEventListener("click", () => {
-      confirmPayment("Tarjeta", total);
-    });
+    $("#payCardBtn")?.addEventListener("click", () => confirmPayment("Tarjeta", total));
   }
 
   if (selectedPaymentMethod === "wallet") {
@@ -725,7 +651,7 @@ function renderPaymentMethodView() {
         <div class="wallet-qr" id="walletQr"></div>
       </div>
 
-      <button class="btn-primary full" id="walletConfirmBtn">Ya realicé el pago</button>
+      <button class="btn-primary full" id="##walletConfirmBtn">Ya realicé el pago</button>
     `;
 
     const renderWallet = () => {
@@ -733,11 +659,9 @@ function renderPaymentMethodView() {
         (document.querySelector('input[name="walletType"]:checked') || {})
           .value || "yape";
       const phone = type === "yape" ? YAPE_PHONE : PLIN_PHONE;
-      document.getElementById(
-        "walletNumber"
-      ).innerHTML = `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
+      document.getElementById("walletNumber").innerHTML =
+        `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
 
-      // QR DEMO (placeholder SVG con monto y número)
       const svg = encodeURIComponent(`
         <svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'>
           <rect width='100%' height='100%' fill='#eee'/>
@@ -746,9 +670,8 @@ function renderPaymentMethodView() {
           <text x='50%' y='75%' font-size='12' text-anchor='middle' fill='#333'>${totalText}</text>
         </svg>
       `);
-      document.getElementById(
-        "walletQr"
-      ).innerHTML = `<img alt="QR ${type}" src="data:image/svg+xml;utf8,${svg}" />`;
+      document.getElementById("walletQr").innerHTML =
+        `<img alt="QR ${type}" src="data:image/svg+xml;utf8,${svg}" />`;
     };
 
     renderWallet();
@@ -756,9 +679,9 @@ function renderPaymentMethodView() {
       .querySelectorAll('input[name="walletType"]')
       .forEach((r) => r.addEventListener("change", renderWallet));
 
-    document
-      .getElementById("walletConfirmBtn")
-      .addEventListener("click", () => confirmPayment("Billetera (Yape/Plin)", total));
+    $("#walletConfirmBtn")?.addEventListener("click", () =>
+      confirmPayment("Billetera (Yape/Plin)", total)
+    );
   }
 
   if (selectedPaymentMethod === "transfer") {
@@ -766,12 +689,12 @@ function renderPaymentMethodView() {
       "Pagar por transferencia bancaria";
     const accountsHtml = BANK_ACCOUNTS.map(
       (b) => `
-      <div class="bank-card">
-        <div class="bank-title">${b.bank}</div>
-        <div>Titular: <strong>${b.holder}</strong></div>
-        <div>Cuenta: <strong>${b.account}</strong></div>
-        <div>CCI: <strong>${b.cci}</strong></div>
-      </div>`
+        <div class="bank-card">
+          <div class="bank-title">${b.bank}</div>
+          <div>Titular: <strong>${b.holder}</strong></div>
+          <div>Cuenta: <strong>${b.account}</strong></div>
+          <div>CCI: <strong>${b.cci}</strong></div>
+        </div>`
     ).join("");
 
     view.innerHTML = `
@@ -784,15 +707,13 @@ function renderPaymentMethodView() {
             <input type="file" id="voucherInput" accept="image/*,application/pdf" />
           </label>
         </div>
-        <button class="btn-primary full" id="transferConfirmBtn">He realizado la transferencia</button>
+        <button class="btn-primary full" id="##transferConfirmBtn">He realizado la transferencia</button>
       </div>
     `;
 
-    document
-      .getElementById("transferConfirmBtn")
-      .addEventListener("click", () =>
-        confirmPayment("Transferencia bancaria", total)
-      );
+    $("#transferConfirmBtn")?.addEventListener("click", () =>
+      confirmPayment("Transferencia bancaria", total)
+    );
   }
 
   if (selectedPaymentMethod === "whatsapp") {
@@ -809,33 +730,30 @@ function renderPaymentMethodView() {
       <div class="wa-wrap">
         <p>Abriremos WhatsApp para coordinar la entrega y el pago en efectivo.</p>
         <a class="btn-primary full" href="${waUrl}" target="_blank" rel="noopener">Abrir WhatsApp</a>
-        <button class="btn-secondary full" id="waConfirmBtn">Ya coordiné por WhatsApp</button>
+        <button class="btn-secondary full" id="##waConfirmBtn">Ya coordiné por WhatsApp</button>
       </div>
     `;
 
-    document
-      .getElementById("waConfirmBtn")
-      .addEventListener("click", () =>
-        confirmPayment("WhatsApp (efectivo)", total)
-      );
+    $("#waConfirmBtn")?.addEventListener("click", () =>
+      confirmPayment("WhatsApp (efectivo)", total)
+    );
   }
 }
 
-// ------ Paso 4: confirmación y “cierre” ------
 function confirmPayment(method, total) {
-  // Demo: simula número de recibo
   const receipt = "TR-" + Math.random().toString(36).slice(2, 8).toUpperCase();
-  const details = `
-    <div><strong>Método:</strong> ${method}</div>
-    <div><strong>Total:</strong> S/${total.toFixed(2)}</div>
-    <div><strong>Recibo:</strong> ${receipt}</div>
-  `;
+  const box = document.getElementById("receiptBox");
+  const msg = document.getElementById("confirmationText");
+  if (box) {
+    box.innerHTML = `
+      <div><strong>Método:</strong> ${method}</div>
+      <div><strong>Total:</strong> ${fmtMoney(total)}</div>
+      <div><strong>Recibo:</strong> ${receipt}</div>
+    `;
+  }
+  if (msg) msg.textContent = "Gracias. Tu pedido fue registrado correctamente (demo).";
 
-  document.getElementById("receiptBox").innerHTML = details;
-  document.getElementById("confirmationText").textContent =
-    "Gracias. Tu pedido fue registrado correctamente (demo).";
-
-  // Vaciar carrito y refrescar
+  // Vaciar carrito
   cart = [];
   updateCartCount();
   renderCart();
@@ -845,14 +763,12 @@ function confirmPayment(method, total) {
   updateStepUI();
 }
 
-// ------ Navegación entre pasos ------
 function nextStep() {
   if (checkoutStep === 1) {
     checkoutStep = 2;
     updateStepUI();
     return;
   }
-
   if (checkoutStep === 2) {
     const chosen = readSelectedMethod();
     if (!chosen) {
@@ -865,22 +781,18 @@ function nextStep() {
     renderPaymentMethodView();
     return;
   }
-
   if (checkoutStep === 3) {
-    // En métodos con botón propio no hacemos nada aquí.
     showNotification("Usa el botón de confirmar/pagar del método elegido");
     return;
   }
-
   if (checkoutStep === 4) {
-    // Cerrar checkout
-    document.getElementById("checkoutModal").classList.remove("active");
+    closeModal("checkoutModal");
   }
 }
 
 function prevStep() {
   if (checkoutStep <= 1) {
-    document.getElementById("checkoutModal").classList.remove("active");
+    closeModal("checkoutModal");
     return;
   }
   if (checkoutStep === 4) {
@@ -894,86 +806,85 @@ function prevStep() {
 }
 
 function updateStepUI() {
-  // Panels
   ["step1", "step2", "step3", "step4"].forEach((id, idx) => {
     const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.toggle("hidden", checkoutStep !== idx + 1);
+    if (el) el.classList.toggle("hidden", checkoutStep !== idx + 1);
   });
-
-  // Indicadores
   document.querySelectorAll(".step-indicator").forEach((el) => {
     const step = Number(el.getAttribute("data-step"));
     el.classList.toggle("active", step === checkoutStep);
     el.classList.toggle("done", step < checkoutStep);
   });
 
-  // Botones
   const prevBtn = document.getElementById("prevStepBtn");
   const nextBtn = document.getElementById("nextStepBtn");
-
-  prevBtn.style.display = checkoutStep === 1 ? "none" : "inline-flex";
-  nextBtn.textContent =
-    checkoutStep === 4 ? "Cerrar" : checkoutStep === 3 ? "Siguiente" : "Siguiente";
+  if (prevBtn) prevBtn.style.display = checkoutStep === 1 ? "none" : "inline-flex";
+  if (nextBtn) {
+    nextBtn.textContent = checkoutStep === 4 ? "Cerrar" : "Siguiente";
+  }
 }
 
-// ========= Estilos mínimos del checkout (inyectados) =========
-const coStyle = document.createElement("style");
-coStyle.textContent = `
-  .modal-lg { max-width: 900px; width: 95%; }
-  .checkout { display: flex; flex-direction: column; gap: 1rem; }
-  .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: .5rem; }
-  .step-indicator { 
-    text-align: center; padding: .6rem; border-radius: 10px; 
-    background: #f2f3f7; color: #555; font-weight: 600; 
-    border: 1px solid #e3e6ef;
-  }
-  .step-indicator.active { background: #111344; color: #fff; border-color: #111344; }
-  .step-indicator.done { background: #dce3ff; color: #111344; border-color: #b9c5ff; }
-  .steps-body { min-height: 260px; }
-  .step-panel.hidden { display: none; }
+/* -------------------------
+   Listeners globales
+------------------------- */
+function setupEventListeners() {
+  // Abrir modales
+  $("#cartBtn")?.addEventListener("click", () => {
+    renderCart();
+    openModal("cartModal");
+  });
+  $("#wishlistBtn")?.addEventListener("click", () => {
+    renderWishlist();
+    openModal("wishlistModal");
+  });
 
-  .steps-actions { display: flex; justify-content: space-between; gap: .75rem; }
-  .btn-primary.full, .btn-secondary.full { width: 100%; }
+  // Cierres
+  $("#modalClose")?.addEventListener("click", () => closeModal("productModal"));
+  $("#cartModalClose")?.addEventListener("click", () => closeModal("cartModal"));
+  $("#wishlistModalClose")?.addEventListener("click", () => closeModal("wishlistModal"));
+  $("#checkoutClose")?.addEventListener("click", () => closeModal("checkoutModal"));
 
-  .co-items { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .75rem; }
-  .co-item { display: flex; justify-content: space-between; align-items: center; padding: .5rem .75rem; border: 1px solid #e9e9f1; border-radius: 10px; }
-  .co-item-info { display: flex; gap: .5rem; align-items: baseline; }
-  .co-name { font-weight: 600; }
-  .co-qty { color: #666; font-size: .9rem; }
-  .co-price { font-weight: 700; }
-  .co-total { display: flex; justify-content: space-between; padding-top: .5rem; border-top: 1px dashed #ddd; font-size: 1.1rem; }
+  // Click fuera para cerrar
+  document.querySelectorAll(".modal").forEach((modal) => {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.remove("active");
+        if (!document.querySelector(".modal.active")) {
+          document.body.classList.remove("modal-open");
+        }
+      }
+    });
+  });
 
-  .payment-methods { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: .75rem; }
-  .payment-card { border: 1px solid #e3e6ef; border-radius: 12px; padding: .75rem; display: flex; gap: .6rem; cursor: pointer; }
-  .payment-card:hover { border-color: #b9c5ff; box-shadow: 0 2px 10px rgba(0,0,0,.04); }
-  .payment-card input { margin-top: .3rem; }
-  .payment-card-body .title { font-weight: 700; }
-  .payment-card-body .desc { color: #666; font-size: .9rem; }
+  // Filtro categorías
+  $("#categoryFilter")?.addEventListener("change", (e) => {
+    renderProducts(e.target.value || "all");
+  });
 
-  .form-grid { display: flex; flex-direction: column; gap: .75rem; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-  .form-field { display: flex; flex-direction: column; gap: .3rem; }
-  .form-field input, .form-field select, .form-field textarea { 
-    padding: .7rem .9rem; border: 1px solid #e3e6ef; border-radius: 10px; outline: none; 
-  }
-  .form-field input:focus { border-color: #b9c5ff; }
-  .hint { color: #667085; font-size: .88rem; }
+  // Checkout
+  $("#checkoutBtn")?.addEventListener("click", openCheckout);
+  $("#prevStepBtn")?.addEventListener("click", prevStep);
+  $("#nextStepBtn")?.addEventListener("click", nextStep);
+}
 
-  .wallet-chooser { display: flex; gap: 1rem; margin-bottom: .75rem; }
-  .wallet-box { display: grid; grid-template-columns: 1fr 180px; gap: 1rem; align-items: center; }
-  .wallet-qr img { width: 180px; height: 180px; border-radius: 8px; border: 1px solid #e3e6ef; }
-
-  .bank-card { border: 1px solid #e3e6ef; border-radius: 12px; padding: .75rem; margin-bottom: .6rem; }
-  .bank-title { font-weight: 800; margin-bottom: .25rem; }
-  .voucher { display: flex; gap: .5rem; align-items: center; margin-top: .5rem; }
-
-  .wa-wrap p { margin-bottom: .75rem; }
-
-  .receipt-box { margin-top: .75rem; border: 1px dashed #b9c5ff; padding: .75rem; border-radius: 10px; background: #f7f9ff; }
+/* -------------------------
+   Animaciones mínimas (toast)
+------------------------- */
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
 `;
-document.head.appendChild(coStyle);
+document.head.appendChild(style);
 
-/***********************
- * FIN CHECKOUT        *
- ***********************/
+/* -------------------------
+   Bootstrap de la página
+------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  loadFromLocalStorage();
+  renderCategories();
+  setupSliderNavigation();
+  initSlider();
+  renderProducts("all");
+  setupEventListeners();
+});
