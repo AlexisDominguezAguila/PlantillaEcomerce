@@ -201,7 +201,7 @@
           <div id="cartItems"></div>
           <div class="cart-total">
             <h3>Total: $<span id="cartTotal">0</span></h3>
-            <button class="btn btn-primary">Proceder al Pago</button>
+            <button class="btn btn-primary" id="checkoutBtn">Proceder al Pago</button>
           </div>
         </div>
       </div>
@@ -217,6 +217,91 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal de Checkout -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-content modal-lg">
+    <button class="modal-close" id="checkoutClose">&times;</button>
+
+    <div class="checkout">
+      <!-- Indicadores de pasos -->
+      <div class="steps">
+        <div class="step-indicator active" data-step="1">1. Resumen</div>
+        <div class="step-indicator" data-step="2">2. Método de pago</div>
+        <div class="step-indicator" data-step="3">3. Detalles</div>
+        <div class="step-indicator" data-step="4">4. Confirmación</div>
+      </div>
+
+      <!-- Contenido de pasos -->
+      <div class="steps-body">
+        <!-- Paso 1 -->
+        <div class="step-panel" id="step1">
+          <h2>Resumen del pedido</h2>
+          <div id="checkoutSummary"></div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="step-panel hidden" id="step2">
+          <h2>Selecciona un método de pago</h2>
+          <form id="paymentMethodForm" class="payment-methods">
+            <label class="payment-card">
+              <input type="radio" name="paymentMethod" value="card" />
+              <div class="payment-card-body">
+                <div class="title">Tarjeta</div>
+                <div class="desc">Crédito o débito</div>
+              </div>
+            </label>
+
+            <label class="payment-card">
+              <input type="radio" name="paymentMethod" value="wallet" />
+              <div class="payment-card-body">
+                <div class="title">Billetera (Yape/Plin)</div>
+                <div class="desc">Pago por QR o número</div>
+              </div>
+            </label>
+
+            <label class="payment-card">
+              <input type="radio" name="paymentMethod" value="transfer" />
+              <div class="payment-card-body">
+                <div class="title">Transferencia bancaria</div>
+                <div class="desc">BCP/Interbank/BBVA/Scotiabank</div>
+              </div>
+            </label>
+
+            <label class="payment-card">
+              <input type="radio" name="paymentMethod" value="whatsapp" />
+              <div class="payment-card-body">
+                <div class="title">WhatsApp (efectivo)</div>
+                <div class="desc">Coordinar pago contra entrega</div>
+              </div>
+            </label>
+          </form>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="step-panel hidden" id="step3">
+          <h2 id="step3Title">Detalles del pago</h2>
+          <div id="paymentMethodView"></div>
+        </div>
+
+        <!-- Paso 4 -->
+        <div class="step-panel hidden" id="step4">
+          <h2>¡Pedido recibido!</h2>
+          <p id="confirmationText">
+            Gracias por tu compra. Te hemos enviado un resumen (demo).
+          </p>
+          <div class="receipt-box" id="receiptBox"></div>
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div class="steps-actions">
+        <button class="btn-secondary" id="prevStepBtn">Atrás</button>
+        <button class="btn-primary" id="nextStepBtn">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <script src="../assets/js/productos.js"></script>
   </body>

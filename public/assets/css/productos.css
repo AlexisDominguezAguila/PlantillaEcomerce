@@ -574,6 +574,13 @@
   flex-shrink: 0;
 }
 
+.cart-item-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .cart-item-info,
 .wishlist-item-info {
   flex: 1;
@@ -582,7 +589,7 @@
 .cart-item-name,
 .wishlist-item-name {
   font-weight: 600;
-  color: var(--primary);
+  color: #0a0c2a;
   margin-bottom: 0.25rem;
 }
 
@@ -599,7 +606,7 @@
 }
 
 .quantity-btn {
-  background: var(--primary);
+  background: #666;
   color: var(--white);
   border: none;
   width: 30px;
@@ -616,6 +623,7 @@
 .quantity {
   font-weight: 600;
   min-width: 30px;
+  color: #333;
   text-align: center;
 }
 
@@ -642,7 +650,7 @@
 
 .cart-total h3 {
   font-size: 1.8rem;
-  color: var(--primary);
+  color: #0a0c2a;
   margin-bottom: 1rem;
 }
 
@@ -678,3 +686,254 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 }
+
+/* ================================
+   Checkout modal: texto en negro
+   ================================ */
+#checkoutModal .modal-content {
+  background: #ffffff;         /* fondo blanco */
+  color: #111111;              /* color base de texto */
+}
+
+/* Colorea tipografías dentro del wizard */
+#checkoutModal .checkout,
+#checkoutModal .checkout h1,
+#checkoutModal .checkout h2,
+#checkoutModal .checkout h3,
+#checkoutModal .checkout h4,
+#checkoutModal .checkout h5,
+#checkoutModal .checkout h6,
+#checkoutModal .checkout p,
+#checkoutModal .checkout li,
+#checkoutModal .checkout label,
+#checkoutModal .checkout span,
+#checkoutModal .checkout .title,
+#checkoutModal .checkout .desc,
+#checkoutModal .checkout .co-name,
+#checkoutModal .checkout .co-qty,
+#checkoutModal .checkout .co-price,
+#checkoutModal .checkout .co-total,
+#checkoutModal .checkout .bank-title {
+  color: #111111;
+}
+
+/* Texto suave / ayudas */
+#checkoutModal .checkout .hint,
+#checkoutModal .checkout .desc {
+  color: #555555;
+}
+
+/* Steps: ya traen estilos, solo garantizamos legibilidad */
+#checkoutModal .step-indicator {
+  color: #111111;
+}
+#checkoutModal .step-indicator.active {
+  color: #ffffff;              /* sobre fondo oscuro del estado active */
+}
+#checkoutModal .step-indicator.done {
+  color: #111344;              /* acorde al estilo previo */
+}
+
+/* Tarjetas de método de pago */
+#checkoutModal .payment-card {
+  background: #ffffff;
+  border-color: #dfe3eb;
+}
+#checkoutModal .payment-card:hover {
+  border-color: #b9c5ff;
+}
+#checkoutModal .payment-card .title { color: #111111; }
+#checkoutModal .payment-card .desc  { color: #555555; }
+
+/* Resumen */
+#checkoutModal .co-item { background: #ffffff; }
+#checkoutModal .co-total span { color: #555555; }
+#checkoutModal .co-total strong { color: #111111; }
+
+/* Formularios */
+#checkoutModal .form-field label { color: #111111; }
+#checkoutModal .form-field input,
+#checkoutModal .form-field select,
+#checkoutModal .form-field textarea {
+  background: #ffffff;
+  color: #111111;
+  border: 1px solid #d0d5dd;
+}
+#checkoutModal .form-field input::placeholder,
+#checkoutModal .form-field textarea::placeholder {
+  color: #6b7280;
+}
+
+/* Wallet */
+#checkoutModal .wallet-info { color: #111111; }
+#checkoutModal .wallet-qr img {
+  background: #ffffff;
+  border: 1px solid #e3e6ef;
+}
+
+/* Transferencia */
+#checkoutModal .bank-card {
+  background: #ffffff;
+  border: 1px solid #e3e6ef;
+}
+#checkoutModal .voucher span { color: #111111; }
+
+/* Confirmación / recibo */
+#checkoutModal .receipt-box {
+  background: #f7f9ff;
+  border-color: #b9c5ff;
+  color: #111111;
+}
+
+/* ================================
+   Modal general + Responsive
+   (añadir al final de productos.css)
+   ================================ */
+
+/* Backdrop mejorado */
+.modal {
+  background: rgba(0,0,0,0.6);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  padding: 24px;
+}
+
+/* Caja base */
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 720px;            /* tamaño default */
+  max-height: 92vh;
+  overflow: hidden;            /* cuidamos header/footer pegajosos */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+
+/* Tamaños opcionales */
+.modal-sm { max-width: 420px; }
+.modal-lg { max-width: 900px; }
+
+/* Cabecera/cerrar */
+.modal-close {
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f3f4f6;
+  color: #111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-close:hover {
+  background: #e5e7eb;
+  color: #111;
+  transform: none;             /* evitamos rotación excesiva */
+}
+
+/* Cuerpo con scroll interno */
+.modal-body {
+  padding: 1.25rem;
+  overflow: auto;
+}
+
+/* ------- Checkout específicos de UX ------- */
+/* Encabezado de pasos pegajoso (si existe) */
+#checkoutModal .steps {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  padding: .5rem;
+  border-bottom: 1px solid #eaeaea;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+/* Footer de acciones pegajoso */
+#checkoutModal .steps-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: #fff;
+  border-top: 1px solid #eaeaea;
+  padding: .75rem;
+}
+
+/* Botones en móvil: apilados */
+@media (max-width: 640px) {
+  #checkoutModal .steps-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .5rem;
+  }
+  #checkoutModal .steps-actions .btn-primary,
+  #checkoutModal .steps-actions .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Imagenes dentro de modales responsivas */
+.modal-body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --------- Full-screen en móviles --------- */
+@media (max-width: 768px) {
+  .modal { padding: 0; }
+  .modal-content {
+    border-radius: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+  }
+  .modal-close {
+    position: fixed;           /* que siempre sea accesible */
+    top: 12px;
+    right: 12px;
+    z-index: 3;
+  }
+  .modal-body {
+    padding: 1rem 1rem 5.5rem; /* espacio extra para footer pegajoso */
+  }
+
+  /* Checkout: columnas a una sola */
+  #checkoutModal .wallet-box {
+    grid-template-columns: 1fr; 
+  }
+}
+
+/* --------- Desktop refinements --------- */
+@media (min-width: 1024px) {
+  .modal-content { max-height: 88vh; }
+  #checkoutModal .modal-content.modal-lg { max-width: 960px; }
+}
+
+/* --------- Accesibilidad --------- */
+@media (prefers-reduced-motion: reduce) {
+  .modal-content { animation: none !important; }
+  .slider-track { transition: none !important; }
+}
+
+/* --------- Scroll lock (opcional) ---------
+   Si desde JS añades `modal-open` al <body> cuando hay un modal activo,
+   esto bloqueará el scroll del fondo. */
+body.modal-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* --------- Ajustes visuales menores --------- */
+.modal .section-title { margin-top: .25rem; }
+#checkoutModal .wallet-qr img { border-radius: 12px; }
+#checkoutModal .bank-card { border-radius: 12px; }
+#checkoutModal .form-field input,
+#checkoutModal .form-field select,
+#checkoutModal .form-field textarea { border-radius: 10px; }

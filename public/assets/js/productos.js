@@ -230,7 +230,7 @@ function renderProducts(filter = "all") {
                 <h3 class="product-name">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
                 <div class="product-footer">
-                    <div class="product-price">$${product.price}</div>
+                    <div class="product-price">S/${product.price}</div>
                     <div class="product-actions">
                         <button class="btn-icon wishlist-btn ${
                           isInWishlist ? "active" : ""
@@ -287,7 +287,7 @@ function showProductDetail(product) {
                 <div class="product-category">${product.category}</div>
                 <h2>${product.name}</h2>
                 <p class="product-description">${product.description}</p>
-                <div class="product-detail-price">$${product.price}</div>
+                <div class="product-detail-price">s/${product.price}</div>
                 <div class="product-detail-actions">
                     <button class="btn btn-primary" onclick="addToCart(${JSON.stringify(
                       product
@@ -360,10 +360,12 @@ function renderCart() {
     .map(
       (item) => `
         <div class="cart-item">
-            <div class="cart-item-image">${item.icon}</div>
+            <div class="cart-item-image">
+                <img src="../assets/uploads/${item.image}" alt="${item.name}" />
+            </div>
             <div class="cart-item-info">
                 <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">$${item.price}</div>
+                <div class="cart-item-price">S/${item.price}</div>
             </div>
             <div class="cart-item-actions">
                 <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
@@ -428,7 +430,7 @@ function renderWishlist() {
             }" alt="${item.name}" /></div>
             <div class="wishlist-item-info">
                 <div class="wishlist-item-name">${item.name}</div>
-                <div class="wishlist-item-price">$${item.price}</div>
+                <div class="wishlist-item-price">S/${item.price}</div>
             </div>
             <div class="cart-item-actions">
                 <button class="btn btn-primary" onclick="addToCart(${JSON.stringify(
@@ -561,3 +563,417 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+/***********************
+ * CHECKOUT PASO A PASO *
+ ***********************/
+
+// ========= Configuración rápida (edítalo a tu gusto) =========
+const WHATSAPP_NUMBER = "51999999999"; // Número para coordinar pago en efectivo (formato internacional sin +)
+const YAPE_PHONE = "999999999";
+const PLIN_PHONE = "999888777";
+const BANK_ACCOUNTS = [
+  {
+    bank: "BCP",
+    holder: "TEC RIVERA S.A.C.",
+    account: "123-45678901-0-12",
+    cci: "002-123-004567890123-45",
+  },
+  {
+    bank: "INTERBANK",
+    holder: "TEC RIVERA S.A.C.",
+    account: "123-4567890123",
+    cci: "003-123-004567890123-45",
+  },
+];
+
+// ========= Estado interno del checkout =========
+let checkoutStep = 1;
+let selectedPaymentMethod = null;
+
+// Conecta el botón "Proceder al Pago" del carrito
+document.addEventListener("DOMContentLoaded", () => {
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  if (checkoutBtn) checkoutBtn.addEventListener("click", openCheckout);
+
+  // Cerrar el checkout
+  const checkoutClose = document.getElementById("checkoutClose");
+  if (checkoutClose) {
+    checkoutClose.addEventListener("click", () => {
+      document.getElementById("checkoutModal").classList.remove("active");
+    });
+  }
+
+  // Botones de navegación del wizard
+  document.getElementById("prevStepBtn").addEventListener("click", prevStep);
+  document.getElementById("nextStepBtn").addEventListener("click", nextStep);
+
+  // Cerrar el modal clic fuera
+  const checkoutModal = document.getElementById("checkoutModal");
+  if (checkoutModal) {
+    checkoutModal.addEventListener("click", (e) => {
+      if (e.target === checkoutModal) checkoutModal.classList.remove("active");
+    });
+  }
+});
+
+// Abre el modal de checkout e inicia en el paso 1
+function openCheckout() {
+  if (cart.length === 0) {
+    showNotification("Tu carrito está vacío");
+    return;
+  }
+  checkoutStep = 1;
+  selectedPaymentMethod = null;
+  updateStepUI();
+  renderCheckoutSummary();
+
+  // Cierra el modal del carrito y abre checkout
+  document.getElementById("cartModal").classList.remove("active");
+  document.getElementById("checkoutModal").classList.add("active");
+}
+
+// ------ Paso 1: resumen ------
+function renderCheckoutSummary() {
+  const wrap = document.getElementById("checkoutSummary");
+  const total = cart.reduce((s, it) => s + it.price * it.quantity, 0);
+  const itemsHTML = cart
+    .map(
+      (it) => `
+      <div class="co-item">
+        <div class="co-item-info">
+          <div class="co-name">${it.name}</div>
+          <div class="co-qty">x${it.quantity}</div>
+        </div>
+        <div class="co-price">S/${(it.price * it.quantity).toFixed(2)}</div>
+      </div>
+    `
+    )
+    .join("");
+
+  wrap.innerHTML = `
+    <div class="co-items">${itemsHTML}</div>
+    <div class="co-total">
+      <span>Total a pagar</span>
+      <strong>S/${total.toFixed(2)}</strong>
+    </div>
+  `;
+}
+
+// ------ Paso 2: método de pago ------
+function readSelectedMethod() {
+  const form = document.getElementById("paymentMethodForm");
+  if (!form) return null;
+  const fd = new FormData(form);
+  return fd.get("paymentMethod");
+}
+
+// ------ Paso 3: vista dinámica por método ------
+function renderPaymentMethodView() {
+  const view = document.getElementById("paymentMethodView");
+  const total = cart.reduce((s, it) => s + it.price * it.quantity, 0);
+  const totalText = `S/${total.toFixed(2)}`;
+
+  if (selectedPaymentMethod === "card") {
+    document.getElementById("step3Title").textContent = "Pagar con tarjeta";
+    view.innerHTML = `
+      <form id="cardForm" class="form-grid" onsubmit="event.preventDefault();">
+        <div class="form-field">
+          <label>Nombre del titular</label>
+          <input type="text" required placeholder="Como aparece en la tarjeta" />
+        </div>
+        <div class="form-field">
+          <label>Número de tarjeta</label>
+          <input type="text" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" required />
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Vencimiento</label>
+            <input type="text" inputmode="numeric" maxlength="5" placeholder="MM/AA" required />
+          </div>
+          <div class="form-field">
+            <label>CVV</label>
+            <input type="password" inputmode="numeric" maxlength="4" placeholder="***" required />
+          </div>
+        </div>
+        <div class="hint">* Demo: este formulario no procesa pagos reales.</div>
+        <button class="btn-primary full" id="payCardBtn">Pagar ${totalText}</button>
+      </form>
+    `;
+
+    // Handler del botón
+    document.getElementById("payCardBtn").addEventListener("click", () => {
+      confirmPayment("Tarjeta", total);
+    });
+  }
+
+  if (selectedPaymentMethod === "wallet") {
+    document.getElementById("step3Title").textContent =
+      "Pagar con billetera (Yape / Plin)";
+    view.innerHTML = `
+      <div class="wallet-chooser">
+        <label><input type="radio" name="walletType" value="yape" checked /> Yape</label>
+        <label><input type="radio" name="walletType" value="plin" /> Plin</label>
+      </div>
+
+      <div class="wallet-box">
+        <div class="wallet-info">
+          <div>Monto: <strong>${totalText}</strong></div>
+          <div id="walletNumber"></div>
+          <div class="hint">* Escanea el QR o envía al número y luego confirma.</div>
+        </div>
+        <div class="wallet-qr" id="walletQr"></div>
+      </div>
+
+      <button class="btn-primary full" id="walletConfirmBtn">Ya realicé el pago</button>
+    `;
+
+    const renderWallet = () => {
+      const type =
+        (document.querySelector('input[name="walletType"]:checked') || {})
+          .value || "yape";
+      const phone = type === "yape" ? YAPE_PHONE : PLIN_PHONE;
+      document.getElementById(
+        "walletNumber"
+      ).innerHTML = `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
+
+      // QR DEMO (placeholder SVG con monto y número)
+      const svg = encodeURIComponent(`
+        <svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'>
+          <rect width='100%' height='100%' fill='#eee'/>
+          <text x='50%' y='45%' font-size='14' text-anchor='middle' fill='#333'>${type.toUpperCase()}</text>
+          <text x='50%' y='60%' font-size='12' text-anchor='middle' fill='#333'>${phone}</text>
+          <text x='50%' y='75%' font-size='12' text-anchor='middle' fill='#333'>${totalText}</text>
+        </svg>
+      `);
+      document.getElementById(
+        "walletQr"
+      ).innerHTML = `<img alt="QR ${type}" src="data:image/svg+xml;utf8,${svg}" />`;
+    };
+
+    renderWallet();
+    document
+      .querySelectorAll('input[name="walletType"]')
+      .forEach((r) => r.addEventListener("change", renderWallet));
+
+    document
+      .getElementById("walletConfirmBtn")
+      .addEventListener("click", () => confirmPayment("Billetera (Yape/Plin)", total));
+  }
+
+  if (selectedPaymentMethod === "transfer") {
+    document.getElementById("step3Title").textContent =
+      "Pagar por transferencia bancaria";
+    const accountsHtml = BANK_ACCOUNTS.map(
+      (b) => `
+      <div class="bank-card">
+        <div class="bank-title">${b.bank}</div>
+        <div>Titular: <strong>${b.holder}</strong></div>
+        <div>Cuenta: <strong>${b.account}</strong></div>
+        <div>CCI: <strong>${b.cci}</strong></div>
+      </div>`
+    ).join("");
+
+    view.innerHTML = `
+      <div class="transfer-wrap">
+        <div class="transfer-info">
+          <div>Monto a transferir: <strong>${totalText}</strong></div>
+          <div class="banks">${accountsHtml}</div>
+          <label class="voucher">
+            <span>Adjuntar comprobante (opcional):</span>
+            <input type="file" id="voucherInput" accept="image/*,application/pdf" />
+          </label>
+        </div>
+        <button class="btn-primary full" id="transferConfirmBtn">He realizado la transferencia</button>
+      </div>
+    `;
+
+    document
+      .getElementById("transferConfirmBtn")
+      .addEventListener("click", () =>
+        confirmPayment("Transferencia bancaria", total)
+      );
+  }
+
+  if (selectedPaymentMethod === "whatsapp") {
+    document.getElementById("step3Title").textContent =
+      "Coordinar por WhatsApp (pago en efectivo)";
+    const msg = `Hola, quiero coordinar mi pago en efectivo. Total: ${totalText}. Pedido: ${cart
+      .map((i) => `${i.name} x${i.quantity}`)
+      .join(", ")}`;
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      msg
+    )}`;
+
+    view.innerHTML = `
+      <div class="wa-wrap">
+        <p>Abriremos WhatsApp para coordinar la entrega y el pago en efectivo.</p>
+        <a class="btn-primary full" href="${waUrl}" target="_blank" rel="noopener">Abrir WhatsApp</a>
+        <button class="btn-secondary full" id="waConfirmBtn">Ya coordiné por WhatsApp</button>
+      </div>
+    `;
+
+    document
+      .getElementById("waConfirmBtn")
+      .addEventListener("click", () =>
+        confirmPayment("WhatsApp (efectivo)", total)
+      );
+  }
+}
+
+// ------ Paso 4: confirmación y “cierre” ------
+function confirmPayment(method, total) {
+  // Demo: simula número de recibo
+  const receipt = "TR-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+  const details = `
+    <div><strong>Método:</strong> ${method}</div>
+    <div><strong>Total:</strong> S/${total.toFixed(2)}</div>
+    <div><strong>Recibo:</strong> ${receipt}</div>
+  `;
+
+  document.getElementById("receiptBox").innerHTML = details;
+  document.getElementById("confirmationText").textContent =
+    "Gracias. Tu pedido fue registrado correctamente (demo).";
+
+  // Vaciar carrito y refrescar
+  cart = [];
+  updateCartCount();
+  renderCart();
+  saveToLocalStorage();
+
+  checkoutStep = 4;
+  updateStepUI();
+}
+
+// ------ Navegación entre pasos ------
+function nextStep() {
+  if (checkoutStep === 1) {
+    checkoutStep = 2;
+    updateStepUI();
+    return;
+  }
+
+  if (checkoutStep === 2) {
+    const chosen = readSelectedMethod();
+    if (!chosen) {
+      showNotification("Selecciona un método de pago");
+      return;
+    }
+    selectedPaymentMethod = chosen;
+    checkoutStep = 3;
+    updateStepUI();
+    renderPaymentMethodView();
+    return;
+  }
+
+  if (checkoutStep === 3) {
+    // En métodos con botón propio no hacemos nada aquí.
+    showNotification("Usa el botón de confirmar/pagar del método elegido");
+    return;
+  }
+
+  if (checkoutStep === 4) {
+    // Cerrar checkout
+    document.getElementById("checkoutModal").classList.remove("active");
+  }
+}
+
+function prevStep() {
+  if (checkoutStep <= 1) {
+    document.getElementById("checkoutModal").classList.remove("active");
+    return;
+  }
+  if (checkoutStep === 4) {
+    checkoutStep = 3;
+  } else {
+    checkoutStep -= 1;
+  }
+  updateStepUI();
+  if (checkoutStep === 1) renderCheckoutSummary();
+  if (checkoutStep === 3) renderPaymentMethodView();
+}
+
+function updateStepUI() {
+  // Panels
+  ["step1", "step2", "step3", "step4"].forEach((id, idx) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle("hidden", checkoutStep !== idx + 1);
+  });
+
+  // Indicadores
+  document.querySelectorAll(".step-indicator").forEach((el) => {
+    const step = Number(el.getAttribute("data-step"));
+    el.classList.toggle("active", step === checkoutStep);
+    el.classList.toggle("done", step < checkoutStep);
+  });
+
+  // Botones
+  const prevBtn = document.getElementById("prevStepBtn");
+  const nextBtn = document.getElementById("nextStepBtn");
+
+  prevBtn.style.display = checkoutStep === 1 ? "none" : "inline-flex";
+  nextBtn.textContent =
+    checkoutStep === 4 ? "Cerrar" : checkoutStep === 3 ? "Siguiente" : "Siguiente";
+}
+
+// ========= Estilos mínimos del checkout (inyectados) =========
+const coStyle = document.createElement("style");
+coStyle.textContent = `
+  .modal-lg { max-width: 900px; width: 95%; }
+  .checkout { display: flex; flex-direction: column; gap: 1rem; }
+  .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: .5rem; }
+  .step-indicator { 
+    text-align: center; padding: .6rem; border-radius: 10px; 
+    background: #f2f3f7; color: #555; font-weight: 600; 
+    border: 1px solid #e3e6ef;
+  }
+  .step-indicator.active { background: #111344; color: #fff; border-color: #111344; }
+  .step-indicator.done { background: #dce3ff; color: #111344; border-color: #b9c5ff; }
+  .steps-body { min-height: 260px; }
+  .step-panel.hidden { display: none; }
+
+  .steps-actions { display: flex; justify-content: space-between; gap: .75rem; }
+  .btn-primary.full, .btn-secondary.full { width: 100%; }
+
+  .co-items { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .75rem; }
+  .co-item { display: flex; justify-content: space-between; align-items: center; padding: .5rem .75rem; border: 1px solid #e9e9f1; border-radius: 10px; }
+  .co-item-info { display: flex; gap: .5rem; align-items: baseline; }
+  .co-name { font-weight: 600; }
+  .co-qty { color: #666; font-size: .9rem; }
+  .co-price { font-weight: 700; }
+  .co-total { display: flex; justify-content: space-between; padding-top: .5rem; border-top: 1px dashed #ddd; font-size: 1.1rem; }
+
+  .payment-methods { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: .75rem; }
+  .payment-card { border: 1px solid #e3e6ef; border-radius: 12px; padding: .75rem; display: flex; gap: .6rem; cursor: pointer; }
+  .payment-card:hover { border-color: #b9c5ff; box-shadow: 0 2px 10px rgba(0,0,0,.04); }
+  .payment-card input { margin-top: .3rem; }
+  .payment-card-body .title { font-weight: 700; }
+  .payment-card-body .desc { color: #666; font-size: .9rem; }
+
+  .form-grid { display: flex; flex-direction: column; gap: .75rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .form-field { display: flex; flex-direction: column; gap: .3rem; }
+  .form-field input, .form-field select, .form-field textarea { 
+    padding: .7rem .9rem; border: 1px solid #e3e6ef; border-radius: 10px; outline: none; 
+  }
+  .form-field input:focus { border-color: #b9c5ff; }
+  .hint { color: #667085; font-size: .88rem; }
+
+  .wallet-chooser { display: flex; gap: 1rem; margin-bottom: .75rem; }
+  .wallet-box { display: grid; grid-template-columns: 1fr 180px; gap: 1rem; align-items: center; }
+  .wallet-qr img { width: 180px; height: 180px; border-radius: 8px; border: 1px solid #e3e6ef; }
+
+  .bank-card { border: 1px solid #e3e6ef; border-radius: 12px; padding: .75rem; margin-bottom: .6rem; }
+  .bank-title { font-weight: 800; margin-bottom: .25rem; }
+  .voucher { display: flex; gap: .5rem; align-items: center; margin-top: .5rem; }
+
+  .wa-wrap p { margin-bottom: .75rem; }
+
+  .receipt-box { margin-top: .75rem; border: 1px dashed #b9c5ff; padding: .75rem; border-radius: 10px; background: #f7f9ff; }
+`;
+document.head.appendChild(coStyle);
+
+/***********************
+ * FIN CHECKOUT        *
+ ***********************/
