@@ -101,6 +101,7 @@ const state = {
     plans: [3, 4, 2, 5, 6, 5, 7, 4, 6, 8, 0, 0],
   },
 };
+
 const persisted = JSON.parse(localStorage.getItem("tr_state") || "{}");
 state.currentTenantId = persisted.currentTenantId || state.tenants[0]?.id;
 
@@ -167,6 +168,68 @@ byId("sidebarToggle")?.addEventListener("click", () => {
 if (JSON.parse(localStorage.getItem("tr_sidebar_collapsed") || "false")) {
   byId("sidebar")?.classList.add("collapsed");
 }
+/* =========================
+   SIDEBAR: modo móvil (hamburguesa)
+========================= */
+const scrim = byId("scrim");
+const sidebarEl = byId("sidebar");
+const mobileBtn = byId("hamburger"); // el de tu HTML
+
+// Helpers
+const isMobile = () => window.matchMedia("(max-width: 1024px)").matches;
+
+function openSidebarMobile() {
+  if (!isMobile()) return;
+  sidebarEl.classList.add("mobile-open");
+  if (scrim) scrim.hidden = false;
+}
+
+function closeSidebarMobile() {
+  sidebarEl.classList.remove("mobile-open");
+  if (scrim) scrim.hidden = true;
+}
+
+function toggleSidebarMobile() {
+  if (!isMobile()) return;
+  const opened = sidebarEl.classList.toggle("mobile-open");
+  if (scrim) scrim.hidden = !opened;
+}
+
+// Botón hamburguesa (abre/cierra y anima el ícono)
+mobileBtn?.addEventListener("click", () => {
+  mobileBtn.classList.toggle("active");
+  toggleSidebarMobile();
+});
+
+// Cerrar al tocar fuera
+scrim?.addEventListener("click", () => {
+  mobileBtn?.classList.remove("active");
+  closeSidebarMobile();
+});
+
+// Cerrar con ESC
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    mobileBtn?.classList.remove("active");
+    closeSidebarMobile();
+  }
+});
+
+// Cerrar al cambiar de ruta en móvil
+document.addEventListener("routechange", () => {
+  if (isMobile()) {
+    mobileBtn?.classList.remove("active");
+    closeSidebarMobile();
+  }
+});
+
+// Limpiar al pasar a escritorio
+window.addEventListener("resize", () => {
+  if (!isMobile()) {
+    mobileBtn?.classList.remove("active");
+    closeSidebarMobile();
+  }
+});
 
 /* =========================
          TOPBAR

@@ -42,7 +42,7 @@
           <span>Multi-Tenant</span>
         </div>
         <button
-          class="sidebar__toggle"
+          class="sidebar__toggle flecha"
           id="sidebarToggle"
           aria-label="Alternar menú"
         >
@@ -103,17 +103,29 @@
       <!-- Topbar -->
       <header class="topbar">
         <div class="topbar__actions">
-          <div class="input-group right" style="max-width: 360px">
+          <!-- Hamburger -->
+          <!-- Botón hamburguesa en la topbar -->
+          <button class="hamburger only-mobile" id="hamburger">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+          </button>
+
+          <div class="input-group right lupa">
             <input
               id="globalSearch"
-              class="input"
+              class="input lupa"
               placeholder="Buscar apps, tenants, dominios…"
             />
-            <button class="icon-btn" id="doSearch" title="Buscar">
+            <button class="icon-btn lupa" id="doSearch" title="Buscar">
               <i class="bx bx-search"></i>
             </button>
           </div>
-          <button class="icon-btn" id="quickCreate" title="Acción rápida">
+          <button
+            class="icon-btn action-fast"
+            id="quickCreate"
+            title="Acción rápida"
+          >
             <i class="bx bx-bolt-circle"></i>
           </button>
           <button class="icon-btn" id="notifBtn" title="Notificaciones">
@@ -530,6 +542,10 @@
     <div class="loader" id="globalLoader" hidden>
       <div class="spinner"></div>
     </div>
+
+    <!-- Scrim -->
+
+    <div id="scrim" class="scrim" hidden></div>
 
     <script src="js/sidebar.js"></script>
   </body>
