@@ -17,15 +17,15 @@
     />
   </head>
   <body>
-        <!-- Topbar -->
-  <div class="topbar" role="region" aria-label="Ingreso de tenant">
-    <div class="container topbar-inner">
-      <span class="topbar-text">
-        SI YA ERES SOCIO, INGRESA CON TU TENANT
-      </span>
-      <a href="#tenant" class="topbar-cta">INGRESA TU ID</a>
+    <!-- Topbar -->
+    <div class="topbar" role="region" aria-label="Ingreso de tenant">
+      <div class="container topbar-inner">
+        <span class="topbar-text">
+          SI YA ERES SOCIO, INGRESA CON TU TENANT
+        </span>
+        <a href="#tenant" class="topbar-cta">INGRESA TU ID</a>
+      </div>
     </div>
-  </div>
     <!-- Header -->
     <header class="header">
       <div class="container">
@@ -260,7 +260,9 @@
               </div>
 
               <div class="form-group">
-                <label for="service">¿En qué servicio estás interesado? *</label>
+                <label for="service"
+                  >¿En qué servicio estás interesado? *</label
+                >
                 <select id="service" name="service" required>
                   <option value="">Selecciona un servicio</option>
                   <option value="desarrollo">Desarrollo de Software</option>
@@ -307,7 +309,9 @@
               <div class="form-group checkbox-group">
                 <label class="checkbox-label">
                   <input type="checkbox" name="terms" required />
-                  <span>Acepto la política de privacidad y términos de uso *</span>
+                  <span
+                    >Acepto la política de privacidad y términos de uso *</span
+                  >
                 </label>
               </div>
 
@@ -387,22 +391,29 @@
               <h3>¿Cuál es su modelo de precios?</h3>
             </div>
             <p class="faq-answer">
-              Ofrecemos precios flexibles según el proyecto: precio fijo,
-              tiempo y materiales, o modelo de retainer mensual. Lo discutimos
-              en la consultoría inicial.
+              Ofrecemos precios flexibles según el proyecto: precio fijo, tiempo
+              y materiales, o modelo de retainer mensual. Lo discutimos en la
+              consultoría inicial.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="footer">
       <div class="container">
         <div class="footer-grid">
+          <!-- LOGO / DESCRIPCIÓN -->
           <div class="footer-column">
             <div class="footer-logo">
-              <span class="logo-icon">▲</span>
+              <span class="logo-icon">
+                <img
+                  src="/public/assets/images/iconoTEC.png"
+                  alt="iconoTEC"
+                  style="width: 30px; height: 30px"
+                />
+              </span>
               <span class="logo-text">TEC RIVERA</span>
             </div>
             <p class="footer-description">
@@ -410,65 +421,74 @@
               innovar y crecer.
             </p>
             <div class="social-links">
-              <a href="#" aria-label="LinkedIn">
-                <i class="bx bxl-linkedin"></i>
-              </a>
-              <a href="#" aria-label="Twitter">
-                <i class="bx bxl-twitter"></i>
-              </a>
-              <a href="#" aria-label="Facebook">
-                <i class="bx bxl-facebook"></i>
-              </a>
-              <a href="#" aria-label="Instagram">
-                <i class="bx bxl-instagram"></i>
-              </a>
+              <a href="#" aria-label="LinkedIn"
+                ><i class="bx bxl-linkedin"></i
+              ></a>
+              <a href="#" aria-label="Twitter"
+                ><i class="bx bxl-twitter"></i
+              ></a>
+              <a href="#" aria-label="Facebook"
+                ><i class="bx bxl-facebook"></i
+              ></a>
+              <a href="#" aria-label="Instagram"
+                ><i class="bx bxl-instagram"></i
+              ></a>
             </div>
           </div>
-          <div class="footer-column">
-            <h4>Productos</h4>
-            <ul>
-              <li><a href="#">Laptops</a></li>
-              <li><a href="#">Servidores</a></li>
-              <li><a href="#">Networking</a></li>
-              <li><a href="#">Seguridad</a></li>
-              <li><a href="#">Accesorios</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Servicios</h4>
-            <ul>
-              <li><a href="#">Análisis de Datos</a></li>
-              <li><a href="#">Punto de Venta</a></li>
-              <li><a href="#">Soporte Técnico</a></li>
-              <li><a href="#">Generación de Reportes</a></li>
-              <li><a href="#">Sistema de Restaurantes</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Empresa</h4>
-            <ul>
-              <li><a href="#">Nosotros</a></li>
-              <li><a href="#">Casos de Éxito</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Carreras</a></li>
-              <li><a href="#">Contacto</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Legal</h4>
-            <ul>
-              <li><a href="#">Privacidad</a></li>
-              <li><a href="#">Términos</a></li>
-              <li><a href="#">Cookies</a></li>
-              <li><a href="#">Licencias</a></li>
-            </ul>
+
+          <!-- 🔹 Agrupación nueva de columnas -->
+          <div class="footer-columns-wrapper">
+            <div class="footer-column">
+              <h4>Productos</h4>
+              <ul>
+                <li><a href="#">Laptops</a></li>
+                <li><a href="#">Servidores</a></li>
+                <li><a href="#">Networking</a></li>
+                <li><a href="#">Seguridad</a></li>
+                <li><a href="#">Accesorios</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Servicios</h4>
+              <ul>
+                <li><a href="#">Análisis de Datos</a></li>
+                <li><a href="#">Punto de Venta</a></li>
+                <li><a href="#">Soporte Técnico</a></li>
+                <li><a href="#">Generación de Reportes</a></li>
+                <li><a href="#">Sistema de Restaurantes</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Empresa</h4>
+              <ul>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Casos de Éxito</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Carreras</a></li>
+                <li><a href="#">Contacto</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacidad</a></li>
+                <li><a href="#">Términos</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Licencias</a></li>
+              </ul>
+            </div>
           </div>
         </div>
+
         <div class="footer-bottom">
           <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
+    <script src="../assets/js/home.js"></script>
 
     <script src="../assets/js/contacto.js"></script>
   </body>

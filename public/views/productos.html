@@ -14,21 +14,27 @@
     />
   </head>
   <body>
-        <!-- Topbar -->
-  <div class="topbar" role="region" aria-label="Ingreso de tenant">
-    <div class="container topbar-inner">
-      <span class="topbar-text">
-        SI YA ERES SOCIO, INGRESA CON TU TENANT
-      </span>
-      <a href="#tenant" class="topbar-cta">INGRESA TU ID</a>
+    <!-- Topbar -->
+    <div class="topbar" role="region" aria-label="Ingreso de tenant">
+      <div class="container topbar-inner">
+        <span class="topbar-text">
+          SI YA ERES SOCIO, INGRESA CON TU TENANT
+        </span>
+        <a href="#tenant" class="topbar-cta">INGRESA TU ID</a>
+      </div>
     </div>
-  </div>
     <!-- Header -->
     <header class="header">
       <div class="container">
         <nav class="nav">
           <div class="logo">
-            <span class="logo-icon">▲</span>
+            <span class="logo-icon">
+              <img
+                src="/public/assets/images/iconoTEC.png"
+                alt="iconoTEC"
+                style="width: 30px; height: 30px"
+              />
+            </span>
             <span class="logo-text">TEC RIVERA</span>
           </div>
           <ul class="nav-menu" id="navMenu">
@@ -37,12 +43,7 @@
             <li><a href="servicios.html">Servicios</a></li>
             <li><a href="soluciones.html">Soluciones</a></li>
             <li><a href="#empresa">Empresa</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-          </ul>
-
-          <div class="nav-actions">
-            <a href="#contacto" class="btn-secondary">Iniciar sesion</a>
-            <!-- <a href="#" class="btn-primary">Iniciar Sesión</a> -->
+            <li><a href="contacto.html">Contacto</a></li>
             <button class="btn-secondary" id="wishlistBtn">
               <span class="icon"><i class="bx bx-heart"></i></span>
               <span class="badge" id="wishlistCount">0</span>
@@ -51,6 +52,16 @@
               <span class="icon"><i class="bx bx-cart"></i></span>
               <span class="badge" id="cartCount">0</span>
             </button>
+            <div class="nav-actions-mobile">
+              <a href="public/views/login.html" class="btn-primary"
+                >Iniciar Sesión</a
+              >
+            </div>
+          </ul>
+
+          <div class="nav-actions">
+            <!-- <a href="#contacto" class="btn-secondary">Iniciar sesion</a> -->
+            <a href="#" class="btn-primary">Iniciar Sesión</a>
           </div>
           <button class="mobile-toggle" id="mobileToggle">
             <span></span><span></span><span></span>
@@ -61,6 +72,13 @@
 
     <!-- Hero Slider -->
     <section class="hero-slider">
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source
+          src="/public/assets/videos/11738195-hd_1920_1080_24fps.mp4"
+          type="video/mp4"
+        />
+      </video>
+
       <div class="slider-container">
         <div class="hero-content-slide">
           <div class="slider-track" id="sliderTrack">
@@ -108,7 +126,7 @@
       </div>
     </section>
 
-     <!-- Modal de Detalles -->
+    <!-- Modal de Detalles -->
     <div class="modal" id="productModal">
       <div class="modal-content">
         <button class="modal-close" id="modalClose">&times;</button>
@@ -127,7 +145,9 @@
           <div id="cartItems"></div>
           <div class="cart-total">
             <h3>Total: s/<span id="cartTotal">0</span></h3>
-            <button class="btn btn-primary" id="checkoutBtn">Proceder al Pago</button>
+            <button class="btn btn-primary" id="checkoutBtn">
+              Proceder al Pago
+            </button>
           </div>
         </div>
       </div>
@@ -145,97 +165,104 @@
     </div>
 
     <!-- Modal de Checkout -->
-<div class="modal" id="checkoutModal">
-  <div class="modal-content modal-lg">
-    <button class="modal-close" id="checkoutClose">&times;</button>
+    <div class="modal" id="checkoutModal">
+      <div class="modal-content modal-lg">
+        <button class="modal-close" id="checkoutClose">&times;</button>
 
-    <div class="checkout">
-      <!-- Indicadores de pasos -->
-      <div class="steps">
-        <div class="step-indicator active" data-step="1">1. Resumen</div>
-        <div class="step-indicator" data-step="2">2. Método de pago</div>
-        <div class="step-indicator" data-step="3">3. Detalles</div>
-        <div class="step-indicator" data-step="4">4. Confirmación</div>
-      </div>
+        <div class="checkout">
+          <!-- Indicadores de pasos -->
+          <div class="steps">
+            <div class="step-indicator active" data-step="1">1. Resumen</div>
+            <div class="step-indicator" data-step="2">2. Método de pago</div>
+            <div class="step-indicator" data-step="3">3. Detalles</div>
+            <div class="step-indicator" data-step="4">4. Confirmación</div>
+          </div>
 
-      <!-- Contenido de pasos -->
-      <div class="steps-body">
-        <!-- Paso 1 -->
-        <div class="step-panel" id="step1">
-          <h2>Resumen del pedido</h2>
-          <div id="checkoutSummary"></div>
+          <!-- Contenido de pasos -->
+          <div class="steps-body">
+            <!-- Paso 1 -->
+            <div class="step-panel" id="step1">
+              <h2>Resumen del pedido</h2>
+              <div id="checkoutSummary"></div>
+            </div>
+
+            <!-- Paso 2 -->
+            <div class="step-panel hidden" id="step2">
+              <h2>Selecciona un método de pago</h2>
+              <form id="paymentMethodForm" class="payment-methods">
+                <label class="payment-card">
+                  <input type="radio" name="paymentMethod" value="card" />
+                  <div class="payment-card-body">
+                    <div class="title">Tarjeta</div>
+                    <div class="desc">Crédito o débito</div>
+                  </div>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="paymentMethod" value="wallet" />
+                  <div class="payment-card-body">
+                    <div class="title">Billetera (Yape/Plin)</div>
+                    <div class="desc">Pago por QR o número</div>
+                  </div>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="paymentMethod" value="transfer" />
+                  <div class="payment-card-body">
+                    <div class="title">Transferencia bancaria</div>
+                    <div class="desc">BCP/Interbank/BBVA/Scotiabank</div>
+                  </div>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="paymentMethod" value="whatsapp" />
+                  <div class="payment-card-body">
+                    <div class="title">WhatsApp (efectivo)</div>
+                    <div class="desc">Coordinar pago contra entrega</div>
+                  </div>
+                </label>
+              </form>
+            </div>
+
+            <!-- Paso 3 -->
+            <div class="step-panel hidden paso3" id="step3">
+              <h2 id="step3Title">Detalles del pago</h2>
+              <div id="paymentMethodView"></div>
+            </div>
+
+            <!-- Paso 4 -->
+            <div class="step-panel hidden" id="step4">
+              <h2>¡Pedido recibido!</h2>
+              <p id="confirmationText">
+                Gracias por tu compra. Te hemos enviado un resumen.
+              </p>
+              <div class="receipt-box" id="receiptBox"></div>
+            </div>
+          </div>
+
+          <!-- Controles -->
+          <div class="steps-actions">
+            <button class="btn-secondary" id="prevStepBtn">Atrás</button>
+            <button class="btn-primary" id="nextStepBtn">Siguiente</button>
+          </div>
         </div>
-
-        <!-- Paso 2 -->
-        <div class="step-panel hidden" id="step2">
-          <h2>Selecciona un método de pago</h2>
-          <form id="paymentMethodForm" class="payment-methods">
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="card" />
-              <div class="payment-card-body">
-                <div class="title">Tarjeta</div>
-                <div class="desc">Crédito o débito</div>
-              </div>
-            </label>
-
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="wallet" />
-              <div class="payment-card-body">
-                <div class="title">Billetera (Yape/Plin)</div>
-                <div class="desc">Pago por QR o número</div>
-              </div>
-            </label>
-
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="transfer" />
-              <div class="payment-card-body">
-                <div class="title">Transferencia bancaria</div>
-                <div class="desc">BCP/Interbank/BBVA/Scotiabank</div>
-              </div>
-            </label>
-
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="whatsapp" />
-              <div class="payment-card-body">
-                <div class="title">WhatsApp (efectivo)</div>
-                <div class="desc">Coordinar pago contra entrega</div>
-              </div>
-            </label>
-          </form>
-        </div>
-
-        <!-- Paso 3 -->
-        <div class="step-panel hidden paso3" id="step3">
-          <h2 id="step3Title">Detalles del pago</h2>
-          <div id="paymentMethodView"></div>
-        </div>
-
-        <!-- Paso 4 -->
-        <div class="step-panel hidden" id="step4">
-          <h2>¡Pedido recibido!</h2>
-          <p id="confirmationText">
-            Gracias por tu compra. Te hemos enviado un resumen.
-          </p>
-          <div class="receipt-box" id="receiptBox"></div>
-        </div>
-      </div>
-
-      <!-- Controles -->
-      <div class="steps-actions">
-        <button class="btn-secondary" id="prevStepBtn">Atrás</button>
-        <button class="btn-primary" id="nextStepBtn">Siguiente</button>
       </div>
     </div>
-  </div>
-</div>
 
     <!-- FOOTER -->
     <footer class="footer">
       <div class="container">
         <div class="footer-grid">
+          <!-- LOGO / DESCRIPCIÓN -->
           <div class="footer-column">
             <div class="footer-logo">
-              <span class="logo-icon">▲</span>
+              <span class="logo-icon">
+                <img
+                  src="/public/assets/images/iconoTEC.png"
+                  alt="iconoTEC"
+                  style="width: 30px; height: 30px"
+                />
+              </span>
               <span class="logo-text">TEC RIVERA</span>
             </div>
             <p class="footer-description">
@@ -257,51 +284,60 @@
               ></a>
             </div>
           </div>
-          <div class="footer-column">
-            <h4>Productos</h4>
-            <ul>
-              <li><a href="#">Laptops</a></li>
-              <li><a href="#">Servidores</a></li>
-              <li><a href="#">Networking</a></li>
-              <li><a href="#">Seguridad</a></li>
-              <li><a href="#">Accesorios</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Servicios</h4>
-            <ul>
-              <li><a href="#">Análisis de Datos</a></li>
-              <li><a href="#">Punto de Venta</a></li>
-              <li><a href="#">Soporte Técnico</a></li>
-              <li><a href="#">Generación de Reportes</a></li>
-              <li><a href="#">Sistema de Restaurantes</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Empresa</h4>
-            <ul>
-              <li><a href="#">Nosotros</a></li>
-              <li><a href="#">Casos de Éxito</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Carreras</a></li>
-              <li><a href="#">Contacto</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Legal</h4>
-            <ul>
-              <li><a href="#">Privacidad</a></li>
-              <li><a href="#">Términos</a></li>
-              <li><a href="#">Cookies</a></li>
-              <li><a href="#">Licencias</a></li>
-            </ul>
+
+          <!-- 🔹 Agrupación nueva de columnas -->
+          <div class="footer-columns-wrapper">
+            <div class="footer-column">
+              <h4>Productos</h4>
+              <ul>
+                <li><a href="#">Laptops</a></li>
+                <li><a href="#">Servidores</a></li>
+                <li><a href="#">Networking</a></li>
+                <li><a href="#">Seguridad</a></li>
+                <li><a href="#">Accesorios</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Servicios</h4>
+              <ul>
+                <li><a href="#">Análisis de Datos</a></li>
+                <li><a href="#">Punto de Venta</a></li>
+                <li><a href="#">Soporte Técnico</a></li>
+                <li><a href="#">Generación de Reportes</a></li>
+                <li><a href="#">Sistema de Restaurantes</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Empresa</h4>
+              <ul>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Casos de Éxito</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Carreras</a></li>
+                <li><a href="#">Contacto</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacidad</a></li>
+                <li><a href="#">Términos</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Licencias</a></li>
+              </ul>
+            </div>
           </div>
         </div>
+
         <div class="footer-bottom">
           <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
+    <script src="../assets/js/home.js"></script>
     <script src="../assets/js/productos.js"></script>
   </body>
 </html>

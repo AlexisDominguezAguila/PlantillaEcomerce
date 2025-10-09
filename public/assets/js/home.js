@@ -15,7 +15,7 @@ document.querySelectorAll(".nav-menu a").forEach((link) => {
   });
 });
 
-// 🔹 Cierra al hacer scroll
+// Cierra al hacer scroll
 window.addEventListener("scroll", () => {
   if (navMenu.classList.contains("active")) {
     navMenu.classList.remove("active");
