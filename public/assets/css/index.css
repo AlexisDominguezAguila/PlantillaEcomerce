@@ -9,7 +9,7 @@
 
 /* Hero */
 .hero {
-  padding: 120px 20px;
+  padding: 40px 20px;
   background: linear-gradient(135deg, var(--primary));
   position: relative;
   overflow: hidden;
@@ -22,11 +22,7 @@
   right: -10%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(
-    circle,
-    rgb(238, 244, 248) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, rgb(238, 244, 248) 0%, transparent 70%);
   animation: float 6s ease-in-out infinite;
 }
 
@@ -49,7 +45,7 @@
   width: 100%;
   height: auto;
   object-fit: contain;
-  border-radius: 16px;          /* opcional */
+  border-radius: 16px; /* opcional */
 }
 
 @keyframes float {
@@ -63,8 +59,14 @@
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100px); opacity: 0; }
-  to   { transform: translateX(0);     opacity: 1; }
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Responsive: apila en móvil (texto arriba, imagen abajo) */
@@ -76,8 +78,18 @@
   .hero-media {
     max-width: 90%;
   }
-}
+  .hero-actions {
+    justify-content: center;
+  }
+  .hero {
+    padding: 40px 20px;
+  }
 
+  .hero-media {
+    order: 2;
+    max-height: max-content;
+  }
+}
 
 .hero-content {
   max-width: 800px;
@@ -137,7 +149,7 @@
 
 /* Stats */
 .stats {
-  padding: 80px 20px;
+  padding: 80px 20px 0 20px;
   background: var(--dark);
 }
 
@@ -233,7 +245,7 @@
 
 /* Products */
 .products {
-  padding: 80px 20px;
+  padding: 0 20px 40px 20px;
   background: linear-gradient(180deg, var(--dark), rgba(17, 19, 68, 0.3));
 }
 
@@ -474,9 +486,21 @@
 /* Solutions */
 .solutions {
   padding: 100px 20px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
   position: relative;
   overflow: hidden;
+
+  /* Degradado + imagen combinados */
+  background: linear-gradient(
+      to right,
+      rgba(36, 36, 62, 0.95),
+      rgba(48, 43, 99, 0.9),
+      rgba(15, 12, 41, 0.9)
+    ),
+    url("/public/assets/images/fondoIndex.jpg"); /* Cambia por tu ruta */
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* efecto parallax sutil */
 }
 
 .solutions::before {
@@ -734,12 +758,17 @@
   padding: 60px 20px 20px;
 }
 
-
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   gap: 40px;
   margin-bottom: 40px;
+}
+/* Agrupación de columnas (solo afecta a los enlaces, no al logo) */
+.footer-columns-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* ← 4 columnas en escritorio */
+  gap: 40px;
 }
 
 .footer-column h4 {
@@ -780,6 +809,10 @@
   color: #ffffff;
   text-decoration: none;
   transition: all 0.3s;
+}
+.social-links a i {
+  font-size: 1.2rem;
+  color: #fff;
 }
 
 .social-links a:hover {
@@ -860,6 +893,27 @@
 
   .footer-grid {
     grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-columns-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  /* Ajustes visuales */
+  .footer-column h4 {
+    margin-bottom: 10px;
+  }
+
+  .footer-column ul li {
+    margin-bottom: 8px;
+  }
+
+  /* Centrado general */
+  .footer-column {
+    text-align: left;
   }
 
   .cta-title {
@@ -868,6 +922,29 @@
 
   .solutions-title {
     font-size: 2rem;
+  }
+}
+@media (max-width: 1024px) {
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  /*navbar*/
+  .nav-actions {
+    display: none;
+  }
+  .nav-menu {
+    display: none;
+  }
+  .logo {
+    margin-left: 20px;
+  }
+  .mobile-toggle {
+    display: flex;
+    margin-right: 30px;
   }
 }
 

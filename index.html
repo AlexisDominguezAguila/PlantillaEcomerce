@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEC RIVERA - Tecnología y Servicios de Software</title>
-    <link rel="shortcut icon" href="public/assets/images/iconoTEC.png" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="public/assets/images/iconoTEC.png"
+      type="image/x-icon"
+    />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -19,35 +23,52 @@
   </head>
   <body>
     <!-- Topbar -->
-  <div class="topbar" role="region" aria-label="Ingreso de tenant">
-    <div class="container topbar-inner">
-      <span class="topbar-text">
-        SI YA ERES SOCIO, INGRESA CON TU TENANT
-      </span>
-      <a href="#tenant" class="topbar-cta">INGRESA TU ID</a>
+    <div class="topbar" role="region" aria-label="Ingreso de tenant">
+      <div class="container topbar-inner">
+        <span class="topbar-text">
+          SI YA ERES SOCIO, INGRESA CON TU TENANT
+        </span>
+        <a href="#tenant" class="topbar-cta">INGRESA TU ID</a>
+      </div>
     </div>
-  </div>
 
-  <header class="header">
     <header class="header">
       <div class="container">
         <nav class="nav">
           <div class="logo">
-            <span class="logo-icon">▲</span>
+            <span class="logo-icon">
+              <img
+                src="public/assets/images/iconoTEC.png"
+                alt="iconoTEC"
+                style="width: 30px; height: 30px"
+              />
+            </span>
             <span class="logo-text">TEC RIVERA</span>
           </div>
+
           <ul class="nav-menu" id="navMenu">
             <li><a class="active" href="#">Inicio</a></li>
             <li><a href="public/views/productos.html">Productos</a></li>
             <li><a href="public/views/servicios.html">Servicios</a></li>
             <li><a href="public/views/soluciones.html">Soluciones</a></li>
             <li><a href="#empresa">Empresa</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="public/views/contacto.html">Contacto</a></li>
+
+            <div class="nav-actions-mobile">
+              <a href="public/views/login.html" class="btn-primary"
+                >Iniciar Sesión</a
+              >
+            </div>
           </ul>
+
+          <!-- Botones normales (visibles en escritorio) -->
           <div class="nav-actions">
-            <a href="#contacto" class="btn-secondary">Contacto</a>
-            <a href="public/views/login.html" class="btn-primary">Iniciar Sesión</a> 
+            <!-- <a href="#contacto" class="btn-secondary">Contacto</a> -->
+            <a href="public/views/login.html" class="btn-primary"
+              >Iniciar Sesión</a
+            >
           </div>
+
           <button class="mobile-toggle" id="mobileToggle">
             <span></span><span></span><span></span>
           </button>
@@ -55,26 +76,35 @@
       </div>
     </header>
 
-<section class="hero">
-  <div class="container hero-inner">
-    <div class="hero-content">
-      <h1 class="hero-title">Soluciones<span class="hero-title2"> inteligentes para impulsar tu</span> negocio y empresa</h1>
-      <h1 class="hero-title2">¡Todo en un solo lugar!</h1>
-      <p class="hero-description">
-        Tu aliado estratégico para llevar tu negocio al siguiente nivel.
-      </p>
-      <div class="hero-actions">
-        <a href="#contacto" class="btn-primary btn-large">Solicitar Demo</a>
-        <a href="#servicios" class="btn-secondary btn-large">Explorar Servicios</a>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Soluciones<span class="hero-title2">
+              inteligentes para impulsar tu</span
+            >
+            negocio y empresa
+          </h1>
+          <h1 class="hero-title2">¡Todo en un solo lugar!</h1>
+          <p class="hero-description">
+            Tu aliado estratégico para llevar tu negocio al siguiente nivel.
+          </p>
+          <div class="hero-actions">
+            <a href="#contacto" class="btn-primary btn-large">Solicitar Demo</a>
+            <a href="#servicios" class="btn-secondary btn-large"
+              >Explorar Servicios</a
+            >
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <img
+            src="public/assets/images/logoindex.png"
+            alt="Soluciones TEC RIVERA"
+          />
+        </div>
       </div>
-    </div>
-
-    <div class="hero-media">
-      <img src="public/assets/images/logoindex.png" alt="Soluciones TEC RIVERA" />
-    </div>
-  </div>
-</section>
-
+    </section>
 
     <section class="stats">
       <div class="container">
@@ -93,13 +123,10 @@
             <div class="stat-number">13+</div>
             <div class="stat-label">Años Brindando soluciones</div>
             <div class="stat-company">En el Mercado</div>
-          </div> 
+          </div>
         </div>
       </div>
-          <h1 class="hero-title2">Todo lo que necesita tu empresa<span class="hero-title"> en un solo lugar!</span></h1>
-
     </section>
-
     <!-- PRODUCTS -->
     <section class="products" id="productos">
       <div class="container">
@@ -118,7 +145,8 @@
             <div class="product-info">
               <h3 class="product-title">Hardware de Cómputo</h3>
               <p class="product-description">
-                Venta de equipos de alto rendimiento para profesionales y empresas
+                Venta de equipos de alto rendimiento para profesionales y
+                empresas
               </p>
               <div class="product-footer">
                 <span class="product-price">Desde $899</span>
@@ -148,9 +176,7 @@
             </div>
             <div class="product-info">
               <h3 class="product-title">Páginas Web</h3>
-              <p class="product-description">
-                Diseño y desarrollo web.
-              </p>
+              <p class="product-description">Diseño y desarrollo web.</p>
               <div class="product-footer">
                 <span class="product-price">Desde $299</span>
                 <button class="btn-product">Ver Detalles</button>
@@ -467,9 +493,16 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-grid">
+          <!-- LOGO / DESCRIPCIÓN -->
           <div class="footer-column">
             <div class="footer-logo">
-              <span class="logo-icon">▲</span>
+              <span class="logo-icon">
+                <img
+                  src="public/assets/images/iconoTEC.png"
+                  alt="iconoTEC"
+                  style="width: 30px; height: 30px"
+                />
+              </span>
               <span class="logo-text">TEC RIVERA</span>
             </div>
             <p class="footer-description">
@@ -480,7 +513,9 @@
               <a href="#" aria-label="LinkedIn"
                 ><i class="bx bxl-linkedin"></i
               ></a>
-              <a href="#" aria-label="Twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" aria-label="Twitter"
+                ><i class="bx bxl-twitter"></i
+              ></a>
               <a href="#" aria-label="Facebook"
                 ><i class="bx bxl-facebook"></i
               ></a>
@@ -489,50 +524,60 @@
               ></a>
             </div>
           </div>
-          <div class="footer-column">
-            <h4>Productos</h4>
-            <ul>
-              <li><a href="#">Laptops</a></li>
-              <li><a href="#">Servidores</a></li>
-              <li><a href="#">Networking</a></li>
-              <li><a href="#">Seguridad</a></li>
-              <li><a href="#">Accesorios</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Servicios</h4>
-            <ul>
-              <li><a href="#">Análisis de Datos</a></li>
-              <li><a href="#">Punto de Venta</a></li>
-              <li><a href="#">Soporte Técnico</a></li>
-              <li><a href="#">Generación de Reportes</a></li>
-              <li><a href="#">Sistema de Restaurantes</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Empresa</h4>
-            <ul>
-              <li><a href="#">Nosotros</a></li>
-              <li><a href="#">Casos de Éxito</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Carreras</a></li>
-              <li><a href="#">Contacto</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Legal</h4>
-            <ul>
-              <li><a href="#">Privacidad</a></li>
-              <li><a href="#">Términos</a></li>
-              <li><a href="#">Cookies</a></li>
-              <li><a href="#">Licencias</a></li>
-            </ul>
+
+          <!-- 🔹 Agrupación nueva de columnas -->
+          <div class="footer-columns-wrapper">
+            <div class="footer-column">
+              <h4>Productos</h4>
+              <ul>
+                <li><a href="#">Laptops</a></li>
+                <li><a href="#">Servidores</a></li>
+                <li><a href="#">Networking</a></li>
+                <li><a href="#">Seguridad</a></li>
+                <li><a href="#">Accesorios</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Servicios</h4>
+              <ul>
+                <li><a href="#">Análisis de Datos</a></li>
+                <li><a href="#">Punto de Venta</a></li>
+                <li><a href="#">Soporte Técnico</a></li>
+                <li><a href="#">Generación de Reportes</a></li>
+                <li><a href="#">Sistema de Restaurantes</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Empresa</h4>
+              <ul>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Casos de Éxito</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Carreras</a></li>
+                <li><a href="#">Contacto</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacidad</a></li>
+                <li><a href="#">Términos</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Licencias</a></li>
+              </ul>
+            </div>
           </div>
         </div>
+
         <div class="footer-bottom">
           <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
+
+    <script src="public/assets/js/home.js"></script>
   </body>
 </html>

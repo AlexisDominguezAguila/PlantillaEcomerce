@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEC RIVERA - Círculo Giratorio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        background: #f5f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      .circle-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+      }
+
+      /* Logo central */
+      .center-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+
+      .center-logo img {
+        width: 100px;
+        height: auto;
+        border-radius: 50%;
+      }
+
+      .center-logo h2 {
+        margin-top: 10px;
+        color: #004a8f;
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+
+      /* Texto circular */
+      .circle-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        animation: rotateText 15s linear infinite;
+      }
+
+      .circle-text span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform-origin: 0 160px;
+        font-weight: 600;
+        color: #004a8f;
+        font-size: 0.9rem;
+      }
+
+      @keyframes rotateText {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Iconos inferiores */
+      .bottom-icons {
+        position: absolute;
+        bottom: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 100px;
+      }
+
+      .icon-box {
+        text-align: center;
+        color: #004a8f;
+      }
+
+      .icon-box i {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .icon-box span {
+        display: block;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="circle-container">
+      <div class="center-logo">
+        <img src="public/assets/images/iconoTEC.png" alt="TEC RIVERA Logo" />
+        <!-- Reemplaza con tu logo -->
+        <h2>TEC RIVERA</h2>
+      </div>
+
+      <div class="circle-text" id="circleText"></div>
+
+      <div class="bottom-icons">
+        <div class="icon-box">
+          <i class="fas fa-store"></i>
+          <span>PEQUEÑOS<br />NEGOCIOS</span>
+        </div>
+        <div class="icon-box">
+          <i class="fas fa-building"></i>
+          <span>GRANDES<br />NEGOCIOS</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const text = [
+        "Control de reportes",
+        "Análisis de datos",
+        "Generación de pedido",
+        "Control de pedidos",
+        "Sisteman de restaurantes",
+        "Páginas web",
+        "Páginas de datos",
+      ];
+
+      const circle = document.getElementById("circleText");
+
+      const step = 360 / text.length;
+      text.forEach((word, i) => {
+        const span = document.createElement("span");
+        span.textContent = word;
+        span.style.transform = `rotate(${
+          i * step
+        }deg) translate(0, -160px) rotate(${-(i * step)}deg)`;
+        circle.appendChild(span);
+      });
+    </script>
+  </body>
+</html>
