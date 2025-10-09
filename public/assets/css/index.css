@@ -752,25 +752,31 @@
   min-height: 120px;
 }
 
-/* Footer */
+/* ===========================
+   FOOTER
+=========================== */
 .footer {
   background: linear-gradient(135deg, var(--secondary));
   padding: 60px 20px 20px;
 }
 
+/* Grilla principal: logo + agrupación de columnas */
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 2fr; /* dos columnas reales */
+  align-items: flex-start;
   gap: 40px;
   margin-bottom: 40px;
 }
-/* Agrupación de columnas (solo afecta a los enlaces, no al logo) */
+
+/* Grilla interna de las secciones de enlaces */
 .footer-columns-wrapper {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* ← 4 columnas en escritorio */
+  grid-template-columns: repeat(4, 1fr);
   gap: 40px;
 }
 
+/* --- Estilos generales --- */
 .footer-column h4 {
   color: var(--accent-blue);
   margin-bottom: 20px;
@@ -810,6 +816,7 @@
   text-decoration: none;
   transition: all 0.3s;
 }
+
 .social-links a i {
   font-size: 1.2rem;
   color: #fff;
@@ -845,7 +852,47 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* Responsive */
+/* ===========================
+   RESPONSIVE FOOTER
+=========================== */
+
+/* TABLET (≤1024px) */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* MÓVIL (≤768px) */
+@media (max-width: 768px) {
+  .footer-columns-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .footer-column h4 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .footer-column ul li {
+    margin-bottom: 8px;
+  }
+
+  .footer-description {
+    text-align: justify;
+  }
+}
+
+/* Opcional: Para móviles MUY pequeños (≤480px), las columnas de enlaces deben ser 1fr */
+@media (max-width: 480px) {
+  .footer-columns-wrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
 @media (max-width: 1024px) {
   .solutions-content {
     grid-template-columns: 1fr;
@@ -854,16 +901,34 @@
   .contact-grid {
     grid-template-columns: 1fr;
   }
-
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .services-grid {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
-}
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  /*navbar*/
+  .nav-actions {
+    display: none;
+  }
+  .nav-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
+  .logo {
+    margin-left: 20px;
+  }
+  .logo-text {
+    font-size: 1rem;
+  }
+}
 @media (max-width: 768px) {
   .nav-menu,
   .nav-actions {
@@ -889,72 +954,5 @@
 
   .services-grid {
     grid-template-columns: 1fr;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .footer-columns-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-  }
-
-  /* Ajustes visuales */
-  .footer-column h4 {
-    margin-bottom: 10px;
-  }
-
-  .footer-column ul li {
-    margin-bottom: 8px;
-  }
-
-  /* Centrado general */
-  .footer-column {
-    text-align: left;
-  }
-
-  .cta-title {
-    font-size: 2rem;
-  }
-
-  .solutions-title {
-    font-size: 2rem;
-  }
-}
-@media (max-width: 1024px) {
-  .hero-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-  .hero-actions {
-    justify-content: center;
-  }
-  /*navbar*/
-  .nav-actions {
-    display: none;
-  }
-  .nav-menu {
-    display: none;
-  }
-  .logo {
-    margin-left: 20px;
-  }
-  .mobile-toggle {
-    display: flex;
-    margin-right: 30px;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
