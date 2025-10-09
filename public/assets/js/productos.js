@@ -306,22 +306,30 @@ function renderProducts(filter = "all") {
       </div>
       <div class="product-info">
         <div class="product-category">${product.category}</div>
-        <h3 class="product-name" data-action="open-detail" data-id="${product.id}">${product.name}</h3>
+        <h3 class="product-name" data-action="open-detail" data-id="${
+          product.id
+        }">${product.name}</h3>
         <p class="product-description">${product.description}</p>
         <div class="product-footer">
           <div class="product-price">${fmtMoney(product.price)}</div>
           <div class="product-actions">
-            <button class="btn-icon wishlist-btn ${isInWishlist ? "active" : ""}" data-action="toggle-wishlist" data-id="${product.id}" aria-label="Añadir a deseos">♥</button>
-            <button class="btn-icon cart-btn" data-action="add-cart" data-id="${product.id}" aria-label="Agregar al carrito">🛒</button>
+            <button class="btn-icon wishlist-btn ${
+              isInWishlist ? "active" : ""
+            }" data-action="toggle-wishlist" data-id="${
+      product.id
+    }" aria-label="Añadir a deseos">♥</button>
+            <button class="btn-icon cart-btn" data-action="add-cart" data-id="${
+              product.id
+            }" aria-label="Agregar al carrito">🛒</button>
           </div>
         </div>
       </div>
     `;
 
     // Click en imagen abre detalle
-    card.querySelector(".product-image")?.addEventListener("click", () =>
-      showProductDetail(product)
-    );
+    card
+      .querySelector(".product-image")
+      ?.addEventListener("click", () => showProductDetail(product));
     // Delegación de acciones
     card.addEventListener("click", (e) => {
       const t = e.target;
@@ -366,7 +374,9 @@ function showProductDetail(product) {
         <div class="product-detail-price">${fmtMoney(product.price)}</div>
         <div class="product-detail-actions">
           <button class="btn btn-primary" id="detailAddCartBtn">🛒 Agregar al Carrito</button>
-          <button class="btn btn-secondary ${isInWishlist ? "active" : ""}" id="detailWishlistBtn">
+          <button class="btn btn-secondary ${
+            isInWishlist ? "active" : ""
+          }" id="detailWishlistBtn">
             ♥ ${isInWishlist ? "En Lista" : "Deseos"}
           </button>
         </div>
@@ -441,10 +451,16 @@ function renderCart() {
           <div class="cart-item-price">${fmtMoney(item.price)}</div>
         </div>
         <div class="cart-item-actions">
-          <button class="quantity-btn" aria-label="Disminuir" data-action="qty-dec" data-id="${item.id}">-</button>
+          <button class="quantity-btn" aria-label="Disminuir" data-action="qty-dec" data-id="${
+            item.id
+          }">-</button>
           <span class="quantity">${item.quantity}</span>
-          <button class="quantity-btn" aria-label="Aumentar" data-action="qty-inc" data-id="${item.id}">+</button>
-          <button class="remove-btn" data-action="remove" data-id="${item.id}">Eliminar</button>
+          <button class="quantity-btn" aria-label="Aumentar" data-action="qty-inc" data-id="${
+            item.id
+          }">+</button>
+          <button class="remove-btn" data-action="remove" data-id="${
+            item.id
+          }">Eliminar</button>
         </div>
       </div>
     `
@@ -455,17 +471,21 @@ function renderCart() {
   totalEl.textContent = total.toFixed(2);
 
   // Delegación de eventos para los botones del carrito
-  wrap.addEventListener("click", (e) => {
-    const t = e.target;
-    if (!(t instanceof HTMLElement)) return;
-    const id = Number(t.getAttribute("data-id"));
-    const action = t.getAttribute("data-action");
-    if (!action || Number.isNaN(id)) return;
+  wrap.addEventListener(
+    "click",
+    (e) => {
+      const t = e.target;
+      if (!(t instanceof HTMLElement)) return;
+      const id = Number(t.getAttribute("data-id"));
+      const action = t.getAttribute("data-action");
+      if (!action || Number.isNaN(id)) return;
 
-    if (action === "qty-dec") updateQuantity(id, -1);
-    if (action === "qty-inc") updateQuantity(id, 1);
-    if (action === "remove") removeFromCart(id);
-  }, { once: true });
+      if (action === "qty-dec") updateQuantity(id, -1);
+      if (action === "qty-inc") updateQuantity(id, 1);
+      if (action === "remove") removeFromCart(id);
+    },
+    { once: true }
+  );
 }
 
 function updateCartCount() {
@@ -504,7 +524,8 @@ function renderWishlist() {
   if (!wrap) return;
 
   if (wishlist.length === 0) {
-    wrap.innerHTML = '<div class="empty-message">Tu lista de deseos está vacía</div>';
+    wrap.innerHTML =
+      '<div class="empty-message">Tu lista de deseos está vacía</div>';
     return;
   }
 
@@ -520,26 +541,34 @@ function renderWishlist() {
           <div class="wishlist-item-price">${fmtMoney(item.price)}</div>
         </div>
         <div class="cart-item-actions">
-          <button class="btn btn-primary" data-action="wish-add-cart" data-id="${item.id}">Agregar al Carrito</button>
-          <button class="remove-btn" data-action="wish-remove" data-id="${item.id}">Eliminar</button>
+          <button class="btn btn-primary" data-action="wish-add-cart" data-id="${
+            item.id
+          }">Agregar al Carrito</button>
+          <button class="remove-btn" data-action="wish-remove" data-id="${
+            item.id
+          }">Eliminar</button>
         </div>
       </div>
     `
     )
     .join("");
 
-  wrap.addEventListener("click", (e) => {
-    const t = e.target;
-    if (!(t instanceof HTMLElement)) return;
-    const id = Number(t.getAttribute("data-id"));
-    const action = t.getAttribute("data-action");
-    if (!action || Number.isNaN(id)) return;
+  wrap.addEventListener(
+    "click",
+    (e) => {
+      const t = e.target;
+      if (!(t instanceof HTMLElement)) return;
+      const id = Number(t.getAttribute("data-id"));
+      const action = t.getAttribute("data-action");
+      if (!action || Number.isNaN(id)) return;
 
-    const product = products.find((p) => p.id === id);
-    if (!product) return;
-    if (action === "wish-add-cart") addToCart(product);
-    if (action === "wish-remove") removeFromWishlist(id);
-  }, { once: true });
+      const product = products.find((p) => p.id === id);
+      if (!product) return;
+      if (action === "wish-add-cart") addToCart(product);
+      if (action === "wish-remove") removeFromWishlist(id);
+    },
+    { once: true }
+  );
 }
 
 function updateWishlistCount() {
@@ -630,7 +659,9 @@ function renderPaymentMethodView() {
         <button class="btn-primary full" id="##payCardBtn">Pagar ${totalText}</button>
       </form>
     `;
-    $("#payCardBtn")?.addEventListener("click", () => confirmPayment("Tarjeta", total));
+    $("#payCardBtn")?.addEventListener("click", () =>
+      confirmPayment("Tarjeta", total)
+    );
   }
 
   if (selectedPaymentMethod === "wallet") {
@@ -659,8 +690,9 @@ function renderPaymentMethodView() {
         (document.querySelector('input[name="walletType"]:checked') || {})
           .value || "yape";
       const phone = type === "yape" ? YAPE_PHONE : PLIN_PHONE;
-      document.getElementById("walletNumber").innerHTML =
-        `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
+      document.getElementById(
+        "walletNumber"
+      ).innerHTML = `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
 
       const svg = encodeURIComponent(`
         <svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'>
@@ -670,8 +702,9 @@ function renderPaymentMethodView() {
           <text x='50%' y='75%' font-size='12' text-anchor='middle' fill='#333'>${totalText}</text>
         </svg>
       `);
-      document.getElementById("walletQr").innerHTML =
-        `<img alt="QR ${type}" src="data:image/svg+xml;utf8,${svg}" />`;
+      document.getElementById(
+        "walletQr"
+      ).innerHTML = `<img alt="QR ${type}" src="data:image/svg+xml;utf8,${svg}" />`;
     };
 
     renderWallet();
@@ -751,7 +784,8 @@ function confirmPayment(method, total) {
       <div><strong>Recibo:</strong> ${receipt}</div>
     `;
   }
-  if (msg) msg.textContent = "Gracias. Tu pedido fue registrado correctamente (demo).";
+  if (msg)
+    msg.textContent = "Gracias. Tu pedido fue registrado correctamente (demo).";
 
   // Vaciar carrito
   cart = [];
@@ -818,7 +852,8 @@ function updateStepUI() {
 
   const prevBtn = document.getElementById("prevStepBtn");
   const nextBtn = document.getElementById("nextStepBtn");
-  if (prevBtn) prevBtn.style.display = checkoutStep === 1 ? "none" : "inline-flex";
+  if (prevBtn)
+    prevBtn.style.display = checkoutStep === 1 ? "none" : "inline-flex";
   if (nextBtn) {
     nextBtn.textContent = checkoutStep === 4 ? "Cerrar" : "Siguiente";
   }
@@ -840,9 +875,15 @@ function setupEventListeners() {
 
   // Cierres
   $("#modalClose")?.addEventListener("click", () => closeModal("productModal"));
-  $("#cartModalClose")?.addEventListener("click", () => closeModal("cartModal"));
-  $("#wishlistModalClose")?.addEventListener("click", () => closeModal("wishlistModal"));
-  $("#checkoutClose")?.addEventListener("click", () => closeModal("checkoutModal"));
+  $("#cartModalClose")?.addEventListener("click", () =>
+    closeModal("cartModal")
+  );
+  $("#wishlistModalClose")?.addEventListener("click", () =>
+    closeModal("wishlistModal")
+  );
+  $("#checkoutClose")?.addEventListener("click", () =>
+    closeModal("checkoutModal")
+  );
 
   // Click fuera para cerrar
   document.querySelectorAll(".modal").forEach((modal) => {
