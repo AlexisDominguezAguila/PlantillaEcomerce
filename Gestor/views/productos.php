@@ -16,7 +16,7 @@
     <aside class="sidebar">
       <div class="logo-section">
         <img
-          src="/public/assets/images/iconoTEC.png"
+          src="../../public/assets/images/iconoTEC.png"
           alt="Tec Rivera"
           class="logo"
         />
@@ -131,11 +131,6 @@
             <label>Categoría</label>
             <select class="filter-input" id="categoryFilter">
               <option value="">Todas las categorías</option>
-              <option value="Electrónica">Electrónica</option>
-              <option value="Ropa">Ropa</option>
-              <option value="Hogar">Hogar</option>
-              <option value="Deportes">Deportes</option>
-              <option value="Juguetes">Juguetes</option>
             </select>
           </div>
           <div class="filter-group">
@@ -253,12 +248,7 @@
                   Categoría *
                 </label>
                 <select class="form-input" id="productCategory" required>
-                  <option value="">Seleccionar categoría</option>
-                  <option value="Electrónica">Electrónica</option>
-                  <option value="Ropa">Ropa</option>
-                  <option value="Hogar">Hogar</option>
-                  <option value="Deportes">Deportes</option>
-                  <option value="Juguetes">Juguetes</option>
+                 
                 </select>
               </div>
 

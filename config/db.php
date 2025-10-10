@@ -16,7 +16,7 @@ class Database {
             $this->conn = new PDO($dsn, $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $e) {
-            echo "Error de conexión: " . $e->getMessage();
+            die(json_encode(["error" => "Error de conexión: " . $e->getMessage()]));
         }
         return $this->conn;
     }

@@ -1,6 +1,7 @@
 // Data Storage
 let products = [];
-const API_URL = "Gestor/controllers/ProductoController.php";
+const API_URL = "../controllers/ProductoController.php";
+
 const UPLOAD_PATH = "public/uploads/productos/"; // para previsualización o paths locales
 
 let currentPage = 1;
@@ -11,7 +12,8 @@ let uploadedImages = [];
 
 // Inicializar desde el backend
 document.addEventListener("DOMContentLoaded", function () {
-  cargarProductos(); // 🔄 Nueva función en lugar de loadSampleData
+  cargarProductos();
+  cargarCategoriasFiltro();
   updateStats();
   setupEventListeners();
 });
@@ -64,6 +66,50 @@ function setupEventListeners() {
   document
     .getElementById("productForm")
     .addEventListener("submit", handleFormSubmit);
+}
+// Cargar categorías desde el backend y llenar el select
+async function cargarCategorias() {
+  const select = document.getElementById("productCategory");
+  select.innerHTML = `<option value="">Cargando categorías...</option>`;
+
+  try {
+    const res = await fetch(`${API_URL}?action=categorias`);
+    const data = await res.json();
+
+    if (!data || data.length === 0) {
+      select.innerHTML = `<option value="">No hay categorías</option>`;
+      return;
+    }
+
+    select.innerHTML = `<option value="">Seleccionar categoría</option>`;
+    data.forEach((cat) => {
+      const option = document.createElement("option");
+      option.value = cat.id;
+      option.textContent = cat.name;
+      select.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error cargando categorías:", error);
+    select.innerHTML = `<option value="">Error al cargar categorías</option>`;
+  }
+}
+async function cargarCategoriasFiltro() {
+  const filterSelect = document.getElementById("categoryFilter");
+  filterSelect.innerHTML = `<option value="">Todas las categorías</option>`;
+
+  try {
+    const res = await fetch(`${API_URL}?action=categorias`);
+    const data = await res.json();
+
+    data.forEach((cat) => {
+      const option = document.createElement("option");
+      option.value = cat.name; // ⚠️ O usa cat.id si filtras por id en tus productos
+      option.textContent = cat.name;
+      filterSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error cargando categorías del filtro:", error);
+  }
 }
 
 // Render Products
@@ -403,6 +449,9 @@ function openModal(productId = null) {
   editingProductId = productId;
   const modal = document.getElementById("productModal");
   const form = document.getElementById("productForm");
+
+  // Cargar categorías antes de mostrar el modal
+  cargarCategorias();
 
   if (productId) {
     const product = products.find((p) => p.id === productId);
