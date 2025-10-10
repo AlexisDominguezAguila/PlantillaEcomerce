@@ -1,13 +1,13 @@
 /* Page Hero - Reusing from servicios but with variations */
 .page-hero {
   padding: 140px 20px 80px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--secondary), var(--accent-blue));
   position: relative;
   overflow: hidden;
   text-align: center;
 }
 
-.page-hero::before {
+/* .page-hero::before {
   content: "";
   position: absolute;
   top: -50%;
@@ -16,11 +16,11 @@
   height: 600px;
   background: radial-gradient(
     circle,
-    rgba(251, 133, 0, 0.15) 0%,
+    rgba(56, 182, 255, 0.15) 0%,
     transparent 70%
   );
   animation: float 8s ease-in-out infinite;
-}
+} */
 
 .page-hero .hero-content {
   max-width: 900px;

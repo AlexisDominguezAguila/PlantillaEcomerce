@@ -62,54 +62,35 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function submitForm(formData) {
-    // Mostrar estado de carga
-    const submitBtn = contactForm.querySelector('.btn-submit');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Enviando...';
-    submitBtn.disabled = true;
+  const submitBtn = contactForm.querySelector('.btn-submit');
+  const originalText = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Enviando...';
+  submitBtn.disabled = true;
 
-    // Simular llamada API (reemplaza esto con tu endpoint real)
-    setTimeout(() => {
-      // Simulación de éxito
-      showMessage('¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.', 'success');
-      
-      // Resetear formulario
+  // Enviar datos reales al servidor PHP
+  fetch('sendMail.php', {
+    method: 'POST',
+    body: new FormData(contactForm)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      showMessage(data.message, 'success');
       contactForm.reset();
-      
-      // Restaurar botón
-      submitBtn.innerHTML = originalText;
-      submitBtn.disabled = false;
+    } else {
+      showMessage(data.message, 'error');
+    }
+  })
+  .catch(error => {
+    showMessage('Hubo un error al enviar el mensaje. Intenta nuevamente.', 'error');
+    console.error('Error:', error);
+  })
+  .finally(() => {
+    submitBtn.innerHTML = originalText;
+    submitBtn.disabled = false;
+  });
+}
 
-      // Log para desarrollo (remover en producción)
-      console.log('Datos del formulario:', formData);
-
-      // Opcional: Scroll al mensaje
-      formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 2000);
-
-    // En producción, usarías algo como:
-    /*
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-      showMessage('¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.', 'success');
-      contactForm.reset();
-      submitBtn.innerHTML = originalText;
-      submitBtn.disabled = false;
-    })
-    .catch(error => {
-      showMessage('Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.', 'error');
-      submitBtn.innerHTML = originalText;
-      submitBtn.disabled = false;
-    });
-    */
-  }
 
   function showMessage(message, type) {
     formMessage.textContent = message;

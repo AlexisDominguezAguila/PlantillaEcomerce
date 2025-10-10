@@ -31,7 +31,13 @@
       <div class="container">
         <nav class="nav">
           <div class="logo">
-            <span class="logo-icon">▲</span>
+            <span class="logo-icon">
+              <img
+                src="/public/assets/images/iconoTEC.png"
+                alt="iconoTEC"
+                style="width: 30px; height: 30px"
+              />
+            </span>
             <span class="logo-text">TEC RIVERA</span>
           </div>
           <ul class="nav-menu" id="navMenu">
@@ -41,9 +47,16 @@
             <li><a href="soluciones.html">Soluciones</a></li>
             <li><a href="#empresa">Empresa</a></li>
             <li><a class="active" href="#">Contacto</a></li>
+            <div class="nav-actions-mobile">
+              <a href="login.html" class="btn-primary"
+                >Iniciar Sesión</a
+              >
+            </div>
           </ul>
           <div class="nav-actions">
-            <a href="#" class="btn-secondary">Iniciar sesion</a>
+            <a href="login.html" class="btn-primary"
+              >Iniciar Sesión</a
+            >
           </div>
           <button class="mobile-toggle" id="mobileToggle">
             <span></span><span></span><span></span>
@@ -76,7 +89,7 @@
             </div>
             <h3>Email</h3>
             <p>Respuesta en 24 horas</p>
-            <a href="mailto:contacto@tecrivera.com">contacto@tecrivera.com</a>
+            <a href="mailto:soporte@tecrivera.com">soporte@tecrivera.com</a>
             <a href="mailto:ventas@tecrivera.com">ventas@tecrivera.com</a>
           </div>
 
@@ -85,9 +98,8 @@
               <i class="bx bx-phone"></i>
             </div>
             <h3>Teléfono</h3>
-            <p>Lun - Vie: 9:00 AM - 6:00 PM</p>
-            <a href="tel:+15551234567">+1 (555) 123-4567</a>
-            <a href="tel:+15559876543">+1 (555) 987-6543</a>
+            <p>Lun - Vie: 9:00 AM - 6:30 PM</p>
+            <a href="tel:+51985468074">+51 985 468 074</a>
           </div>
 
           <div class="method-card">
@@ -96,7 +108,7 @@
             </div>
             <h3>Soporte 24/7</h3>
             <p>Emergencias y soporte técnico</p>
-            <a href="tel:+15551111111">+1 (555) 111-1111</a>
+            <a href="tel:+51985468074">+51 985 468 074</a>
             <span class="status-badge online">En línea</span>
           </div>
 
@@ -107,8 +119,8 @@
             <h3>Oficina Principal</h3>
             <p>Visítanos en nuestra sede</p>
             <address>
-              123 Tech Avenue, Suite 100<br />
-              Silicon Valley, CA 94025
+              Calle Loreto 412<br />
+              sullana, Sullana, Perú
             </address>
           </div>
         </div>
@@ -135,8 +147,8 @@
                 </div>
                 <div class="info-content">
                   <h4>Llámanos</h4>
-                  <p>+1 (555) 123-4567</p>
-                  <span>Lun - Vie: 9 AM - 6 PM</span>
+                  <p>+51 985 468 074</p>
+                  <span>Lun - Vie: 9 AM - 6:30 PM</span>
                 </div>
               </div>
 
@@ -146,7 +158,7 @@
                 </div>
                 <div class="info-content">
                   <h4>Escríbenos</h4>
-                  <p>contacto@tecrivera.com</p>
+                  <p>ventas@tecrivera.com</p>
                   <span>Respuesta en 24 horas</span>
                 </div>
               </div>
@@ -157,8 +169,8 @@
                 </div>
                 <div class="info-content">
                   <h4>Visítanos</h4>
-                  <p>123 Tech Avenue, Suite 100</p>
-                  <span>Silicon Valley, CA 94025</span>
+                  <p>Calle Loreto 412</p>
+                  <span>sullana, Sullana, Perú</span>
                 </div>
               </div>
 
@@ -168,8 +180,8 @@
                 </div>
                 <div class="info-content">
                   <h4>Horario</h4>
-                  <p>Lunes - Viernes: 9:00 AM - 6:00 PM</p>
-                  <span>Sábados: 10:00 AM - 2:00 PM</span>
+                  <p>Lunes - Viernes: 9:00 AM - 6:30 PM</p>
+                  <span>Sábados: 9:00 AM - 6:00 PM</span>
                 </div>
               </div>
             </div>
@@ -177,20 +189,11 @@
             <div class="social-connect">
               <h4>Síguenos en Redes</h4>
               <div class="social-icons">
-                <a href="#" aria-label="LinkedIn">
-                  <i class="bx bxl-linkedin"></i>
-                </a>
-                <a href="#" aria-label="Twitter">
-                  <i class="bx bxl-twitter"></i>
-                </a>
-                <a href="#" aria-label="Facebook">
+                <a href="https://www.facebook.com/multi.per.5" aria-label="Facebook">
                   <i class="bx bxl-facebook"></i>
                 </a>
-                <a href="#" aria-label="Instagram">
+                <a href="https://www.instagram.com/tecrivera_peru?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram">
                   <i class="bx bxl-instagram"></i>
-                </a>
-                <a href="#" aria-label="YouTube">
-                  <i class="bx bxl-youtube"></i>
                 </a>
               </div>
             </div>
@@ -198,7 +201,7 @@
 
           <!-- Contact Form -->
           <div class="contact-form-panel">
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" method="POST" action="sendMail.php">
               <h2>Envíanos un Mensaje</h2>
               <p class="form-subtitle">
                 * Todos los campos marcados son obligatorios
@@ -265,13 +268,12 @@
                 >
                 <select id="service" name="service" required>
                   <option value="">Selecciona un servicio</option>
-                  <option value="desarrollo">Desarrollo de Software</option>
-                  <option value="outsourcing">Outsourcing IT</option>
+                  <option value="desarrollo">Sistema de Restaurante</option>
+                  <option value="outsourcing">Venta de Productos de Computo</option>
                   <option value="soporte">Soporte Técnico</option>
-                  <option value="cloud">Consultoría Cloud</option>
-                  <option value="seguridad">Ciberseguridad</option>
+                  <option value="cloud">Generación de Reportes</option>
+                  <option value="seguridad">Punto de Venta</option>
                   <option value="datos">Análisis de Datos</option>
-                  <option value="productos">Productos de Hardware</option>
                   <option value="otro">Otro</option>
                 </select>
               </div>
@@ -280,11 +282,11 @@
                 <label for="budget">Presupuesto Estimado</label>
                 <select id="budget" name="budget">
                   <option value="">Selecciona un rango</option>
-                  <option value="5k">Menos de $5,000</option>
-                  <option value="5k-10k">$5,000 - $10,000</option>
-                  <option value="10k-25k">$10,000 - $25,000</option>
-                  <option value="25k-50k">$25,000 - $50,000</option>
-                  <option value="50k+">Más de $50,000</option>
+                  <option value="5k">Menos de s/5,000</option>
+                  <option value="5k-10k">s/5,000 - s/10,000</option>
+                  <option value="10k-25k">s/10,000 - s/25,000</option>
+                  <option value="25k-50k">s/25,000 - s/50,000</option>
+                  <option value="50k+">Más de s/50,000</option>
                 </select>
               </div>
 
@@ -332,11 +334,7 @@
       <div class="container">
         <h2 class="section-title">Nuestra Ubicación</h2>
         <div class="map-container">
-          <div class="map-placeholder">
-            <i class="bx bx-map"></i>
-            <p>Mapa interactivo</p>
-            <span>123 Tech Avenue, Suite 100, Silicon Valley, CA 94025</span>
-          </div>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d496.91177440903965!2d-80.6799268055225!3d-4.890326943989411!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9035fbcc190352c1%3A0x97e1944111219a31!2sTec%20Rivera!5e0!3m2!1ses-419!2spe!4v1760107295706!5m2!1ses-419!2spe" width="1200" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </section>
@@ -421,16 +419,10 @@
               innovar y crecer.
             </p>
             <div class="social-links">
-              <a href="#" aria-label="LinkedIn"
-                ><i class="bx bxl-linkedin"></i
-              ></a>
-              <a href="#" aria-label="Twitter"
-                ><i class="bx bxl-twitter"></i
-              ></a>
-              <a href="#" aria-label="Facebook"
+              <a href="https://www.facebook.com/multi.per.5" aria-label="Facebook"
                 ><i class="bx bxl-facebook"></i
               ></a>
-              <a href="#" aria-label="Instagram"
+              <a href="https://www.instagram.com/tecrivera_peru?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"
                 ><i class="bx bxl-instagram"></i
               ></a>
             </div>
