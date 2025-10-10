@@ -1,18 +1,51 @@
 // Data Storage
 let products = [];
+const API_URL = "Gestor/controllers/ProductoController.php";
+const UPLOAD_PATH = "public/uploads/productos/"; // para previsualización o paths locales
+
 let currentPage = 1;
 let itemsPerPage = 6;
 let editingProductId = null;
 let currentView = "grid";
 let uploadedImages = [];
 
-// Initialize
+// Inicializar desde el backend
 document.addEventListener("DOMContentLoaded", function () {
-  loadSampleData();
-  renderProducts();
+  cargarProductos(); // 🔄 Nueva función en lugar de loadSampleData
   updateStats();
   setupEventListeners();
 });
+
+async function cargarProductos() {
+  try {
+    const res = await fetch(`${API_URL}?action=listar`);
+    const data = await res.json();
+
+    // Mapear a la estructura esperada
+    products = data.map((p) => ({
+      id: parseInt(p.id),
+      name: p.name,
+      category: p.category_name,
+      sku: p.sku,
+      price: parseFloat(p.price),
+      oldPrice: p.old_price ? parseFloat(p.old_price) : null,
+      stock: parseInt(p.stock),
+      minStock: parseInt(p.min_stock),
+      description: p.description,
+      active: p.active == 1,
+      isNew: p.is_new == 1,
+      isHot: p.is_hot == 1,
+      isOffer: p.is_offer == 1,
+      images: p.image_urls
+        ? p.image_urls.split(",")
+        : ["public/uploads/productos/no-image.png"],
+    }));
+
+    renderProducts();
+  } catch (error) {
+    console.error("Error cargando productos:", error);
+  }
+}
 
 // Setup Event Listeners
 function setupEventListeners() {
@@ -31,141 +64,6 @@ function setupEventListeners() {
   document
     .getElementById("productForm")
     .addEventListener("submit", handleFormSubmit);
-}
-
-// Load Sample Data
-function loadSampleData() {
-  products = [
-    {
-      id: 1,
-      name: "Laptop HP Pavilion 15",
-      category: "Electrónica",
-      sku: "TEC-001",
-      price: 899.99,
-      oldPrice: 1099.99,
-      stock: 15,
-      minStock: 5,
-      description:
-        "Laptop potente con procesador Intel Core i7, 16GB RAM y 512GB SSD",
-      active: true,
-      isNew: true,
-      isHot: false,
-      isOffer: true,
-      images: [
-        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400",
-      ],
-    },
-    {
-      id: 2,
-      name: "Auriculares Sony WH-1000XM5",
-      category: "Electrónica",
-      sku: "TEC-002",
-      price: 349.99,
-      oldPrice: null,
-      stock: 20,
-      minStock: 5,
-      description:
-        "Auriculares premium con cancelación de ruido líder en la industria",
-      active: true,
-      isNew: true,
-      isHot: true,
-      isOffer: false,
-      images: [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
-      ],
-    },
-    {
-      id: 3,
-      name: "Smartwatch Samsung Galaxy Watch",
-      category: "Electrónica",
-      sku: "TEC-003",
-      price: 299.99,
-      oldPrice: 349.99,
-      stock: 12,
-      minStock: 4,
-      description: "Reloj inteligente con monitor de salud y GPS integrado",
-      active: true,
-      isNew: true,
-      isHot: true,
-      isOffer: true,
-      images: [
-        "https://images.samsung.com/is/image/samsung/p6pim/pe/2407/gallery/pe-galaxy-watch7-l310-sm-l310nzsalta-542358243?$684_547_PNG$",
-      ],
-    },
-    {
-      id: 4,
-      name: "Tablet Apple iPad Air",
-      category: "Electrónica",
-      sku: "TEC-004",
-      price: 599.99,
-      oldPrice: 699.99,
-      stock: 8,
-      minStock: 3,
-      description: "Tablet ligera y potente con pantalla Retina y chip M1",
-      active: true,
-      isNew: false,
-      isHot: false,
-      isOffer: true,
-      images: [
-        "https://mac-center.com.pe/cdn/shop/files/iPad_Air_11_M2_WiFi_Space_Gray_PDP_Image_Position_2__COES_f17a0230-cdce-4191-b0d9-12f32ace5de6.jpg?v=1720075415&width=823",
-      ],
-    },
-    {
-      id: 5,
-      name: "Monitor LG UltraWide 34''",
-      category: "Electrónica",
-      sku: "TEC-005",
-      price: 449.99,
-      oldPrice: 499.99,
-      stock: 10,
-      minStock: 2,
-      description: "Monitor panorámico para productividad y gaming",
-      active: false,
-      isNew: false,
-      isHot: false,
-      isOffer: true,
-      images: [
-        "https://www.kabifperu.com/imagenes/prod-06022021202531-monitor-lg-led-34-34uc79g-b-gaming-curvo-2-hdmi-dp-2-usb-2560x1080-1ms-144hz-deta.png",
-      ],
-    },
-    {
-      id: 6,
-      name: "Teclado Mecánico Logitech G Pro",
-      category: "Electrónica",
-      sku: "TEC-006",
-      price: 129.99,
-      oldPrice: null,
-      stock: 25,
-      minStock: 5,
-      description: "Teclado mecánico profesional para gaming y productividad",
-      active: true,
-      isNew: true,
-      isHot: false,
-      isOffer: false,
-      images: [
-        "https://www.impacto.com.pe/storage/products/md/173834505497890.webp",
-      ],
-    },
-    {
-      id: 7,
-      name: "Mouse Inalámbrico Razer Basilisk",
-      category: "Electrónica",
-      sku: "TEC-007",
-      price: 89.99,
-      oldPrice: 119.99,
-      stock: 35,
-      minStock: 15,
-      description:
-        "Mouse inalámbrico ergonómico con sensor óptico de alta precisión",
-      active: true,
-      isNew: false,
-      isHot: true,
-      isOffer: true,
-      images: [
-        "https://assets2.razerzone.com/images/pnx.assets/b2ab0e9be26141d4677cae0f2d38cb88/razer-basilisk-x-hyperspeed-hero-mobile.jpg",
-      ],
-    },
-  ];
 }
 
 // Render Products
@@ -547,47 +445,62 @@ function fillForm(product) {
 }
 
 // Handle Form Submit
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
   e.preventDefault();
 
-  const productData = {
-    name: document.getElementById("productName").value,
-    category: document.getElementById("productCategory").value,
-    sku: document.getElementById("productSKU").value,
-    price: parseFloat(document.getElementById("productPrice").value),
-    oldPrice:
-      parseFloat(document.getElementById("productOldPrice").value) || null,
-    stock: parseInt(document.getElementById("productStock").value),
-    minStock: parseInt(document.getElementById("productMinStock").value) || 5,
-    description: document.getElementById("productDescription").value,
-    active: document.getElementById("productActive").checked,
-    isNew: document.getElementById("productNew").checked,
-    isHot: document.getElementById("productHot").checked,
-    isOffer: document.getElementById("productOffer").checked,
-    images:
-      uploadedImages.length > 0
-        ? uploadedImages
-        : ["https://via.placeholder.com/400"],
-  };
+  const form = document.getElementById("productForm");
+  const formData = new FormData(form);
+  const imageInput = document.getElementById("imageInput");
 
-  if (editingProductId) {
-    // Update existing product
-    const index = products.findIndex((p) => p.id === editingProductId);
-    products[index] = { ...products[index], ...productData };
-    showAlert("Producto actualizado exitosamente", "success");
-  } else {
-    // Create new product
-    const newProduct = {
-      id: products.length > 0 ? Math.max(...products.map((p) => p.id)) + 1 : 1,
-      ...productData,
-    };
-    products.push(newProduct);
-    showAlert("Producto creado exitosamente", "success");
+  // Añadir imágenes al FormData
+  for (let file of imageInput.files) {
+    formData.append("images[]", file);
   }
 
-  closeModal();
-  renderProducts();
-  updateStats();
+  // Datos adicionales manuales
+  formData.append(
+    "active",
+    document.getElementById("productActive").checked ? 1 : 0
+  );
+  formData.append(
+    "is_new",
+    document.getElementById("productNew").checked ? 1 : 0
+  );
+  formData.append(
+    "is_hot",
+    document.getElementById("productHot").checked ? 1 : 0
+  );
+  formData.append(
+    "is_offer",
+    document.getElementById("productOffer").checked ? 1 : 0
+  );
+
+  let action = editingProductId ? "actualizar" : "crear";
+  if (editingProductId) formData.append("id", editingProductId);
+
+  try {
+    const res = await fetch(`${API_URL}?action=${action}`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      showAlert(
+        `Producto ${editingProductId ? "actualizado" : "creado"} correctamente`,
+        "success"
+      );
+      closeModal();
+      cargarProductos();
+      updateStats();
+    } else {
+      showAlert("Error al guardar el producto", "error");
+    }
+  } catch (err) {
+    console.error(err);
+    showAlert("Error de conexión con el servidor", "error");
+  }
 }
 
 // Edit Product
