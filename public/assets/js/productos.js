@@ -10,6 +10,8 @@ const CURRENCY = "S/";
 const WHATSAPP_NUMBER = "51985468074"; // WhatsApp para coordinar efectivo
 const YAPE_PHONE = "985468074";
 const PLIN_PHONE = "985468074";
+const YAPE_QR = "../images/yape.jpg"; // <-- ruta a tu imagen QR Yape
+  const PLIN_QR = "../images/plin.jpg"; // <-- ruta a tu imagen QR Plin
 const BANK_ACCOUNTS = [
   {
     bank: "BCP",
@@ -686,33 +688,32 @@ function renderPaymentMethodView() {
     `;
 
     const renderWallet = () => {
-      const type =
-        (document.querySelector('input[name="walletType"]:checked') || {})
-          .value || "yape";
-      const phone = type === "yape" ? YAPE_PHONE : PLIN_PHONE;
-      document.getElementById(
-        "walletNumber"
-      ).innerHTML = `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
+    const type =
+      (document.querySelector('input[name="walletType"]:checked') || {})
+        .value || "yape";
 
-      const svg = encodeURIComponent(`
-        <svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'>
-          <rect width='100%' height='100%' fill='#eee'/>
-          <text x='50%' y='45%' font-size='14' text-anchor='middle' fill='#333'>${type.toUpperCase()}</text>
-          <text x='50%' y='60%' font-size='12' text-anchor='middle' fill='#333'>${phone}</text>
-          <text x='50%' y='75%' font-size='12' text-anchor='middle' fill='#333'>${totalText}</text>
-        </svg>
-      `);
-      document.getElementById(
-        "walletQr"
-      ).innerHTML = `<img alt="QR ${type}" src="data:image/svg+xml;utf8,${svg}" />`;
-    };
+    const phone = type === "yape" ? YAPE_PHONE : PLIN_PHONE;
+    const qr = type === "yape" ? YAPE_QR : PLIN_QR;
 
-    renderWallet();
-    document
-      .querySelectorAll('input[name="walletType"]')
-      .forEach((r) => r.addEventListener("change", renderWallet));
+    document.getElementById(
+      "walletNumber"
+    ).innerHTML = `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
 
-    $("#walletConfirmBtn")?.addEventListener("click", () =>
+    document.getElementById(
+      "walletQr"
+    ).innerHTML = `<img src="${qr}" alt="QR ${type}" class="wallet-qr-img" />`;
+  };
+
+  renderWallet();
+
+  // Escuchar cambio de billetera
+  document
+    .querySelectorAll('input[name="walletType"]')
+    .forEach((r) => r.addEventListener("change", renderWallet));
+
+  document
+    .getElementById("walletConfirmBtn")
+    ?.addEventListener("click", () =>
       confirmPayment("Billetera (Yape/Plin)", total)
     );
   }
