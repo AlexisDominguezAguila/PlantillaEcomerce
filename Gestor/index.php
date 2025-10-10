@@ -15,7 +15,7 @@
     <aside class="sidebar">
       <div class="logo-section">
         <img
-          src="/public/assets/images/iconoTEC.png"
+          src="../public/assets/images/iconoTEC.png"
           alt="Tec Rivera"
           class="logo"
         />
