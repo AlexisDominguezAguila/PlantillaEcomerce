@@ -39,8 +39,10 @@ async function cargarProductos() {
       isHot: p.is_hot == 1,
       isOffer: p.is_offer == 1,
       images: p.image_urls
-        ? p.image_urls.split(",")
-        : ["public/uploads/productos/no-image.png"],
+        ? p.image_urls
+            .split(",")
+            .map((img) => `../../public/uploads/productos/${img}`)
+        : ["../../public/uploads/productos/no-image.png"],
     }));
 
     renderProducts();
@@ -507,6 +509,7 @@ async function handleFormSubmit(e) {
   }
 
   // Datos adicionales manuales
+
   formData.append(
     "active",
     document.getElementById("productActive").checked ? 1 : 0

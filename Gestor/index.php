@@ -28,7 +28,7 @@
           <span>Inicio</span>
         </a>
 
-        <a href="views/productos.html" class="menu-item">
+        <a href="views/productos.php" class="menu-item">
           <i class="bx bx-box"></i>
           <span>Productos</span>
         </a>

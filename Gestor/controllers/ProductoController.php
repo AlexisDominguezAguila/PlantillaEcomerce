@@ -29,12 +29,13 @@ switch ($action) {
        CREAR PRODUCTO NUEVO
     ============================================================ */
     case 'crear':
+    try {
         $data = $_POST;
 
-        // Asignar categoría (por defecto 1 si no se envía)
+        // Asegurar que venga el category_id
         $data['category_id'] = $_POST['productCategory'] ?? 1;
 
-        // Subir imágenes
+        // Subida de imágenes
         $uploadedImages = [];
         if (!empty($_FILES['images']['name'][0])) {
             $uploadDir = __DIR__ . '/../../public/uploads/productos/';
@@ -43,20 +44,27 @@ switch ($action) {
             }
 
             foreach ($_FILES['images']['tmp_name'] as $key => $tmpName) {
+                // ✅ Guardar solo el nombre del archivo
                 $fileName = uniqid('prod_') . '_' . basename($_FILES['images']['name'][$key]);
                 $targetFile = $uploadDir . $fileName;
 
                 if (move_uploaded_file($tmpName, $targetFile)) {
-                    $uploadedImages[] = 'public/uploads/productos/' . $fileName;
+                    $uploadedImages[] = $fileName; 
                 }
             }
         }
 
         $data['images'] = $uploadedImages;
+
         $success = $model->crearProducto($data);
 
         echo json_encode(['success' => $success]);
-        break;
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    }
+    break;
+
 
     /* ===========================================================
        ACTUALIZAR PRODUCTO
