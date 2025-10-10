@@ -391,7 +391,7 @@
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   font-size: 1rem;
-  color: var(--text);
+  color: #000000;
   background: #fff;
   transition: all 0.3s ease;
   font-family: inherit;
@@ -401,8 +401,9 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(56, 182, 255, 0.1);
+  background: #e0e0e0;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(208, 230, 242, 0.553);
 }
 
 .form-group textarea {
