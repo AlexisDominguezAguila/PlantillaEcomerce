@@ -1,7 +1,7 @@
 /* Page Hero */
 .page-hero {
   padding: 140px 20px 80px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--secondary), var(--accent-blue));
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -116,7 +116,7 @@
 
 .service-detail-card.featured {
   border: 2px solid var(--accent-orange);
-  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  background: linear-gradient(135deg, var(--secondary), var(--accent-orange));
 }
 
 .popular-badge {
