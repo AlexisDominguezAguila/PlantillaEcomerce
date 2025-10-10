@@ -24,7 +24,7 @@
       </div>
 
       <nav class="menu">
-        <a href="../index.html" class="menu-item">
+        <a href="../index.php" class="menu-item">
           <i class="bx bx-home"></i>
           <span>Inicio</span>
         </a>
@@ -214,204 +214,232 @@
     </main>
     <!-- 
     Modal -->
-    <div class="modal" id="productModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>
-            <i class="bx bx-package"></i>
-            <span id="modalTitle">Nuevo Producto</span>
-          </h2>
-          <button class="modal-close" onclick="closeModal()">
-            <i class="bx bx-x"></i>
-          </button>
-        </div>
-        <form id="productForm">
-          <div class="modal-body">
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label>
-                  <i class="bx bx-text"></i>
-                  Nombre del Producto *
-                </label>
+<!-- Modal -->
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>
+        <i class="bx bx-package"></i>
+        <span id="modalTitle">Nuevo Producto</span>
+      </h2>
+      <button class="modal-close" onclick="closeModal()">
+        <i class="bx bx-x"></i>
+      </button>
+    </div>
+
+    <form id="productForm">
+      <div class="modal-body">
+        <div class="form-grid">
+
+          <!-- Nombre del producto -->
+          <div class="form-group full-width">
+            <label>
+              <i class="bx bx-text"></i>
+              Nombre del Producto *
+            </label>
+            <input
+              type="text"
+              class="form-input"
+              id="productName"
+              name="name"
+              required
+              placeholder="Ej: Laptop HP Pavilion"
+            />
+          </div>
+
+          <!-- Categoría -->
+          <div class="form-group">
+            <label>
+              <i class="bx bx-category"></i>
+              Categoría *
+            </label>
+            <select
+              class="form-input"
+              id="productCategory"
+              name="productCategory"
+              required
+            >
+            </select>
+          </div>
+
+          <!-- SKU -->
+          <div class="form-group">
+            <label>
+              <i class="bx bx-barcode"></i>
+              SKU *
+            </label>
+            <input
+              type="text"
+              class="form-input"
+              id="productSKU"
+              name="sku"
+              required
+              placeholder="Ej: PROD-001"
+            />
+          </div>
+
+          <!-- Precio -->
+          <div class="form-group">
+            <label>
+              <i class="bx bx-money"></i>
+              Precio *
+            </label>
+            <input
+              type="number"
+              class="form-input"
+              id="productPrice"
+              name="price"
+              required
+              step="0.01"
+              placeholder="0.00"
+            />
+          </div>
+
+          <!-- Precio Anterior -->
+          <div class="form-group">
+            <label>
+              <i class="bx bx-purchase-tag"></i>
+              Precio Anterior
+            </label>
+            <input
+              type="number"
+              class="form-input"
+              id="productOldPrice"
+              name="old_price"
+              step="0.01"
+              placeholder="0.00"
+            />
+          </div>
+
+          <!-- Stock -->
+          <div class="form-group">
+            <label>
+              <i class="bx bx-package"></i>
+              Stock *
+            </label>
+            <input
+              type="number"
+              class="form-input"
+              id="productStock"
+              name="stock"
+              required
+              placeholder="0"
+            />
+          </div>
+
+          <!-- Stock Mínimo -->
+          <div class="form-group">
+            <label>
+              <i class="bx bx-error-circle"></i>
+              Stock Mínimo
+            </label>
+            <input
+              type="number"
+              class="form-input"
+              id="productMinStock"
+              name="min_stock"
+              placeholder="5"
+            />
+          </div>
+
+          <!-- Descripción -->
+          <div class="form-group full-width">
+            <label>
+              <i class="bx bx-detail"></i>
+              Descripción
+            </label>
+            <textarea
+              class="form-input"
+              id="productDescription"
+              name="description"
+              placeholder="Describe el producto..."
+            ></textarea>
+          </div>
+
+          <!-- Estado -->
+          <div class="form-group full-width">
+            <label>
+              <i class="bx bx-toggle-left"></i>
+              Estado
+            </label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
                 <input
-                  type="text"
-                  class="form-input"
-                  id="productName"
-                  required
-                  placeholder="Ej: Laptop HP Pavilion"
+                  type="checkbox"
+                  id="productActive"
+                  name="active"
+                  checked
                 />
-              </div>
-
-              <div class="form-group">
-                <label>
-                  <i class="bx bx-category"></i>
-                  Categoría *
-                </label>
-                <select class="form-input" id="productCategory" required>
-                 
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label>
-                  <i class="bx bx-barcode"></i>
-                  SKU *
-                </label>
-                <input
-                  type="text"
-                  class="form-input"
-                  id="productSKU"
-                  required
-                  placeholder="Ej: PROD-001"
-                />
-              </div>
-
-              <div class="form-group">
-                <label>
-                  <i class="bx bx-money"></i>
-                  Precio *
-                </label>
-                <input
-                  type="number"
-                  class="form-input"
-                  id="productPrice"
-                  required
-                  step="0.01"
-                  placeholder="0.00"
-                />
-              </div>
-
-              <div class="form-group">
-                <label>
-                  <i class="bx bx-purchase-tag"></i>
-                  Precio Anterior
-                </label>
-                <input
-                  type="number"
-                  class="form-input"
-                  id="productOldPrice"
-                  step="0.01"
-                  placeholder="0.00"
-                />
-              </div>
-
-              <div class="form-group">
-                <label>
-                  <i class="bx bx-package"></i>
-                  Stock *
-                </label>
-                <input
-                  type="number"
-                  class="form-input"
-                  id="productStock"
-                  required
-                  placeholder="0"
-                />
-              </div>
-
-              <div class="form-group">
-                <label>
-                  <i class="bx bx-error-circle"></i>
-                  Stock Mínimo
-                </label>
-                <input
-                  type="number"
-                  class="form-input"
-                  id="productMinStock"
-                  placeholder="5"
-                />
-              </div>
-
-              <div class="form-group full-width">
-                <label>
-                  <i class="bx bx-detail"></i>
-                  Descripción
-                </label>
-                <textarea
-                  class="form-input"
-                  id="productDescription"
-                  placeholder="Describe el producto..."
-                ></textarea>
-              </div>
-
-              <div class="form-group full-width">
-                <label>
-                  <i class="bx bx-toggle-left"></i>
-                  Estado
-                </label>
-                <div class="checkbox-group">
-                  <div class="checkbox-item">
-                    <input type="checkbox" id="productActive" checked />
-                    <label for="productActive">Activo</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>
-                  <i class="bx bx-purchase-tag"></i>
-                  Etiquetas
-                </label>
-                <div class="checkbox-group">
-                  <div class="checkbox-item">
-                    <input type="checkbox" id="productNew" />
-                    <label for="productNew">Nuevo</label>
-                  </div>
-                  <div class="checkbox-item">
-                    <input type="checkbox" id="productHot" />
-                    <label for="productHot">Hot</label>
-                  </div>
-                  <div class="checkbox-item">
-                    <input type="checkbox" id="productOffer" />
-                    <label for="productOffer">Oferta</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>
-                  <i class="bx bx-image"></i>
-                  Imágenes del Producto
-                </label>
-                <div
-                  class="image-upload-area"
-                  onclick="document.getElementById('imageInput').click()"
-                >
-                  <i class="bx bx-cloud-upload"></i>
-                  <p><strong>Click para subir</strong> las imágenes aquí</p>
-                  <p style="font-size: 0.75rem">PNG, JPG, WEBP (máx. 5MB)</p>
-                </div>
-                <input
-                  type="file"
-                  id="imageInput"
-                  accept="image/*"
-                  multiple
-                  style="display: none"
-                  onchange="handleImageUpload(event)"
-                />
-                <div class="image-preview-grid" id="imagePreviewGrid">
-                  <!-- Image previews will be rendered here -->
-                </div>
+                <label for="productActive">Activo</label>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              onclick="closeModal()"
-            >
-              <i class="bx bx-x"></i>
-              Cancelar
-            </button>
-            <button type="submit" class="btn btn-primary">
-              <i class="bx bx-save"></i>
-              Guardar Producto
-            </button>
+
+          <!-- Etiquetas -->
+          <div class="form-group full-width">
+            <label>
+              <i class="bx bx-purchase-tag"></i>
+              Etiquetas
+            </label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="productNew" name="is_new" />
+                <label for="productNew">Nuevo</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="productHot" name="is_hot" />
+                <label for="productHot">Hot</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="productOffer" name="is_offer" />
+                <label for="productOffer">Oferta</label>
+              </div>
+            </div>
           </div>
-        </form>
+
+          <!-- Imágenes -->
+          <div class="form-group full-width">
+            <label>
+              <i class="bx bx-image"></i>
+              Imágenes del Producto
+            </label>
+            <div
+              class="image-upload-area"
+              onclick="document.getElementById('imageInput').click()"
+            >
+              <i class="bx bx-cloud-upload"></i>
+              <p><strong>Click para subir</strong> las imágenes aquí</p>
+              <p style="font-size: 0.75rem">PNG, JPG, WEBP (máx. 5MB)</p>
+            </div>
+            <input
+              type="file"
+              id="imageInput"
+              name="images[]"
+              accept="image/*"
+              multiple
+              style="display: none"
+              onchange="handleImageUpload(event)"
+            />
+            <div class="image-preview-grid" id="imagePreviewGrid">
+              <!-- Image previews will be rendered here -->
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">
+          <i class="bx bx-x"></i>
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <i class="bx bx-save"></i>
+          Guardar Producto
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
     <script src="../assets/js/sidebar.js"></script>
     <script src="../assets/js/productos.js"></script>

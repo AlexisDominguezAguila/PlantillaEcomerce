@@ -40,7 +40,8 @@ class ProductoModel {
             if (!empty($data['images'])) {
                 foreach ($data['images'] as $img) {
                     $imgStmt = $this->conn->prepare("INSERT INTO product_images (product_id, image_url) VALUES (:pid, :url)");
-                    $imgStmt->execute(['pid' => $productId, 'url' => $img]);
+                    $imgStmt->execute(['pid' => $productId, 'url' => basename($img)]);
+
                 }
             }
 

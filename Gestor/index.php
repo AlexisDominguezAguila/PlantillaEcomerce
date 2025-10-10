@@ -15,7 +15,7 @@
     <aside class="sidebar">
       <div class="logo-section">
         <img
-          src="/public/assets/images/iconoTEC.png"
+          src="../public/assets/images/iconoTEC.png"
           alt="Tec Rivera"
           class="logo"
         />
@@ -28,7 +28,7 @@
           <span>Inicio</span>
         </a>
 
-        <a href="views/productos.html" class="menu-item">
+        <a href="views/productos.php" class="menu-item">
           <i class="bx bx-box"></i>
           <span>Productos</span>
         </a>
