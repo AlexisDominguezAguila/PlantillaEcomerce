@@ -10,8 +10,8 @@ const CURRENCY = "S/";
 const WHATSAPP_NUMBER = "51985468074"; // WhatsApp para coordinar efectivo
 const YAPE_PHONE = "985468074";
 const PLIN_PHONE = "985468074";
-const YAPE_QR = "../images/yape.jpg"; // <-- ruta a tu imagen QR Yape
-  const PLIN_QR = "../images/plin.jpg"; // <-- ruta a tu imagen QR Plin
+const YAPE_QR = "/public/assets/images/yape.jpg"; // <-- ruta a tu imagen QR Yape
+const PLIN_QR = "/public/assets/images/plin.jpg"; // <-- ruta a tu imagen QR Plin
 const BANK_ACCOUNTS = [
   {
     bank: "BCP",
