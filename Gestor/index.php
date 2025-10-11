@@ -33,7 +33,7 @@
           <span>Productos</span>
         </a>
 
-        <a href="#" class="menu-item">
+        <a href="views/Servicios.php" class="menu-item">
           <i class="bx bx-cog"></i>
           <span>Servicios</span>
         </a>
