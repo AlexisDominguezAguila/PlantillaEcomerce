@@ -138,7 +138,7 @@
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(251, 133, 0, 0.7);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.886);
   }
   50% {
     transform: scale(1.05);
@@ -253,7 +253,7 @@
   font-size: 2rem;
   font-weight: 700;
   color: var(--accent-orange);
-  text-shadow: 0 2px 10px rgba(251, 133, 0, 0.3);
+  text-shadow: 0 2px 10px rgb(6, 6, 6);
 }
 
 .service-pricing .btn-primary {
