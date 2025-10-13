@@ -1,17 +1,25 @@
 :root {
+  /* Colores base TEC RIVERA */
+  --primary: #111344; /* azul oscuro institucional */
   --primary-light: #1a1d5e;
   --primary-dark: #0a0c2a;
-  --accent: #4a90e2;
+
+  /* Acentos */
+  --accent-blue: #126fa8;
+  --accent-orange: #497ac2;
+  --accent-red: #1b69c1;
+  --accent: var(--accent-blue);
+
+  /* Neutros y texto */
   --text: #333;
   --text-light: #666;
   --bg: #f5f5f5;
   --white: #ffffff;
   --border: #e0e0e0;
+
+  /* Estados */
   --success: #4caf50;
   --danger: #f44336;
-  --title-hero: #edeeee;
-  --text-hero: #b1b1b1;
-  --price-hero: #c4c4c4;
 }
 
 /* ==========================
@@ -673,74 +681,6 @@ body.modal-open {
 /* ================================
    PRODUCT DETAIL
    ================================ */
-.product-detail {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.product-detail-image {
-  width: 400px;
-  max-width: 100%;
-  height: 400px;
-  background: linear-gradient(
-    135deg,
-    var(--primary-light) 0%,
-    var(--accent) 100%
-  );
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 6rem;
-  color: var(--white);
-}
-.product-detail-image img {
-  width: 400px;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.product-detail-info h2 {
-  font-size: 2rem;
-  color: #000000;
-  margin-bottom: 1rem;
-}
-
-.product-detail-info .product-category {
-  margin-bottom: 1rem;
-}
-
-.product-detail-info .product-description {
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-}
-
-.product-detail-price {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #000000;
-  margin-bottom: 2rem;
-}
-
-.product-detail-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.btn {
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
 
 /* Cart / Wishlist items */
 .cart-item,
@@ -1309,5 +1249,162 @@ body.modal-open {
 @media (max-width: 520px) {
   #checkoutModal #cardForm .form-row {
     grid-template-columns: 1fr;
+  }
+}
+/* ============ TOPBAR ============ */
+.topbar {
+  background: #3f474f;
+  color: #e9ecef;
+  padding: 2px 16px;
+  position: relative;
+  z-index: 10;
+}
+.topbar-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.topbar-text {
+  justify-self: right;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.topbar-cta {
+  color: #eeeeee;
+  font-weight: 800;
+  text-decoration: underline;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.topbar-cta:hover {
+  color: var(--accent-blue);
+}
+@media (max-width: 768px) {
+  .topbar-inner {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+  .topbar-text,
+  .topbar-cta {
+    justify-self: center;
+  }
+}
+
+/* ============ HEADER Y NAV ============ */
+.header {
+  background: var(--primary);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-blue);
+}
+.logo-text {
+  color: #fff;
+}
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+}
+.nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+.nav-menu a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-orange);
+  transition: width 0.3s;
+}
+.nav-menu a:hover {
+  color: var(--accent-orange);
+}
+.nav-menu a:hover::after {
+  width: 100%;
+}
+.nav-menu .active {
+  color: var(--accent-orange);
+}
+.nav-actions {
+  display: flex;
+  gap: 15px;
+}
+.nav-actions-mobile {
+  display: none;
+}
+.btn-primary {
+  background: var(--accent-orange);
+  color: #fff;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-primary:hover {
+  background: var(--accent-red);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--accent-blue);
+  padding: 10px 25px;
+  border: 2px solid var(--accent-blue);
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.btn-secondary:hover {
+  background: var(--accent-blue);
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(56, 182, 255, 0.3);
+}
+
+/* Responsive nav */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.mobile-toggle span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+}
+@media (max-width: 768px) {
+  .nav-menu,
+  .nav-actions {
+    display: none;
+  }
+  .mobile-toggle {
+    display: flex;
   }
 }

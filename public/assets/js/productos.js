@@ -38,7 +38,12 @@ const products = [
     price: 1299,
     description:
       "Potente consola portátil con gráficos de última generación y 128GB de almacenamiento. Ideal para gamers en movimiento.",
-    image: "consolaPortatil.png",
+    images: [
+      "consolaPortatil.png",
+      "consolaPortatil_2.png",
+      "consolaPortatil_3.png",
+    ],
+    image: "consolaPortatil.png", // imagen principal para grillas y carrito
   },
   {
     id: 2,
@@ -47,6 +52,7 @@ const products = [
     price: 3499,
     description:
       "Laptop gamer con procesador Intel Core i7, 16GB RAM y tarjeta gráfica NVIDIA GeForce RTX 3060.",
+    images: ["laptop.png", "laptop_2.png", "laptop_3.png"],
     image: "laptop.png",
   },
   {
@@ -56,6 +62,7 @@ const products = [
     price: 999,
     description:
       "Tablet de alto rendimiento con pantalla de 11 pulgadas y S Pen incluido.",
+    images: ["Tablet1.png", "Tablet2.png", "Tablet3.png"],
     image: "Tablet1.png",
   },
   {
@@ -65,6 +72,12 @@ const products = [
     price: 499,
     description:
       "Impresora láser compacta y eficiente, ideal para uso doméstico y pequeñas oficinas.",
+    images: [
+      "impresora.png",
+      "impresora2.webp",
+      "impresora3.webp",
+      "impresora4.webp",
+    ],
     image: "impresora.png",
   },
 ];
@@ -358,42 +371,183 @@ function filterByCategory(category) {
 /* -------------------------
    Detalle de producto
 ------------------------- */
+/* -------------------------
+   Detalle de producto (Nuevo diseño integrado)
+------------------------- */
 function showProductDetail(product) {
-  const modalBody = document.getElementById("modalBody");
-  if (!modalBody) return;
+  const productsSection = document.getElementById("productsSection");
+  const detailSection = document.getElementById("productDetailSection");
+  if (!productsSection || !detailSection) return;
 
-  const isInWishlist = wishlist.some((i) => i.id === product.id);
+  // Ocultar productos y mostrar detalle
+  productsSection.classList.add("hidden");
+  detailSection.classList.remove("hidden");
 
-  modalBody.innerHTML = `
-    <div class="product-detail">
-      <div class="product-detail-image">
-        <img src="../assets/uploads/${product.image}" alt="${product.name}" />
-      </div>
-      <div class="product-detail-info">
-        <div class="product-category">${product.category}</div>
-        <h2>${product.name}</h2>
-        <p class="product-description">${product.description}</p>
-        <div class="product-detail-price">${fmtMoney(product.price)}</div>
-        <div class="product-detail-actions">
-          <button class="btn btn-primary" id="detailAddCartBtn">🛒 Agregar al Carrito</button>
-          <button class="btn btn-secondary ${
-            isInWishlist ? "active" : ""
-          }" id="detailWishlistBtn">
-            ♥ ${isInWishlist ? "En Lista" : "Deseos"}
-          </button>
+  // Reactivar íconos Lucide si existen
+  if (typeof lucide !== "undefined") lucide.createIcons();
+
+  // Rellenar datos
+  $("#breadcrumb-name").textContent = product.name;
+  $("#brand").textContent = product.category;
+  $("#name").textContent = product.name;
+  $("#sku").textContent = "SKU: " + product.id;
+  $("#prices").innerHTML = `
+    <span class="text-3xl font-bold text-gray-900">${fmtMoney(
+      product.price
+    )}</span>
+  `;
+  $("#shipping").innerHTML = `
+    <div class="flex items-center gap-3 mb-2">
+      <i data-lucide="truck" class="w-5 h-5 text-blue-600"></i>
+      <div>
+        <div class="font-semibold text-gray-900">
+          Envío disponible en todo el país
         </div>
+        <div class="text-sm text-gray-600">Tiempo estimado: 2-3 días hábiles</div>
+      </div>
+    </div>
+  `;
+  $("#stock").textContent = "Disponible en stock";
+
+  // Imagen principal + galería
+  const mainImg = $("#main-img");
+  const thumbs = $("#thumbs");
+  thumbs.innerHTML = "";
+
+  const images = product.images?.length
+    ? product.images.map((img) => `../assets/uploads/${img}`)
+    : [`../assets/uploads/${product.image}`];
+
+  let currentIndex = 0;
+  mainImg.src = images[currentIndex];
+
+  function updateImage() {
+    mainImg.src = images[currentIndex];
+  }
+
+  $("#prev-img").onclick = () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateImage();
+  };
+  $("#next-img").onclick = () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateImage();
+  };
+  images.forEach((src, i) => {
+    const btn = document.createElement("button");
+    btn.className = `w-20 h-20 rounded-lg overflow-hidden border-2 ${
+      i === 0 ? "border-blue-500 shadow-md" : "border-gray-200"
+    }`;
+    btn.innerHTML = `<img src="${src}" class="w-full h-full object-cover"/>`;
+    btn.addEventListener("click", () => {
+      currentIndex = i;
+      updateImage();
+      thumbs
+        .querySelectorAll("button")
+        .forEach(
+          (b) =>
+            (b.className =
+              "w-20 h-20 rounded-lg overflow-hidden border-2 border-gray-200")
+        );
+      btn.className =
+        "w-20 h-20 rounded-lg overflow-hidden border-2 border-blue-500 shadow-md";
+    });
+    thumbs.appendChild(btn);
+  });
+
+  // Wishlist
+  const favIcon = $("#fav-btn i");
+  const isFav = wishlist.some((w) => w.id === product.id);
+  if (isFav) favIcon.classList.add("fill-red-500", "text-red-500");
+  $("#fav-btn").onclick = () => {
+    toggleWishlist(product);
+    favIcon.classList.toggle("fill-red-500");
+    favIcon.classList.toggle("text-red-500");
+    favIcon.classList.toggle("text-gray-400");
+  };
+
+  // Cantidad
+  let cantidad = 1;
+  const inputCantidad = $("#quantity");
+  $("#increment").onclick = () => {
+    cantidad++;
+    inputCantidad.value = cantidad;
+  };
+  $("#decrement").onclick = () => {
+    if (cantidad > 1) cantidad--;
+    inputCantidad.value = cantidad;
+  };
+
+  // Botones principales
+  $$(".btn-add-cart").forEach((btn) =>
+    btn.addEventListener("click", () => {
+      addToCart(product);
+    })
+  );
+  $("#checkoutBtn")?.addEventListener("click", () => {
+    addToCart(product);
+    if (typeof openCheckout === "function") openCheckout();
+  });
+
+  // Especificaciones
+  $("#specs").innerHTML = `
+    <h2 class="text-2xl font-bold mb-6">Acerca del producto</h2>
+    <p class="text-gray-600">${product.description}</p>
+  `;
+
+  // Vendedor
+  $("#seller").innerHTML = `
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="text-sm text-gray-600">Vendido por</div>
+        <div class="font-semibold text-gray-900">TEC RIVERA</div>
+      </div>
+      <div class="flex items-center gap-1 bg-green-100 px-3 py-1 rounded-full">
+        <i data-lucide="star" class="w-4 h-4 fill-green-600 text-green-600"></i>
+        <span class="font-semibold text-green-700">5.0</span>
       </div>
     </div>
   `;
 
-  // Listeners del detalle (sin inline JS)
-  $("#detailAddCartBtn")?.addEventListener("click", () => addToCart(product));
-  $("#detailWishlistBtn")?.addEventListener("click", () =>
-    toggleWishlist(product)
-  );
+  // Productos relacionados
+  $("#related").innerHTML = `
+    <h2 class="text-2xl font-bold mb-6">Productos relacionados</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      ${products
+        .slice(0, 4)
+        .map(
+          (p) => `
+          <div class="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all cursor-pointer group" onclick="showProductDetail(${JSON.stringify(
+            p
+          )})">
+            <div class="aspect-square bg-gray-100 rounded-lg mb-3 overflow-hidden">
+              <img src="../assets/uploads/${
+                p.image
+              }" class="w-full h-full object-contain group-hover:scale-105 transition-transform" />
+            </div>
+            <h3 class="font-medium text-sm mb-2 text-gray-900">${p.name}</h3>
+            <div class="font-bold text-lg text-blue-600">${fmtMoney(
+              p.price
+            )}</div>
+          </div>`
+        )
+        .join("")}
+    </div>
+  `;
 
-  openModal("productModal");
+  // Reactiva íconos
+  if (typeof lucide !== "undefined") lucide.createIcons();
 }
+
+// Botón "volver"
+document.addEventListener("click", (e) => {
+  const target = e.target;
+  if (target && target.id === "backToProducts") {
+    e.preventDefault();
+    document.getElementById("productDetailSection").classList.add("hidden");
+    document.getElementById("productsSection").classList.remove("hidden");
+  }
+});
 
 /* -------------------------
    Carrito
@@ -688,34 +842,34 @@ function renderPaymentMethodView() {
     `;
 
     const renderWallet = () => {
-    const type =
-      (document.querySelector('input[name="walletType"]:checked') || {})
-        .value || "yape";
+      const type =
+        (document.querySelector('input[name="walletType"]:checked') || {})
+          .value || "yape";
 
-    const phone = type === "yape" ? YAPE_PHONE : PLIN_PHONE;
-    const qr = type === "yape" ? YAPE_QR : PLIN_QR;
+      const phone = type === "yape" ? YAPE_PHONE : PLIN_PHONE;
+      const qr = type === "yape" ? YAPE_QR : PLIN_QR;
 
-    document.getElementById(
-      "walletNumber"
-    ).innerHTML = `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
+      document.getElementById(
+        "walletNumber"
+      ).innerHTML = `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
 
-    document.getElementById(
-      "walletQr"
-    ).innerHTML = `<img src="${qr}" alt="QR ${type}" class="wallet-qr-img" />`;
-  };
+      document.getElementById(
+        "walletQr"
+      ).innerHTML = `<img src="${qr}" alt="QR ${type}" class="wallet-qr-img" />`;
+    };
 
-  renderWallet();
+    renderWallet();
 
-  // Escuchar cambio de billetera
-  document
-    .querySelectorAll('input[name="walletType"]')
-    .forEach((r) => r.addEventListener("change", renderWallet));
+    // Escuchar cambio de billetera
+    document
+      .querySelectorAll('input[name="walletType"]')
+      .forEach((r) => r.addEventListener("change", renderWallet));
 
-  document
-    .getElementById("walletConfirmBtn")
-    ?.addEventListener("click", () =>
-      confirmPayment("Billetera (Yape/Plin)", total)
-    );
+    document
+      .getElementById("walletConfirmBtn")
+      ?.addEventListener("click", () =>
+        confirmPayment("Billetera (Yape/Plin)", total)
+      );
   }
 
   if (selectedPaymentMethod === "transfer") {
