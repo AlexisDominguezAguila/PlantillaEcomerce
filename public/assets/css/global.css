@@ -7,7 +7,7 @@
 :root {
   --primary: #fafafa;
   --secondary: #111344;
-  --dark: #d9d9d9;
+  --dark: #ffffff;
   --accent-blue: #126fa8;
   --accent-orange: #497ac2;
   --accent-red: #1b69c1;
@@ -15,7 +15,8 @@
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--dark);
+
+  background-color: #fff;
   color: #fff;
   overflow-x: hidden;
   line-height: 1.6;
@@ -297,5 +298,297 @@ body {
   }
   .mobile-toggle.active span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
+  }
+}
+/* ===============================
+   NAVBAR PROFESIONAL MEJORADO
+=============================== */
+/* ===============================
+   SELECT DE CATEGORÍAS EN NAV
+=============================== */
+.nav-select {
+  display: flex;
+  align-items: center;
+}
+.nav-select select {
+  background: #ffffff;
+  color: #111344;
+  font-weight: 600;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  min-width: 180px;
+}
+.nav-select select:hover {
+  border-color: var(--accent-blue);
+}
+.nav-select select:focus {
+  outline: none;
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 2px rgba(73, 122, 194, 0.3);
+}
+.nav-select select option {
+  color: #111;
+  font-weight: 500;
+}
+
+/* ===============================
+   ICONOS DE NAV SIMPLIFICADOS
+=============================== */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.nav-icon {
+  position: relative;
+  font-size: 1.6rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.2s;
+}
+.nav-icon:hover {
+  color: var(--accent-orange);
+  transform: translateY(-2px);
+}
+.nav-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: var(--accent-orange);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===============================
+   Responsive ajustes
+=============================== */
+@media (max-width: 992px) {
+  .nav-select select {
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-select {
+    display: none;
+  }
+  .nav-icons {
+    display: none;
+  }
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+.footer {
+  background: linear-gradient(135deg, var(--secondary));
+  padding: 60px 20px 20px;
+}
+
+/* Grilla principal: logo + agrupación de columnas */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr; /* dos columnas reales */
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* Grilla interna de las secciones de enlaces */
+.footer-columns-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+/* --- Estilos generales --- */
+.footer-column h4 {
+  color: var(--accent-blue);
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-blue);
+  margin-bottom: 20px;
+}
+
+.footer-description {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.social-links a i {
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.social-links a:hover {
+  background: var(--accent-orange);
+  transform: translateY(-5px);
+}
+
+.footer-column ul {
+  list-style: none;
+}
+
+.footer-column ul li {
+  margin-bottom: 12px;
+}
+
+.footer-column a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-column a:hover {
+  color: var(--accent-orange);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ===========================
+   RESPONSIVE FOOTER
+=========================== */
+
+/* TABLET (≤1024px) */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* MÓVIL (≤768px) */
+@media (max-width: 768px) {
+  .footer-columns-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .footer-column h4 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .footer-column ul li {
+    margin-bottom: 8px;
+  }
+
+  .footer-description {
+    text-align: justify;
+  }
+}
+
+/* Opcional: Para móviles MUY pequeños (≤480px), las columnas de enlaces deben ser 1fr */
+@media (max-width: 480px) {
+  .footer-columns-wrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .solutions-content {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  .services-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  /*navbar*/
+  .nav-actions {
+    display: none;
+  }
+  .nav-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo {
+    margin-left: 20px;
+  }
+  .logo-text {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .nav-menu,
+  .nav-actions {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: flex;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-title2 {
+    font-size: 2.5rem;
+  }
+
+  .stats-grid,
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
   }
 }

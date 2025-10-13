@@ -38,12 +38,8 @@ const products = [
     price: 1299,
     description:
       "Potente consola portátil con gráficos de última generación y 128GB de almacenamiento. Ideal para gamers en movimiento.",
-    images: [
-      "consolaPortatil.png",
-      "consolaPortatil_2.png",
-      "consolaPortatil_3.png",
-    ],
-    image: "consolaPortatil.png", // imagen principal para grillas y carrito
+    images: ["consolaPortatil.png"],
+    image: "consolaPortatil.png",
   },
   {
     id: 2,
@@ -52,7 +48,7 @@ const products = [
     price: 3499,
     description:
       "Laptop gamer con procesador Intel Core i7, 16GB RAM y tarjeta gráfica NVIDIA GeForce RTX 3060.",
-    images: ["laptop.png", "laptop_2.png", "laptop_3.png"],
+    images: ["laptop.png", "laptop1.webp", "laptop2.webp", "laptop3.webp"],
     image: "laptop.png",
   },
   {
@@ -62,7 +58,7 @@ const products = [
     price: 999,
     description:
       "Tablet de alto rendimiento con pantalla de 11 pulgadas y S Pen incluido.",
-    images: ["Tablet1.png", "Tablet2.png", "Tablet3.png"],
+    images: ["Tablet1.png", "Tablet2.webp", "Tablet3.webp", "Tablet4.webp"],
     image: "Tablet1.png",
   },
   {
@@ -85,14 +81,9 @@ const products = [
 // Categorías con iconos (Boxicons)
 const categories = [
   { name: "Laptops", icon: "bx bx-laptop" },
-  { name: "Smartphones", icon: "bx bx-mobile" },
   { name: "Tablets", icon: "bx bx-tab" },
   { name: "Audio", icon: "bx bx-headphone" },
-  { name: "Wearables", icon: "bx bx-clock" },
-  { name: "Cámaras", icon: "bx bx-camera" },
   { name: "Monitores", icon: "bx bx-desktop" },
-  { name: "Accesorios", icon: "bx bx-keyboard" },
-  { name: "Drones", icon: "bx bx-cube" },
   { name: "Gaming", icon: "bx bx-joystick" },
   { name: "Impresoras", icon: "bx bx-printer" },
 ];
@@ -315,47 +306,75 @@ function renderProducts(filter = "all") {
 
     const isInWishlist = wishlist.some((w) => w.id === product.id);
 
+    // Imagen principal
+    const firstImage = `../uploads/productos/${product.image}`;
+    const secondImage =
+      product.images && product.images.length > 1
+        ? `../uploads/productos/${product.images[1]}`
+        : firstImage;
+
     card.innerHTML = `
-      <div class="product-image">
-        <img src="../assets/uploads/${product.image}" alt="${product.name}" />
+      <div class="product-image" data-action="open-detail" data-id="${
+        product.id
+      }">
+        <img src="${firstImage}" alt="${
+      product.name
+    }" class="product-main-img" />
+        <img src="${secondImage}" alt="${
+      product.name
+    }" class="product-hover-img" />
+        <div class="product-actions">
+          <button class="btn-icon wishlist-btn ${isInWishlist ? "active" : ""}"
+            data-action="toggle-wishlist" data-id="${
+              product.id
+            }" aria-label="Añadir a deseos">
+            <i class="bx bx-heart"></i>
+          </button>
+          <button class="btn-icon cart-btn"
+            data-action="add-cart" data-id="${
+              product.id
+            }" aria-label="Agregar al carrito">
+            <i class="bx bx-cart"></i>
+          </button>
+        </div>
       </div>
+
       <div class="product-info">
         <div class="product-category">${product.category}</div>
         <h3 class="product-name" data-action="open-detail" data-id="${
           product.id
-        }">${product.name}</h3>
+        }">
+          ${product.name}
+        </h3>
         <p class="product-description">${product.description}</p>
         <div class="product-footer">
           <div class="product-price">${fmtMoney(product.price)}</div>
-          <div class="product-actions">
-            <button class="btn-icon wishlist-btn ${
-              isInWishlist ? "active" : ""
-            }" data-action="toggle-wishlist" data-id="${
-      product.id
-    }" aria-label="Añadir a deseos">♥</button>
-            <button class="btn-icon cart-btn" data-action="add-cart" data-id="${
-              product.id
-            }" aria-label="Agregar al carrito">🛒</button>
-          </div>
+          <button class="btn-view-detail" data-action="open-detail" data-id="${
+            product.id
+          }">
+            <i class="bx bx-show-alt"></i>
+          </button>
         </div>
       </div>
     `;
 
-    // Click en imagen abre detalle
-    card
-      .querySelector(".product-image")
-      ?.addEventListener("click", () => showProductDetail(product));
-    // Delegación de acciones
+    // Eventos de acción (sin abrir detalle por error)
     card.addEventListener("click", (e) => {
-      const t = e.target;
-      if (!(t instanceof HTMLElement)) return;
+      const t = e.target.closest("[data-action]");
+      if (!t) return;
+
       const action = t.getAttribute("data-action");
       const id = Number(t.getAttribute("data-id"));
       if (!action) return;
+      e.stopPropagation();
 
-      if (action === "open-detail") showProductDetail(product);
-      if (action === "toggle-wishlist") toggleWishlist(product);
-      if (action === "add-cart") addToCart(product);
+      if (action === "open-detail") {
+        showProductDetail(product);
+      } else if (action === "toggle-wishlist") {
+        toggleWishlist(product);
+      } else if (action === "add-cart") {
+        addToCart(product);
+      }
     });
 
     grid.appendChild(card);
@@ -371,9 +390,6 @@ function filterByCategory(category) {
 /* -------------------------
    Detalle de producto
 ------------------------- */
-/* -------------------------
-   Detalle de producto (Nuevo diseño integrado)
-------------------------- */
 function showProductDetail(product) {
   const productsSection = document.getElementById("productsSection");
   const detailSection = document.getElementById("productDetailSection");
@@ -383,11 +399,16 @@ function showProductDetail(product) {
   productsSection.classList.add("hidden");
   detailSection.classList.remove("hidden");
 
+  // Hacer scroll al inicio
+  detailSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
   // Reactivar íconos Lucide si existen
   if (typeof lucide !== "undefined") lucide.createIcons();
 
-  // Rellenar datos
+  // Actualizar breadcrumb
   $("#breadcrumb-name").textContent = product.name;
+
+  // Rellenar datos principales
   $("#brand").textContent = product.category;
   $("#name").textContent = product.name;
   $("#sku").textContent = "SKU: " + product.id;
@@ -409,14 +430,16 @@ function showProductDetail(product) {
   `;
   $("#stock").textContent = "Disponible en stock";
 
-  // Imagen principal + galería
+  /* ---------------------------
+     Galería de imágenes
+  --------------------------- */
   const mainImg = $("#main-img");
   const thumbs = $("#thumbs");
   thumbs.innerHTML = "";
 
   const images = product.images?.length
-    ? product.images.map((img) => `../assets/uploads/${img}`)
-    : [`../assets/uploads/${product.image}`];
+    ? product.images.map((img) => `../uploads/productos/${img}`)
+    : [`../uploads/productos/${product.image}`];
 
   let currentIndex = 0;
   mainImg.src = images[currentIndex];
@@ -433,6 +456,7 @@ function showProductDetail(product) {
     currentIndex = (currentIndex + 1) % images.length;
     updateImage();
   };
+
   images.forEach((src, i) => {
     const btn = document.createElement("button");
     btn.className = `w-20 h-20 rounded-lg overflow-hidden border-2 ${
@@ -455,10 +479,14 @@ function showProductDetail(product) {
     thumbs.appendChild(btn);
   });
 
-  // Wishlist
+  /* ---------------------------
+     Wishlist
+  --------------------------- */
   const favIcon = $("#fav-btn i");
   const isFav = wishlist.some((w) => w.id === product.id);
-  if (isFav) favIcon.classList.add("fill-red-500", "text-red-500");
+  favIcon.classList.toggle("fill-red-500", isFav);
+  favIcon.classList.toggle("text-red-500", isFav);
+
   $("#fav-btn").onclick = () => {
     toggleWishlist(product);
     favIcon.classList.toggle("fill-red-500");
@@ -466,7 +494,9 @@ function showProductDetail(product) {
     favIcon.classList.toggle("text-gray-400");
   };
 
-  // Cantidad
+  /* ---------------------------
+     Cantidad
+  --------------------------- */
   let cantidad = 1;
   const inputCantidad = $("#quantity");
   $("#increment").onclick = () => {
@@ -478,24 +508,24 @@ function showProductDetail(product) {
     inputCantidad.value = cantidad;
   };
 
-  // Botones principales
+  /* ---------------------------
+     Botones principales
+  --------------------------- */
   $$(".btn-add-cart").forEach((btn) =>
-    btn.addEventListener("click", () => {
-      addToCart(product);
-    })
+    btn.addEventListener("click", () => addToCart(product))
   );
   $("#checkoutBtn")?.addEventListener("click", () => {
     addToCart(product);
     if (typeof openCheckout === "function") openCheckout();
   });
 
-  // Especificaciones
+  /* ---------------------------
+     Especificaciones y vendedor
+  --------------------------- */
   $("#specs").innerHTML = `
     <h2 class="text-2xl font-bold mb-6">Acerca del producto</h2>
     <p class="text-gray-600">${product.description}</p>
   `;
-
-  // Vendedor
   $("#seller").innerHTML = `
     <div class="flex items-center justify-between">
       <div>
@@ -509,17 +539,24 @@ function showProductDetail(product) {
     </div>
   `;
 
-  // Productos relacionados
-  $("#related").innerHTML = `
-    <h2 class="text-2xl font-bold mb-6">Productos relacionados</h2>
+  /* ---------------------------
+     Productos relacionados
+  --------------------------- */
+  const related = $("#related");
+  related.innerHTML = `
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold">Productos relacionados</h2>
+      <button id="backToCatalogBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded-lg transition">
+        ← Volver al catálogo
+      </button>
+    </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       ${products
+        .filter((p) => p.id !== product.id)
         .slice(0, 4)
         .map(
           (p) => `
-          <div class="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all cursor-pointer group" onclick="showProductDetail(${JSON.stringify(
-            p
-          )})">
+          <div class="related-item border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all cursor-pointer group">
             <div class="aspect-square bg-gray-100 rounded-lg mb-3 overflow-hidden">
               <img src="../assets/uploads/${
                 p.image
@@ -529,13 +566,30 @@ function showProductDetail(product) {
             <div class="font-bold text-lg text-blue-600">${fmtMoney(
               p.price
             )}</div>
+            <button class="view-detail-btn mt-2 w-full bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium py-2 rounded-lg flex items-center justify-center gap-1">
+              <i data-lucide="eye" class="w-4 h-4"></i> Ver detalles
+            </button>
           </div>`
         )
         .join("")}
     </div>
   `;
 
-  // Reactiva íconos
+  // Añadir eventos dinámicos a los botones de “Ver detalles” y “Volver”
+  related.querySelectorAll(".view-detail-btn").forEach((btn, i) => {
+    btn.addEventListener("click", () => {
+      const relProduct = products.filter((p) => p.id !== product.id)[i];
+      showProductDetail(relProduct);
+    });
+  });
+
+  $("#backToCatalogBtn")?.addEventListener("click", () => {
+    detailSection.classList.add("hidden");
+    productsSection.classList.remove("hidden");
+    productsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  // Reactiva iconos Lucide
   if (typeof lucide !== "undefined") lucide.createIcons();
 }
 
