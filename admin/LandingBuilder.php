@@ -14,8 +14,7 @@
             <div class="toolbar-left">
                 <h1 class="toolbar-title">
                     <img src="images/iconoTEC.png" style="width: 32px; height: 32px;" alt="">
-                    Tec Rivera Builder
-                
+                    Tec Rivera Builder               
                 </h1>
             </div>
             <div class="toolbar-center">

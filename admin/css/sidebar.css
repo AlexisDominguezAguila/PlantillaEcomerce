@@ -677,7 +677,6 @@ tbody tr:hover {
   background: #defce7;
   color: #14532d;
 }
-.status["en-pausa"],
 .status.en-pausa {
   background: #fff7ed;
   color: #7c2d12;
