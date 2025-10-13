@@ -1,0 +1,239 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --secondary: #111344;
+  --accent-blue: #126fa8;
+  --accent-orange: #497ac2;
+  --accent-red: #1b69c1;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--dark);
+  color: #0a0a0a;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+.topbar {
+  background: #3f474f; /* gris oscuro */
+  color: #e9ecef;
+  padding: 2px 16px;
+  position: relative;
+  z-index: 10; /* sobre decoraciones del header */
+}
+
+/* Distribución: texto centrado y CTA a la derecha */
+.topbar-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+/* Mantiene el texto realmente centrado aunque exista el botón a la derecha */
+.topbar-text {
+  justify-self: right;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Enlace “INGRESA TU ID” a la derecha con subrayado */
+.topbar-cta {
+  color: #eeeeee;
+  font-weight: 800;
+  text-decoration: underline;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.topbar-cta:hover {
+  color: var(--accent-blue);
+}
+
+/* Responsive: apilar en pantallas pequeñas */
+@media (max-width: 768px) {
+  .topbar-inner {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+  .topbar-text {
+    justify-self: center;
+  }
+  .topbar-cta {
+    justify-self: center;
+  }
+}
+
+/* diseño del navbar */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+/* Header */
+.header {
+  background: var(--secondary);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+  animation: mirror 2s linear infinite;
+}
+.logo-text {
+  color: #fff;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+  margin: 0;
+}
+
+.nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-menu a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-orange);
+  transition: width 0.3s;
+}
+
+.nav-menu a:hover {
+  color: var(--accent-orange);
+}
+
+.nav-menu a:hover::after {
+  width: 100%;
+}
+
+.nav-menu .active {
+  color: var(--accent-orange);
+}
+.nav-actions {
+  display: flex;
+  gap: 15px;
+}
+.nav-actions-mobile {
+  display: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent-blue);
+  padding: 10px 25px;
+  border: 2px solid var(--accent-blue);
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background: var(--accent-blue);
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(56, 182, 255, 0.3);
+}
+
+.btn-primary {
+  background: var(--accent-orange);
+  color: #fff;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: var(--accent-red);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.btn-large {
+  padding: 15px 40px;
+  font-size: 1.1rem;
+}
+
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-toggle span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  transition: all 0.3s;
+}
+@media (max-width: 768px) {
+  /* Ocultar en escritorio */
+  .nav-menu,
+  .nav-actions {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: flex;
+    z-index: 1100;
+    padding: 0 20px;
+  }
+  .logo {
+    font-size: 1.2rem;
+    gap: 5px;
+  }
+  .logo-icon {
+    font-size: 1.5rem;
+    margin-left: 10px;
+  }
+}
