@@ -86,6 +86,7 @@ const categories = [
   { name: "Monitores", icon: "bx bx-desktop" },
   { name: "Gaming", icon: "bx bx-joystick" },
   { name: "Impresoras", icon: "bx bx-printer" },
+  { name: "Accesorios", icon: "bx bx-mouse" },
 ];
 
 /* -------------------------

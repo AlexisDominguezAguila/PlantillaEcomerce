@@ -302,6 +302,7 @@
   padding: 1rem 2rem;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  justify-content: center;
 }
 .category-slider::-webkit-scrollbar {
   display: none;
