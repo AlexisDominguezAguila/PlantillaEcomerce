@@ -4,7 +4,7 @@
     if (typeof lucide !== "undefined") lucide.createIcons();
 
     /* -------------------------------------------
-       Datos del producto actual (demo)
+    Datos del producto actual (demo)
     ------------------------------------------- */
     const PRODUCTO_DETALLE = {
       id: 101,
@@ -45,8 +45,8 @@
     const CURRENCY_SYMBOL = "S/";
 
     /* -------------------------------------------
-       Acceso a datos globales del carrito/wishlist
-       (comparten almacenamiento con productos.js)
+    Acceso a datos globales del carrito/wishlist
+    (comparten almacenamiento con productos.js)
     ------------------------------------------- */
     let cart = [];
     let wishlist = [];
@@ -65,7 +65,7 @@
     };
 
     /* -------------------------------------------
-       Notificación rápida tipo toast
+      Notificación rápida tipo toast
     ------------------------------------------- */
     const notificar = (mensaje) => {
       const alerta = document.createElement("div");
@@ -81,8 +81,8 @@
     };
 
     /* -------------------------------------------
-       Funciones locales: carrito + wishlist
-       (usa el mismo almacenamiento que productos.js)
+      Funciones locales: carrito + wishlist
+      (usa el mismo almacenamiento que productos.js)
     ------------------------------------------- */
     const agregarAlCarrito = (prod) => {
       const existe = cart.find((i) => i.id === prod.id);
@@ -112,7 +112,7 @@
     };
 
     /* -------------------------------------------
-       Render dinámico de la vista
+      Render dinámico de la vista
     ------------------------------------------- */
     const p = PRODUCTO_DETALLE;
 
