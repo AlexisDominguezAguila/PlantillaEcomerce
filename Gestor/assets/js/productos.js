@@ -23,7 +23,6 @@ async function cargarProductos() {
     const res = await fetch(`${API_URL}?action=listar`);
     const data = await res.json();
 
-    // Mapear a la estructura esperada
     products = data.map((p) => ({
       id: parseInt(p.id),
       name: p.name,
@@ -39,17 +38,17 @@ async function cargarProductos() {
       isHot: p.is_hot == 1,
       isOffer: p.is_offer == 1,
       images: p.image_urls
-        ? p.image_urls
-            .split(",")
-            .map((img) => `../../public/uploads/productos/${img}`)
+        ? p.image_urls.split(",").map((img) => `../../public/uploads/productos/${img}`)
         : ["../../public/uploads/productos/no-image.png"],
     }));
 
     renderProducts();
   } catch (error) {
     console.error("Error cargando productos:", error);
+    showAlert("Error cargando productos desde el servidor", "error");
   }
 }
+
 
 // Setup Event Listeners
 function setupEventListeners() {
@@ -502,12 +501,14 @@ async function handleFormSubmit(e) {
   const form = document.getElementById("productForm");
   const formData = new FormData(form);
 
+  // flags
   formData.append("active", document.getElementById("productActive").checked ? 1 : 0);
   formData.append("is_new", document.getElementById("productNew").checked ? 1 : 0);
   formData.append("is_hot", document.getElementById("productHot").checked ? 1 : 0);
   formData.append("is_offer", document.getElementById("productOffer").checked ? 1 : 0);
 
-  let action = editingProductId ? "actualizar" : "crear";
+  // acción
+  const action = editingProductId ? "actualizar" : "crear";
   if (editingProductId) formData.append("id", editingProductId);
 
   try {
@@ -516,18 +517,36 @@ async function handleFormSubmit(e) {
       body: formData,
     });
 
-    const result = await res.json();
+    // Si el servidor devolvió error 500/404, fetch NO lanza; validamos:
+    if (!res.ok) {
+      const txt = await res.text();
+      console.error("Respuesta no OK:", res.status, txt);
+      showAlert("El servidor respondió con error (" + res.status + ")", "error");
+      return;
+    }
+
+    // Intentar parsear JSON; si falla, mostrar el texto crudo (debug)
+    let result;
+    try {
+      result = await res.json();
+    } catch (parseErr) {
+      const txt = await res.text();
+      console.error("No es JSON válido. Respuesta:", txt);
+      showAlert("Respuesta no válida del servidor (ver consola)", "error");
+      return;
+    }
 
     if (result.success) {
-      showAlert(`Producto ${editingProductId ? "actualizado" : "creado"} correctamente`, "success");
+      showAlert(`Producto ${editingProductId ? "actualizado" : "guardado"} correctamente`, "success");
       closeModal();
-      cargarProductos();
+      await cargarProductos();
       updateStats();
     } else {
+      console.error(result.error || result);
       showAlert("Error al guardar el producto", "error");
     }
   } catch (err) {
-    console.error(err);
+    console.error("Error guardando producto:", err);
     showAlert("Error de conexión con el servidor", "error");
   }
 }
@@ -538,12 +557,25 @@ function editProduct(id) {
 }
 
 // Delete Product
-function deleteProduct(id) {
-  if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
-    products = products.filter((p) => p.id !== id);
-    showAlert("Producto eliminado exitosamente", "success");
-    renderProducts();
-    updateStats();
+async function deleteProduct(id) {
+  const confirmar = confirm("¿Estás seguro de que deseas eliminar este producto?");
+  if (!confirmar) return;
+
+  try {
+    const res = await fetch(`${API_URL}?action=eliminar&id=${id}`);
+    const result = await res.json();
+
+    if (result.success) {
+      showAlert("Producto eliminado correctamente", "success");
+      await cargarProductos(); // Recarga desde la BD
+      updateStats();
+    } else {
+      showAlert("Error al eliminar el producto", "error");
+      console.error(result);
+    }
+  } catch (error) {
+    console.error("Error al eliminar producto:", error);
+    showAlert("Error de conexión al eliminar el producto", "error");
   }
 }
 
