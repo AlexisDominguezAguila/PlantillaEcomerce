@@ -1,5 +1,4 @@
 <?php
-// Gestor/models/ProductoModel.php
 require_once __DIR__ . '/../../config/db.php';
 
 class ProductoModel {
@@ -17,11 +16,9 @@ class ProductoModel {
                     (name, category_id, sku, price, old_price, stock, min_stock, description, active, is_new, is_hot, is_offer)
                     VALUES (:name, :category_id, :sku, :price, :old_price, :stock, :min_stock, :description, :active, :is_new, :is_hot, :is_offer)";
             $stmt = $this->conn->prepare($sql);
-
-            // Ejecutar solo los parámetros esperados
             $stmt->execute([
                 'name'        => $data['name'] ?? '',
-                'category_id' => $data['category_id'] ?? 1, // valor por defecto
+                'category_id' => $data['category_id'] ?? 1,
                 'sku'         => $data['sku'] ?? '',
                 'price'       => $data['price'] ?? 0,
                 'old_price'   => $data['old_price'] ?? null,
@@ -36,36 +33,57 @@ class ProductoModel {
 
             $productId = $this->conn->lastInsertId();
 
-            // Guardar imágenes
-            if (!empty($data['images'])) {
-                foreach ($data['images'] as $img) {
-                    $imgStmt = $this->conn->prepare("INSERT INTO product_images (product_id, image_url) VALUES (:pid, :url)");
-                    $imgStmt->execute(['pid' => $productId, 'url' => basename($img)]);
-
-                }
+            if (!empty($data['images']) && is_array($data['images'])) {
+                $this->agregarImagenes($productId, $data['images']);
             }
 
             return true;
         } catch (PDOException $e) {
+            error_log("❌ Error crearProducto(): " . $e->getMessage());
             echo json_encode(['error' => $e->getMessage()]);
             return false;
         }
     }
 
-    // Listar todas las categorías
+
+    public function agregarImagenes($productId, $imagenes) {
+    if (empty($imagenes) || !is_array($imagenes) || empty($productId)) {
+        error_log("⚠️ agregarImagenes() no ejecutado: sin imágenes o sin product_id");
+        return;
+    }
+
+    $sql = "INSERT INTO product_images (product_id, image_url) VALUES (:pid, :url)";
+    $stmt = $this->conn->prepare($sql);
+
+    foreach (array_unique($imagenes) as $img) {
+        if (!empty($img)) {
+            try {
+                $stmt->execute([
+                    'pid' => $productId,
+                    'url' => basename($img)
+                ]);
+                error_log("✅ Imagen insertada: PID=$productId → " . basename($img));
+            } catch (PDOException $e) {
+                error_log("❌ Error insertar imagen: " . $e->getMessage());
+            }
+        }
+    }
+}
+
+
+    // Obtener todas las categorías
     public function obtenerCategorias() {
         $sql = "SELECT id, name FROM categories ORDER BY name ASC";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-    // Listar productos con sus imágenes
+    // Obtener productos con imágenes
     public function obtenerProductos() {
         $sql = "SELECT 
                     p.*, 
                     c.name AS category_name,
-                    GROUP_CONCAT(pi.image_url) AS image_urls
+                    GROUP_CONCAT(DISTINCT pi.image_url) AS image_urls
                 FROM products p
                 JOIN categories c ON p.category_id = c.id
                 LEFT JOIN product_images pi ON p.id = pi.product_id
@@ -75,10 +93,10 @@ class ProductoModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Obtener producto por ID
+    // Obtener un producto por ID
     public function obtenerProducto($id) {
         $sql = "SELECT p.*, c.name AS category_name,
-                       GROUP_CONCAT(pi.image_url) AS image_urls
+                       GROUP_CONCAT(DISTINCT pi.image_url) AS image_urls
                 FROM products p
                 JOIN categories c ON p.category_id = c.id
                 LEFT JOIN product_images pi ON p.id = pi.product_id
@@ -115,7 +133,10 @@ class ProductoModel {
                 'is_hot'      => (int)$data['is_hot'],
                 'is_offer'    => (int)$data['is_offer']
             ]);
+
+            return true;
         } catch (PDOException $e) {
+            error_log("Error al actualizar producto: " . $e->getMessage());
             echo json_encode(['error' => $e->getMessage()]);
             return false;
         }

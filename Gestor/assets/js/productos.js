@@ -501,31 +501,11 @@ async function handleFormSubmit(e) {
 
   const form = document.getElementById("productForm");
   const formData = new FormData(form);
-  const imageInput = document.getElementById("imageInput");
 
-  // Añadir imágenes al FormData
-  for (let file of imageInput.files) {
-    formData.append("images[]", file);
-  }
-
-  // Datos adicionales manuales
-
-  formData.append(
-    "active",
-    document.getElementById("productActive").checked ? 1 : 0
-  );
-  formData.append(
-    "is_new",
-    document.getElementById("productNew").checked ? 1 : 0
-  );
-  formData.append(
-    "is_hot",
-    document.getElementById("productHot").checked ? 1 : 0
-  );
-  formData.append(
-    "is_offer",
-    document.getElementById("productOffer").checked ? 1 : 0
-  );
+  formData.append("active", document.getElementById("productActive").checked ? 1 : 0);
+  formData.append("is_new", document.getElementById("productNew").checked ? 1 : 0);
+  formData.append("is_hot", document.getElementById("productHot").checked ? 1 : 0);
+  formData.append("is_offer", document.getElementById("productOffer").checked ? 1 : 0);
 
   let action = editingProductId ? "actualizar" : "crear";
   if (editingProductId) formData.append("id", editingProductId);
@@ -539,10 +519,7 @@ async function handleFormSubmit(e) {
     const result = await res.json();
 
     if (result.success) {
-      showAlert(
-        `Producto ${editingProductId ? "actualizado" : "creado"} correctamente`,
-        "success"
-      );
+      showAlert(`Producto ${editingProductId ? "actualizado" : "creado"} correctamente`, "success");
       closeModal();
       cargarProductos();
       updateStats();
