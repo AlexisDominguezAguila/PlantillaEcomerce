@@ -39,7 +39,7 @@ class ProductoModel {
 
             return true;
         } catch (PDOException $e) {
-            error_log("❌ Error crearProducto(): " . $e->getMessage());
+            error_log("Error crearProducto(): " . $e->getMessage());
             echo json_encode(['error' => $e->getMessage()]);
             return false;
         }
@@ -62,9 +62,9 @@ class ProductoModel {
                     'pid' => $productId,
                     'url' => basename($img)
                 ]);
-                error_log("✅ Imagen insertada: PID=$productId → " . basename($img));
+                error_log("Imagen insertada: PID=$productId → " . basename($img));
             } catch (PDOException $e) {
-                error_log("❌ Error insertar imagen: " . $e->getMessage());
+                error_log("Error insertar imagen: " . $e->getMessage());
             }
         }
     }
