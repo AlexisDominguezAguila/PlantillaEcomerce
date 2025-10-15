@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page Builder - Constructor Visual</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="css/crear.css">
+    <link rel="stylesheet" href="../css/crear.css">
 </head>
 <body>
     <main class="builder-container">
@@ -13,7 +13,7 @@
         <header class="toolbar">
             <div class="toolbar-left">
                 <h1 class="toolbar-title">
-                    <img src="images/iconoTEC.png" style="width: 32px; height: 32px;" alt="">
+                    <img src="../images/iconoTEC.png" style="width: 32px; height: 32px;" alt="">
                     Tec Rivera Builder               
                 </h1>
             </div>
@@ -135,6 +135,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/crear.js"></script>
+    <script src="../js/crear.js"></script>
 </body>
 </html>

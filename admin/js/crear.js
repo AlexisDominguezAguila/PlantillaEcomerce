@@ -88,10 +88,40 @@ function handleDrop(e) {
   });
 }
 
-function addComponentToCanvas(componentType) {
+async function addComponentToCanvas(componentType) {
   const canvas = document.getElementById("mainCanvas");
-  const componentElement = createComponentElement(componentType);
-  canvas.appendChild(componentElement);
+
+  try {
+    const response = await fetch(
+      `api/render_component.php?component=${componentType}`
+    );
+    const data = await response.json();
+
+    if (data.html) {
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("canvas-component");
+      wrapper.dataset.component = componentType;
+      wrapper.innerHTML = `
+        <div class="component-toolbar">
+          <button class="edit-btn" onclick="editComponent(this)"><i class='bx bx-edit'></i></button>
+          <button class="delete-btn" onclick="deleteComponent(this)"><i class='bx bx-trash'></i></button>
+        </div>
+        ${data.html}
+      `;
+      canvas.appendChild(wrapper);
+
+      showToast(
+        "success",
+        "Componente agregado",
+        `${getComponentTitle(componentType)} agregado al canvas`
+      );
+    } else {
+      showToast("error", "Error", "No se pudo cargar el componente");
+    }
+  } catch (error) {
+    console.error(error);
+    showToast("error", "Error", "No se pudo conectar al servidor");
+  }
 }
 
 function createComponentElement(type) {
