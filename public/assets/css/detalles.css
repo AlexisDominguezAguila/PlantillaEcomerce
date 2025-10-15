@@ -14,7 +14,7 @@
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: var(--dark);
-  color: #0a0a0a;
+  color: #100e0e;
   overflow-x: hidden;
   line-height: 1.6;
 }
@@ -82,7 +82,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(255, 249, 249, 0.3);
 }
 
 .nav {
@@ -172,7 +172,7 @@ body {
 
 .btn-secondary:hover {
   background: var(--accent-blue);
-  color: #000000;
+  color: #eadede;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(56, 182, 255, 0.3);
 }
@@ -193,7 +193,7 @@ body {
 .btn-primary:hover {
   background: var(--accent-red);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(248, 246, 246, 0.4);
 }
 
 .btn-large {

@@ -790,6 +790,36 @@ function updateWishlistCount() {
 /* -------------------------
    Checkout (Wizard)
 ------------------------- */
+// Engancha ambos botones al mismo comportamiento
+// Engancha ambos botones al mismo comportamiento
+document.querySelectorAll("#checkoutBtnDetail, #checkoutBtnCart").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    // Detectar si hay un producto en detalle visible
+    const detailSection = document.getElementById("productDetailSection");
+    const productsSection = document.getElementById("productsSection");
+
+    // Si el usuario está en la vista de detalle, intentamos obtener el producto mostrado
+    if (!productsSection.classList.contains("hidden") && cart.length === 0) {
+      showNotification("Agrega un producto primero desde el catálogo");
+      return;
+    }
+
+    // Si estamos en la vista de detalle, busca el nombre del producto mostrado
+    if (!detailSection.classList.contains("hidden")) {
+      const productName = document.getElementById("name")?.textContent || "";
+      const product = products.find((p) => p.name === productName);
+
+      if (product) {
+        addToCart(product);
+      }
+    }
+
+    // Finalmente, procede al checkout
+    openCheckout();
+  });
+});
+
+
 function openCheckout() {
   if (cart.length === 0) {
     showNotification("Tu carrito está vacío");
