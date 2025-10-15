@@ -19,6 +19,9 @@ class Database {
             die(json_encode(["error" => "Error de conexión: " . $e->getMessage()]));
         }
         return $this->conn;
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     }
 }
 ?>
