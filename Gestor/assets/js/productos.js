@@ -9,14 +9,17 @@ let itemsPerPage = 6;
 let editingProductId = null;
 let currentView = "grid";
 let uploadedImages = [];
+let currentProductId = null;
 
 // Inicializar desde el backend
-document.addEventListener("DOMContentLoaded", function () {
-  cargarProductos();
-  cargarCategoriasFiltro();
+async function init() {
+  await cargarProductos();
+  await cargarCategoriasFiltro();
   updateStats();
   setupEventListeners();
-});
+}
+document.addEventListener("DOMContentLoaded", init);
+
 
 async function cargarProductos() {
   try {
@@ -27,6 +30,7 @@ async function cargarProductos() {
       id: parseInt(p.id),
       name: p.name,
       category: p.category_name,
+      category_id: parseInt(p.category_id),
       sku: p.sku,
       price: parseFloat(p.price),
       oldPrice: p.old_price ? parseFloat(p.old_price) : null,
@@ -38,8 +42,9 @@ async function cargarProductos() {
       isHot: p.is_hot == 1,
       isOffer: p.is_offer == 1,
       images: p.image_urls
-        ? p.image_urls.split(",").map((img) => `../../public/uploads/productos/${img}`)
+        ? p.image_urls.split(",").map((img) => `../../public/uploads/productos/${img.trim()}`)
         : ["../../public/uploads/productos/no-image.png"],
+
     }));
 
     renderProducts();
@@ -456,6 +461,7 @@ function openModal(productId = null) {
 
   if (productId) {
     const product = products.find((p) => p.id === productId);
+    currentProductId = productId;
     document.getElementById("modalTitle").textContent = "Editar Producto";
     fillForm(product);
   } else {
@@ -473,12 +479,15 @@ function closeModal() {
   document.getElementById("productModal").classList.remove("active");
   document.body.style.overflow = "auto";
   editingProductId = null;
+  currentProductId = null; //limpia para evitar residuos
   uploadedImages = [];
 }
+
 
 function fillForm(product) {
   document.getElementById("productName").value = product.name;
   document.getElementById("productCategory").value = product.category;
+  document.getElementById("productCategory").value = product.category_id;
   document.getElementById("productSKU").value = product.sku;
   document.getElementById("productPrice").value = product.price;
   document.getElementById("productOldPrice").value = product.oldPrice || "";
@@ -490,7 +499,14 @@ function fillForm(product) {
   document.getElementById("productHot").checked = product.isHot;
   document.getElementById("productOffer").checked = product.isOffer;
 
-  uploadedImages = [...product.images];
+  uploadedImages = product.images.map(img => {
+  // Si ya es una URL completa o base64 (de FileReader), la dejamos igual
+  if (img.startsWith("data:") || img.startsWith("http") || img.startsWith("/")) {
+    return img;
+  }
+  // Si solo es nombre de archivo (prod_xxx.jpg)
+  return `../public/uploads/productos/${img}`;
+});
   renderImagePreviews();
 }
 
@@ -601,19 +617,21 @@ function handleImageUpload(event) {
 // Render Image Previews
 function renderImagePreviews() {
   const grid = document.getElementById("imagePreviewGrid");
+
   grid.innerHTML = uploadedImages
     .map(
       (img, index) => `
-                <div class="image-preview-item">
-                    <img src="${img}" alt="Preview ${index + 1}">
-                    <button type="button" class="image-preview-remove" onclick="removeImage(${index})">
-                        <i class='bx bx-x'></i>
-                    </button>
-                </div>
-            `
+        <div class="image-preview-item">
+          <img src="${img}" alt="Preview ${index + 1}">
+          <button type="button" class="image-preview-remove" onclick="confirmRemoveImage('${img}', ${index})">
+              <i class='bx bx-x'></i>
+          </button>
+        </div>
+      `
     )
     .join("");
 }
+
 
 // Remove Image
 function removeImage(index) {
@@ -661,3 +679,53 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+
+
+function renderImagePreviews() {
+  const grid = document.getElementById("imagePreviewGrid");
+  grid.innerHTML = uploadedImages
+    .map(
+      (img, index) => `
+        <div class="image-preview-item">
+          <img src="${img.includes("http") ? img : "/public/uploads/productos/" + img}" alt="Preview ${index + 1}">
+          <button type="button" class="image-preview-remove" onclick="confirmRemoveImage('${img}', ${index})">
+              <i class='bx bx-x'></i>
+          </button>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function confirmRemoveImage(imageName, index) {
+  if (confirm("¿Estás seguro de eliminar esta imagen?")) {
+    removeImageFromDB(imageName, index);
+  }
+}
+
+async function removeImageFromDB(imageName, index) {
+  try {
+    const formData = new FormData();
+    formData.append("action", "eliminar_imagen");
+    formData.append("image", imageName.split("/").pop());
+    formData.append("product_id", currentProductId);
+
+    const res = await fetch(`../controllers/ProductoController.php?action=eliminar_imagen`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      uploadedImages.splice(index, 1);
+      renderImagePreviews();
+      alert("Imagen eliminada correctamente.");
+    } else {
+      alert("No se pudo eliminar la imagen.");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Error al eliminar la imagen.");
+  }
+}

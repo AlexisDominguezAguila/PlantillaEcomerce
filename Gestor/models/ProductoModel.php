@@ -185,4 +185,30 @@ class ProductoModel {
             return false;
         }
     }
+
+    // ==================== ELIMINAR IMAGEN INDIVIDUAL ====================
+    public function eliminarImagen($productId, $imageName) {
+        if (empty($productId) || empty($imageName)) return false;
+
+        try {
+            // 1. Obtener ruta física
+            $uploadDir = __DIR__ . '/../../public/uploads/productos/';
+            $imagePath = $uploadDir . basename($imageName);
+
+            // 2. Eliminar registro en BD
+            $stmt = $this->conn->prepare("DELETE FROM product_images WHERE product_id = :pid AND image_url = :url");
+            $stmt->execute(['pid' => (int)$productId, 'url' => $imageName]);
+
+            // 3. Eliminar del servidor (si existe)
+            if (is_file($imagePath)) {
+                unlink($imagePath);
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error eliminarImagen(): " . $e->getMessage());
+            return false;
+        }
+    }
+
 }

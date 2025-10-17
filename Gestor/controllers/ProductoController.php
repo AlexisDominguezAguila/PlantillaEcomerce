@@ -99,4 +99,24 @@ switch ($action) {
     default:
         echo json_encode(['error' => 'Acción no válida']);
         break;
+    
+     case 'eliminar_imagen':
+    try {
+        $imageName = $_POST['image'] ?? '';
+        $productId = (int)($_POST['product_id'] ?? 0);
+
+        if (empty($imageName) || $productId <= 0) {
+            echo json_encode(['success' => false, 'error' => 'Datos inválidos']);
+            exit;
+        }
+
+        $success = $model->eliminarImagen($productId, $imageName);
+
+        echo json_encode(['success' => $success]);
+    } catch (Exception $e) {
+        error_log("Error eliminar_imagen(): " . $e->getMessage());
+        echo json_encode(['success' => false, 'error' => 'Error interno']);
+    }
+    break;
+
 }

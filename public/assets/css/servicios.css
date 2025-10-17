@@ -264,7 +264,7 @@
 
 /* CTA Override for Services Page */
 .services-detailed ~ .cta {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
 }
 
 .services-detailed ~ .cta::before {
