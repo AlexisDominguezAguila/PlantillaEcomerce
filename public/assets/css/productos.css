@@ -568,6 +568,11 @@
   text-transform: uppercase;
 }
 
+.product-card .product-info h3,
+.product-card .product-info p {
+  color: #000;
+}
+
 .product-name {
   font-size: 1.1rem;
   font-weight: 700;
