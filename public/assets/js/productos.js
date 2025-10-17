@@ -1,5 +1,5 @@
 /* =====================================================================
-   TEC RIVERA – Catálogo público (carrito, wishlist, checkout + BD)
+  TEC RIVERA – Catálogo público (carrito, wishlist, checkout + BD)
    ===================================================================== */
 const API_URL = "../controllers/ProductosController.php";
 const IMAGE_BASE = "../uploads/productos/";

@@ -98,32 +98,42 @@
     const slider = $("#categorySlider");
     const select = $("#categoryFilter");
     if (!slider || !select) return;
+
     slider.innerHTML = "";
-    select.innerHTML = `<option value="all">Todas las categorías</option>`;
+    select.innerHTML = ""; // limpiar completamente
+
+    //siempre incluye la opción general
+    const optAll = document.createElement("option");
+    optAll.value = "all";
+    optAll.textContent = "Todas las categorías";
+    select.appendChild(optAll);
 
     categories.forEach(c => {
         const card = document.createElement("div");
         card.className = "category-card";
         card.innerHTML = `<i class="bx bx-folder"></i><h3>${c.name}</h3>`;
-        card.onclick = async ()=> {
-        select.value = String(c.id);
+        card.onclick = async () => {
         await loadProductos(c.id);
+        select.value = c.id;
         renderProductos(c.id);
         initHero();
         };
         slider.appendChild(card);
 
         const opt = document.createElement("option");
-        opt.value = c.id; opt.textContent = c.name; select.appendChild(opt);
+        opt.value = c.id;
+        opt.textContent = c.name;
+        select.appendChild(opt);
     });
 
-    select.onchange = async (e)=> {
+    select.onchange = async (e) => {
         const val = e.target.value;
         await loadProductos(val);
         renderProductos(val);
         initHero();
     };
     }
+
 
     // ---------------------- Slider Hero ----------------------
     function initHero() {
@@ -279,6 +289,38 @@
         <div class="text-sm text-gray-600">Tiempo estimado: 2-3 días hábiles</div></div></div>`;
     $("#stock").textContent="Disponible en stock";
 
+    // --- Botón de favoritos en detalle ---
+    const favIcon = $("#fav-btn i");
+    if (favIcon) {
+    const isFav = wishlist.some(w => w.id === p.id);
+    favIcon.classList.toggle("text-red-500", isFav);
+    favIcon.classList.toggle("bx-heart", !isFav);
+    favIcon.classList.toggle("bxs-heart", isFav);
+
+    $("#fav-btn").onclick = () => {
+        toggleWishlist(p);
+        favIcon.classList.toggle("text-red-500");
+        favIcon.classList.toggle("bx-heart");
+        favIcon.classList.toggle("bxs-heart");
+    };
+    }
+
+    // --- Contador de cantidad ---
+    let cantidad = 1;
+    const inputCantidad = $("#quantity");
+    if (inputCantidad) inputCantidad.value = cantidad;
+
+    $("#increment")?.addEventListener("click", () => {
+    cantidad++;
+    if (inputCantidad) inputCantidad.value = cantidad;
+    });
+
+    $("#decrement")?.addEventListener("click", () => {
+    if (cantidad > 1) cantidad--;
+    if (inputCantidad) inputCantidad.value = cantidad;
+    });
+
+
     const main=$("#main-img"), thumbs=$("#thumbs");
     thumbs.innerHTML="";
     const imgs=p.images?.length?p.images:[p.image];
@@ -296,7 +338,12 @@
         thumbs.appendChild(b);
     });
 
-    $$(".btn-add-cart").forEach(btn=>btn.onclick=()=>addToCart(p));
+    $$(".btn-add-cart").forEach(btn =>
+    btn.onclick = () => {
+        for (let i = 0; i < cantidad; i++) addToCart(p);
+    }
+    );
+
     $("#checkoutBtnDetail")?.addEventListener("click",()=>{addToCart(p);openCheckout();});
 
     $("#specs").innerHTML=`<h2 class="text-2xl font-bold mb-6">Acerca del producto</h2>
