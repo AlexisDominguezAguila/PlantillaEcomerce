@@ -316,7 +316,7 @@
             <button type="submit" class="btn-login">Ingresar</button>
             <p class="footer-text">
               Acceso directo para pruebas
-              <a href="/Gestor/views/productos.php">Click aquí</a>
+              <a href="##">Click aquí</a>
             </p>
           </form>
         </div>
@@ -335,6 +335,29 @@
           ? '<i class="bx bx-hide"></i>'
           : '<i class="bx bx-show"></i>';
       });
+
+      const loginForm = document.getElementById("loginForm");
+
+  // Credenciales fijas (puedes cambiarlas)
+  const USER = "admin@tecrivera.com";
+  const PASSWORD = "12345";
+
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (email === USER && password === PASSWORD) {
+      // Guardar sesión local (opcional)
+      localStorage.setItem("usuarioActivo", USER);
+
+      // Redirigir a otra página (dashboard o panel)
+      window.location.href = "../../Gestor/index.php";
+    } else {
+      alert("Credenciales incorrectas. Intente de nuevo.");
+    }
+  });
     </script>
   </body>
 </html>

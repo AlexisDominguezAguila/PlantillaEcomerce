@@ -1,491 +1,195 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Servicios - TEC RIVERA</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../assets/css/global.css" />
-    <link rel="stylesheet" href="../assets/css/index.css" />
-    <link rel="stylesheet" href="../assets/css/servicios.css" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-    />
-  </head>
-  <body>
-    <!-- Topbar -->
-    <div class="topbar" role="region" aria-label="Ingreso de tenant">
-      <div class="container topbar-inner">
-        <span class="topbar-text">
-          SI YA ERES SOCIO, INGRESA CON TU TENANT
-        </span>
-        <a href="login.html" class="topbar-cta">INGRESA TU ID</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios - TEC RIVERA</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/index.css" />
+  <link rel="stylesheet" href="../assets/css/servicios.css" />
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar" role="region" aria-label="Ingreso de tenant">
+    <div class="container topbar-inner">
+      <span class="topbar-text">SI YA ERES SOCIO, INGRESA CON TU TENANT</span>
+      <a href="login.html" class="topbar-cta">INGRESA TU ID</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <div class="logo">
+          <span class="logo-icon">
+            <img src="../assets/images/iconoTEC.png" alt="iconoTEC" style="width: 30px; height: 30px" />
+          </span>
+          <span class="logo-text">TEC RIVERA</span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="../../index.html">Inicio</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a class="active" href="#">Servicios</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="inicio.html" class="btn-primary">Iniciar sesión</a>
+        </div>
+        <button class="mobile-toggle" id="mobileToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-label">Nuestros Servicios</p>
+        <h1 class="hero-title">Soluciones tecnológicas a tu medida</h1>
+        <p class="hero-description">
+          Ofrecemos servicios especializados que impulsan la transformación digital de tu empresa con tecnología de vanguardia.
+        </p>
       </div>
     </div>
-    <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <nav class="nav">
-          <div class="logo">
+  </section>
+
+  <!-- Main Benefits -->
+  <section class="benefits">
+    <div class="container">
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="fas fa-rocket"></i></div>
+          <h3>Implementación Rápida</h3>
+          <p>Despliega tus proyectos en días, no en meses, con nuestra metodología ágil probada</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Escalabilidad Garantizada</h3>
+          <p>Crece sin límites con infraestructura cloud que se adapta a tu ritmo de crecimiento</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="fas fa-headset"></i></div>
+          <h3>Soporte Dedicado 24/7</h3>
+          <p>Equipo experto siempre disponible para resolver cualquier incidencia en minutos</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="fas fa-lightbulb"></i></div>
+          <h3>Disponibilidad de la información</h3>
+          <p>Información accesible en todo momento, garantizando transparencia y disponibilidad continua (24/7).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Services Grid -->
+  <section class="services-detailed">
+    <div class="container">
+      <div class="services-grid" id="servicesGrid">
+        <!-- Aquí se insertarán dinámicamente los servicios activos desde la BD -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">¿No encuentras el servicio que buscas?</h2>
+        <p class="cta-description">
+          Contáctanos y diseñaremos una solución personalizada para tu empresa
+        </p>
+        <div class="cta-actions">
+          <a href="contacto.html" class="btn-primary btn-large">Consultoría Gratuita</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- LOGO / DESCRIPCIÓN -->
+        <div class="footer-column">
+          <div class="footer-logo">
             <span class="logo-icon">
-              <img
-                src="../assets/images/iconoTEC.png"
-                alt="iconoTEC"
-                style="width: 30px; height: 30px"
-              />
+              <img src="../assets/images/iconoTEC.png" alt="iconoTEC" style="width: 30px; height: 30px" />
             </span>
             <span class="logo-text">TEC RIVERA</span>
           </div>
-          <ul class="nav-menu" id="navMenu">
-            <li><a href="../../index.html">Inicio</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a class="active" href="#">Servicios</a></li>
-            <!-- <li><a href="soluciones.html">Soluciones</a></li> -->
-            <li><a href="contacto.html">Contacto</a></li>
-          </ul>
-          <div class="nav-actions">
-            <a href="inicio.html" class="btn-primary">Iniciar sesion</a>
-          </div>
-          <button class="mobile-toggle" id="mobileToggle">
-            <span></span><span></span><span></span>
-          </button>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="page-hero">
-      <div class="container">
-        <div class="hero-content">
-          <p class="hero-label">Nuestros Servicios</p>
-          <h1 class="hero-title">Soluciones tecnológicas a tu medida</h1>
-          <p class="hero-description">
-            Ofrecemos servicios especializados que impulsan la transformación
-            digital de tu empresa con tecnología de vanguardia.
+          <p class="footer-description">
+            Soluciones tecnológicas integrales para empresas que buscan innovar y crecer.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Benefits -->
-    <section class="benefits">
-      <div class="container">
-        <div class="benefits-grid">
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-rocket"></i>
-            </div>
-            <h3>Implementación Rápida</h3>
-            <p>
-              Despliega tus proyectos en días, no en meses, con nuestra
-              metodología ágil probada
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-chart-line"></i>
-            </div>
-            <h3>Escalabilidad Garantizada</h3>
-            <p>
-              Crece sin límites con infraestructura cloud que se adapta a tu
-              ritmo de crecimiento
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-headset"></i>
-            </div>
-            <h3>Soporte Dedicado 24/7</h3>
-            <p>
-              Equipo experto siempre disponible para resolver cualquier
-              incidencia en minutos
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-lightbulb"></i>
-            </div>
-            <h3>Disponibilidad de la información</h3>
-            <p>
-              Información accesible en todo momento, garantizando transparencia y disponibilidad continua (24/7).
-            </p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/multi.per.5" aria-label="Facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="https://www.instagram.com/tecrivera_peru" aria-label="Instagram"><i class="bx bxl-instagram"></i></a>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Services Grid -->
-    <section class="services-detailed">
-      <div class="container">
-        <div class="services-grid">
-          <!-- Sistema de Restaurante -->
-          <div class="service-detail-card">
-            <div class="service-header">
-              <div class="service-icon"><i class="fas fa-code"></i></div>
-              <h2>Sistema de Restaurante</h2>
-            </div>
-            <p class="service-intro">
-              Aplicación completa para la gestión operativa de restaurantes, desde pedidos y 
-              cocina hasta caja e inventario, todo desde una interfaz sencilla.
-            </p>
-            <div class="service-features">
-              <h3>¿Qué incluye?</h3>
-              <ul>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span
-                    >Toma de pedidos por mesero o QR.</span
-                  >
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Estadísticas de consumo y rentabilidad.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Adaptable a restaurantes, cafés y bares.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Nuestros plaes Basico:80 sin igv | estandar:120 sin igv.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Nuestros planes pro:160sin igv | premium:240sin igv.</span>
-                </li>
-              </ul>
-            </div>
-            <div class="service-pricing">
-              <div class="price-tag">Desde s/80 a s/240</div>
-              <a href="contacto.html" class="btn-primary"
-                >Solicitar Cotización</a
-              >
-            </div>
-          </div>
-
-          <!-- Venta de Productos de Cómputo -->
-          <div class="service-detail-card featured">
-            <div class="popular-badge">Más Popular</div>
-            <div class="service-header">
-              <div class="service-icon"><i class="fas fa-users"></i></div>
-              <h2>Venta de Productos de Cómputo</h2>
-            </div>
-            <p class="service-intro">
-              Ofrecemos una plataforma especializada en la venta y distribución de equipos de cómputo.
-              Nos enfocamos en la comercialización de hardware de alto rendimiento de las mejores marcas del mercado.
-            </p>
-            <div class="service-features">
-              <h3>Lo que ofrecemos</h3>
-              <ul>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span
-                    >Catálogo actualizado con disponibilidad en tiempo real.</span
-                  >
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Equipos y componentes originales.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Compras y pagos seguros.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Cotizaciones y descuentos personalizados.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Seguimiento del pedido y soporte postventa.</span>
-                </li>
-              </ul>
-            </div>
-            <div class="service-pricing">
-              <div class="price-tag">Precios accesibles</div>
-              <a href="productos.html" class="btn-primary"
-                >ver más</a
-              >
-            </div>
-          </div>
-
-          <!-- Soporte Técnico -->
-          <div class="service-detail-card">
-            <div class="service-header">
-              <div class="service-icon"><i class="fas fa-headset"></i></div>
-              <h2>Soporte Técnico 24/7</h2>
-            </div>
-            <p class="service-intro">
-              Brindamos soporte disponible todo el tiempo para mantener tu infraestructura funcionando sin interrupciones.
-            </p>
-            <div class="service-features">
-              <h3>Beneficios</h3>
-              <ul>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Soporte 24/7/365 por múltiples canales</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Tiempo de respuesta < 15 minutos</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Mantenimiento preventivo mensual</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Monitoreo continuo de sistemas</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Asistencia remorta | helpdesk</span>
-                </li>
-              </ul>
-            </div>
-            <div class="service-pricing">
-              <div class="price-tag">Disponible las 24hrs</div>
-              <a href="contacto.html" class="btn-primary"
-                >Solicitar atención</a
-              >
-            </div>
-          </div>
-
-          <!-- Generación de Reportes -->
-          <div class="service-detail-card">
-            <div class="service-header">
-              <div class="service-icon"><i class="fas fa-cloud"></i></div>
-              <h2>Generación de Reportes</h2>
-            </div>
-            <p class="service-intro">
-              Solución que automatiza la creación de informes de desempeño, finanzas, 
-              ventas o productividad, ayudando a monitorear resultados y detectar tendencias.
-            </p>
-            <div class="service-features">
-              <h3>Servicios</h3>
-              <ul>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Reportes personalizables por área o usuario</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Exportación en formatos PDF, Excel y gráficos dinámicos.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Comparativas históricas y proyecciones.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Alertas automáticas ante variaciones críticas.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Centralización de datos para mayor transparencia.</span>
-                </li>
-              </ul>
-            </div>
-            <div class="service-pricing">
-              <div class="price-tag">Desde $4,000</div>
-              <a href="contacto.html" class="btn-primary"
-                >Solicitar Cotización</a
-              >
-            </div>
-          </div>
-
-          <!-- Punto de Venta (POS) -->
-          <div class="service-detail-card">
-            <div class="service-header">
-              <div class="service-icon"><i class="fas fa-lock"></i></div>
-              <h2>Punto de Venta (POS)</h2>
-            </div>
-            <p class="service-intro">
-              Sistema ágil y moderno para registrar ventas, controlar inventario y 
-              gestionar cobros en tiempo real, optimizando la atención al cliente.
-            </p>
-            <div class="service-features">
-              <h3>Brinda</h3>
-              <ul>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Registro rápido de productos y pagos.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Control automático de stock.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Integración con métodos de pago digitales.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Generación de comprobantes y facturación electrónica.</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Compatible con equipos táctiles y lectores de código.</span>
-                </li>
-              </ul>
-            </div>
-            <div class="service-pricing">
-              <div class="price-tag">Desde $3,500</div>
-              <a href="contacto.html" class="btn-primary"
-                >Solicitar Cotización</a
-              >
-            </div>
-          </div>
-
-          <!-- Análisis de Datos -->
-          <div class="service-detail-card">
-            <div class="service-header">
-              <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-              <h2>Análisis de Datos</h2>
-            </div>
-            <p class="service-intro">
-              Transforma datos en insights accionables con Business Intelligence
-              y Machine Learning.
-            </p>
-            <div class="service-features">
-              <h3>Soluciones de Datos</h3>
-              <ul>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Dashboards interactivos en Power BI/Tableau</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Data Analytics y visualización avanzada</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Modelos de Machine Learning predictivos</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>ETL y Data Warehousing</span>
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>
-                  <span>Reportes automatizados</span>
-                </li>
-              </ul>
-            </div>
-            <div class="service-pricing">
-              <div class="price-tag">Desde $4,500</div>
-              <a href="contacto.html" class="btn-primary"
-                >Solicitar Cotización</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-      <div class="container">
-        <div class="cta-content">
-          <h2 class="cta-title">¿No encuentras el servicio que buscas?</h2>
-          <p class="cta-description">
-            Contáctanos y diseñaremos una solución personalizada para tu empresa
-          </p>
-          <div class="cta-actions">
-            <a href="contacto.html" class="btn-primary btn-large"
-              >Consultoría Gratuita</a
-            >
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <!-- LOGO / DESCRIPCIÓN -->
+        <!-- Menús -->
+        <div class="footer-columns-wrapper">
           <div class="footer-column">
-            <div class="footer-logo">
-              <span class="logo-icon">
-                <img
-                  src="../assets/images/iconoTEC.png"
-                  alt="iconoTEC"
-                  style="width: 30px; height: 30px"
-                />
-              </span>
-              <span class="logo-text">TEC RIVERA</span>
-            </div>
-            <p class="footer-description">
-              Soluciones tecnológicas integrales para empresas que buscan
-              innovar y crecer.
-            </p>
-            <div class="social-links">
-              <a href="https://www.facebook.com/multi.per.5" aria-label="Facebook"
-                ><i class="bx bxl-facebook"></i
-              ></a>
-              <a href="https://www.instagram.com/tecrivera_peru?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"
-                ><i class="bx bxl-instagram"></i
-              ></a>
-            </div>
+            <h4>Productos</h4>
+            <ul>
+              <li><a href="#">Laptops</a></li>
+              <li><a href="#">Servidores</a></li>
+              <li><a href="#">Networking</a></li>
+              <li><a href="#">Seguridad</a></li>
+              <li><a href="#">Accesorios</a></li>
+            </ul>
           </div>
 
-          <!-- 🔹 Agrupación nueva de columnas -->
-          <div class="footer-columns-wrapper">
-            <div class="footer-column">
-              <h4>Productos</h4>
-              <ul>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Servidores</a></li>
-                <li><a href="#">Networking</a></li>
-                <li><a href="#">Seguridad</a></li>
-                <li><a href="#">Accesorios</a></li>
-              </ul>
-            </div>
-
-            <div class="footer-column">
-              <h4>Servicios</h4>
-              <ul>
-                <li><a href="#">Análisis de Datos</a></li>
-                <li><a href="#">Punto de Venta</a></li>
-                <li><a href="#">Soporte Técnico</a></li>
-                <li><a href="#">Generación de Reportes</a></li>
-                <li><a href="#">Sistema de Restaurantes</a></li>
-              </ul>
-            </div>
-
-            <div class="footer-column">
-              <h4>Empresa</h4>
-              <ul>
-                <li><a href="#">Nosotros</a></li>
-                <li><a href="#">Casos de Éxito</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Carreras</a></li>
-                <li><a href="#">Contacto</a></li>
-              </ul>
-            </div>
-
-            <div class="footer-column">
-              <h4>Legal</h4>
-              <ul>
-                <li><a href="#">Privacidad</a></li>
-                <li><a href="#">Términos</a></li>
-                <li><a href="#">Cookies</a></li>
-                <li><a href="#">Licencias</a></li>
-              </ul>
-            </div>
+          <div class="footer-column">
+            <h4>Servicios</h4>
+            <ul id="footerServices">
+              <!-- Aquí también se llenarán dinámicamente los servicios activos -->
+            </ul>
           </div>
-        </div>
 
-        <div class="footer-bottom">
-          <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
+          <div class="footer-column">
+            <h4>Empresa</h4>
+            <ul>
+              <li><a href="#">Nosotros</a></li>
+              <li><a href="#">Casos de Éxito</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Carreras</a></li>
+              <li><a href="#">Contacto</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="#">Privacidad</a></li>
+              <li><a href="#">Términos</a></li>
+              <li><a href="#">Cookies</a></li>
+              <li><a href="#">Licencias</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-    </footer>
-    <script src="../assets/js/home.js"></script>
-  </body>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Detalle Servicio -->
+  <div class="modal" id="serviceModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="cerrarModalServicio()"><i class="fas fa-times"></i></button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="../assets/js/home.js"></script>
+  <script src="../assets/js/servicios.js"></script>
+</body>
 </html>

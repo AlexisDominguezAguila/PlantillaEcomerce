@@ -17,26 +17,14 @@
     </div>
 
     <nav class="menu">
-      <a href="../index.php" class="menu-item">
-        <i class="bx bx-home"></i><span>Inicio</span>
-      </a>
-      <a href="productos.php" class="menu-item">
-        <i class="bx bx-box"></i><span>Productos</span>
-      </a>
-      <a href="#" class="menu-item active">
-        <i class="bx bx-cog"></i><span>Servicios</span>
-      </a>
-      <a href="#" class="menu-item">
-        <i class="bx bx-layer"></i><span>Soluciones</span>
-      </a>
-      <a href="#" class="menu-item">
-        <i class="bx bx-message-dots"></i><span>Mensajes</span>
-      </a>
+      <a href="../index.php" class="menu-item"><i class="bx bx-home"></i><span>Inicio</span></a>
+      <a href="productos.php" class="menu-item"><i class="bx bx-box"></i><span>Productos</span></a>
+      <a href="#" class="menu-item active"><i class="bx bx-cog"></i><span>Servicios</span></a>
+      <a href="#" class="menu-item"><i class="bx bx-layer"></i><span>Soluciones</span></a>
+      <a href="#" class="menu-item"><i class="bx bx-message-dots"></i><span>Mensajes</span></a>
     </nav>
 
-    <button id="toggleSidebar" class="toggle-btn">
-      <i class="bx bx-chevron-left"></i>
-    </button>
+    <button id="toggleSidebar" class="toggle-btn"><i class="bx bx-chevron-left"></i></button>
   </aside>
 
   <main class="main-content">
@@ -44,11 +32,11 @@
     <div class="page-header">
       <div class="page-title">
         <div>
-          <div style="display: flex; align-items: center; gap: 0.75rem">
-            <h1>Gestión de Servicios</h1>
+            <div style="display: flex; align-items: center; gap: 0.75rem">
+              <h1>Gestión de Servicios</h1>
+            </div>
+            <p>Administra los servicios disponibles en tu sistema</p>
           </div>
-          <p>Administra tus servicios ofrecidos y controla su visibilidad</p>
-        </div>
       </div>
       <button class="btn btn-primary" onclick="openModal()">
         <i class="bx bx-plus"></i> Nuevo Servicio
@@ -77,76 +65,26 @@
       </div>
     </div>
 
-    <!-- Filters -->
+
+    <!-- Search -->
     <div class="filters-section">
-      <div class="filters-grid">
-        <div class="filter-group">
-          <label>Buscar Servicio</label>
-          <div class="search-wrapper">
-            <i class="bx bx-search"></i>
-            <input type="text" class="filter-input" id="searchInput" placeholder="Buscar por nombre...">
-          </div>
-        </div>
-        <div class="filter-group">
-          <label>Categoría</label>
-          <select class="filter-input" id="categoryFilter">
-            <option value="">Todas las categorías</option>
-            <option value="sistemas">Sistemas</option>
-            <option value="soporte">Soporte</option>
-            <option value="ventas">Ventas</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Estado</label>
-          <select class="filter-input" id="statusFilter">
-            <option value="">Todos</option>
-            <option value="activo">Visibles</option>
-            <option value="oculto">Ocultos</option>
-          </select>
-        </div>
+      <div class="filter-group full-width">
+        <label><i class="bx bx-search"></i> Buscar Servicio</label>
+        <input type="text" id="searchInput" class="filter-input" placeholder="Buscar por nombre..." onkeyup="buscarServicio()">
       </div>
     </div>
 
-    <!-- Services Container -->
+    <!-- Services -->
     <div class="services-container">
       <div class="products-header">
-        <h2 style="font-size: 1.25rem; color: var(--text)">
-          <span id="servicesCount">0</span> Servicios encontrados
-        </h2>
-        <div class="view-toggle">
-          <button class="view-btn active" onclick="changeView('grid')">
-            <i class="bx bx-grid-alt"></i>
-          </button>
-          <button class="view-btn" onclick="changeView('table')">
-            <i class="bx bx-list-ul"></i>
-          </button>
-        </div>
+        <h2><span id="servicesCount">0</span> Servicios encontrados</h2>
       </div>
 
-      <!-- Grid View -->
       <div class="products-grid" id="servicesGrid"></div>
 
-      <!-- Table View -->
-      <div class="table-responsive">
-        <table class="products-table" id="servicesTable">
-          <thead>
-            <tr>
-              <th>Imagen</th>
-              <th>Servicio</th>
-              <th>Categoría</th>
-              <th>Descripción</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="servicesTableBody"></tbody>
-        </table>
-      </div>
-
-      <!-- Empty State -->
       <div class="empty-state" id="emptyState" style="display:none;">
         <i class="bx bx-layer"></i>
-        <h3>No hay servicios</h3>
+        <h3>No hay servicios registrados</h3>
         <p>Agrega tu primer servicio para comenzar</p>
         <button class="btn btn-primary" onclick="openModal()">
           <i class="bx bx-plus"></i> Crear Servicio
@@ -164,59 +102,72 @@
       </div>
 
       <form id="serviceForm">
-        <div class="modal-body">
-          <div class="form-grid">
-            <div class="form-group full-width">
-              <label><i class="bx bx-text"></i> Nombre del Servicio *</label>
-              <input type="text" class="form-input" id="serviceName" name="name" required placeholder="Ej: Soporte Técnico Integral">
-            </div>
+  <input type="hidden" id="serviceId" name="id">
+  <div class="modal-body">
+    <div class="form-grid">
+      <div class="form-group full-width">
+        <label><i class="bx bx-text"></i> Nombre del Servicio *</label>
+        <input type="text" id="serviceTitle" name="titulo" class="form-input" required>
+      </div>
 
-            <div class="form-group">
-              <label><i class="bx bx-category"></i> Categoría *</label>
-              <select class="form-input" id="serviceCategory" name="category" required>
-                <option value="sistemas">Sistemas</option>
-                <option value="soporte">Soporte</option>
-                <option value="ventas">Ventas</option>
-              </select>
-            </div>
+      <div class="form-group full-width">
+        <label><i class="bx bx-detail"></i> Descripción *</label>
+        <textarea id="serviceDescription" name="descripcion" class="form-input" required></textarea>
+      </div>
 
-            <div class="form-group full-width">
-              <label><i class="bx bx-detail"></i> Descripción *</label>
-              <textarea class="form-input" id="serviceDescription" name="description" required placeholder="Describe el servicio..."></textarea>
-            </div>
+      <div class="form-group full-width">
+        <label><i class="bx bx-list-check"></i> Características</label>
+        <textarea id="serviceFeatures" name="caracteristicas" class="form-input"></textarea>
+      </div>
 
-            <div class="form-group full-width">
-              <label><i class="bx bx-toggle-left"></i> Estado</label>
-              <div class="checkbox-group">
-                <div class="checkbox-item">
-                  <input type="checkbox" id="serviceActive" name="active" checked>
-                  <label for="serviceActive">Visible</label>
-                </div>
-              </div>
-            </div>
+      <div class="form-group">
+        <label><i class="bx bx-purchase-tag"></i> Precio mínimo</label>
+        <input type="number" step="0.01" id="serviceMin" name="precio_min" class="form-input">
+      </div>
 
-            <div class="form-group full-width">
-              <label><i class="bx bx-image"></i> Imagen</label>
-              <div class="image-upload-area" onclick="document.getElementById('serviceImage').click()">
-                <i class="bx bx-cloud-upload"></i>
-                <p><strong>Click para subir</strong> una imagen del servicio</p>
-                <p style="font-size:0.75rem;">PNG, JPG, WEBP (máx. 5MB)</p>
-              </div>
-              <input type="file" id="serviceImage" name="image" accept="image/*" style="display:none;" onchange="previewImage(event)">
-              <div class="image-preview-grid" id="imagePreview"></div>
-            </div>
+      <div class="form-group">
+        <label><i class="bx bx-purchase-tag"></i> Precio máximo</label>
+        <input type="number" step="0.01" id="serviceMax" name="precio_max" class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label><i class="bx bx-label"></i> Etiqueta</label>
+        <input type="text" id="serviceLabel" name="etiqueta" class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label><i class="bx bx-link"></i> Enlace</label>
+        <input type="text" id="serviceLink" name="enlace" class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label><i class="bx bx-icon"></i> Icono (FontAwesome)</label>
+        <input type="text" id="serviceIcon" name="icono" class="form-input" placeholder="fas fa-code">
+      </div>
+
+      <!-- 🔽 Campo agregado: Visible -->
+      <div class="form-group full-width">
+        <label><i class="bx bx-toggle-left"></i> Estado</label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="serviceActive" name="active" checked>
+            <label for="serviceActive">Visible</label>
           </div>
         </div>
+      </div>
+      <!-- 🔼 -->
+    </div>
+  </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick="closeModal()">
-            <i class="bx bx-x"></i> Cancelar
-          </button>
-          <button type="submit" class="btn btn-primary">
-            <i class="bx bx-save"></i> Guardar Servicio
-          </button>
-        </div>
-      </form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" onclick="closeModal()">
+      <i class="bx bx-x"></i> Cancelar
+    </button>
+    <button type="submit" class="btn btn-primary">
+      <i class="bx bx-save"></i> Guardar Servicio
+    </button>
+  </div>
+</form>
     </div>
   </div>
 
