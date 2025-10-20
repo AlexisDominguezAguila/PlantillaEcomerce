@@ -28,6 +28,11 @@
           <span>Inicio</span>
         </a>
 
+        <a href="views/principal.php" class="menu-item">
+          <i class="bx bx-layer"></i>
+          <span>Principal</span>
+        </a>
+
         <a href="views/productos.php" class="menu-item">
           <i class="bx bx-box"></i>
           <span>Productos</span>
@@ -36,16 +41,6 @@
         <a href="views/Servicios.php" class="menu-item">
           <i class="bx bx-cog"></i>
           <span>Servicios</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i class="bx bx-layer"></i>
-          <span>Soluciones</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i class="bx bx-message-dots"></i>
-          <span>Mensajes</span>
         </a>
       </nav>
 

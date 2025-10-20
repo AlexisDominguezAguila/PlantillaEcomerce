@@ -18,10 +18,9 @@
 
     <nav class="menu">
       <a href="../index.php" class="menu-item"><i class="bx bx-home"></i><span>Inicio</span></a>
+            <a href="principal.php" class="menu-item"><i class="bx bx-box"></i><span>Principal</span></a>
       <a href="productos.php" class="menu-item"><i class="bx bx-box"></i><span>Productos</span></a>
       <a href="#" class="menu-item active"><i class="bx bx-cog"></i><span>Servicios</span></a>
-      <a href="#" class="menu-item"><i class="bx bx-layer"></i><span>Soluciones</span></a>
-      <a href="#" class="menu-item"><i class="bx bx-message-dots"></i><span>Mensajes</span></a>
     </nav>
 
     <button id="toggleSidebar" class="toggle-btn"><i class="bx bx-chevron-left"></i></button>

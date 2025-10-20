@@ -150,7 +150,32 @@
 /* Stats */
 .stats {
   padding: 80px 20px 0 20px;
-  background: var(--dark);
+  background: linear-gradient(
+      to right,
+      rgba(36, 36, 62, 0.95),
+      rgba(48, 43, 99, 0.9),
+      rgba(15, 12, 41, 0.9)
+    ),
+    url("/public/assets/images/fondoIndex.jpg"); /* Cambia por tu ruta */
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* efecto parallax sutil */
+}
+
+.stats::before {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(251, 133, 0, 0.1) 0%,
+    transparent 70%
+  );
+  animation: float 8s ease-in-out infinite;
 }
 
 .stats-grid {
@@ -246,7 +271,32 @@
 /* Products */
 .products {
   padding: 0 20px 40px 20px;
-  background: linear-gradient(180deg, var(--dark), rgba(17, 19, 68, 0.3));
+  background: linear-gradient(
+      to right,
+      rgba(36, 36, 62, 0.95),
+      rgba(48, 43, 99, 0.9),
+      rgba(15, 12, 41, 0.9)
+    ),
+    url("/public/assets/images/fondoIndex.jpg"); /* Cambia por tu ruta */
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* efecto parallax sutil */
+}
+
+.Products::before {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(251, 133, 0, 0.1) 0%,
+    transparent 70%
+  );
+  animation: float 8s ease-in-out infinite;
 }
 
 .products-grid {
@@ -270,7 +320,7 @@
 
 .product-image {
   position: relative;
-  height: 250px;
+  height: 355px;
   background: var(--primary);
   display: flex;
   align-items: center;
@@ -278,14 +328,22 @@
   overflow: hidden;
 }
 
-.product-image i {
-  font-size: 100px;
-  color: var(--accent-blue);
-  transition: transform 0.4s;
+.product-image img {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  max-width: 100%; /* ajusta según la altura que desees */
+  object-fit: cover; /* mantiene proporciones recortando bordes */
+  border-radius: 12px; /* mantiene estética moderna de tus cards */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
-.product-card:hover .product-image i {
-  transform: scale(1.1);
+/* efecto hover profesional */
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .product-badge {
