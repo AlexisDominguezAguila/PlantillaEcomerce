@@ -3,70 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TEC RIVERA - Círculo Giratorio</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <title>TEC RIVERA Anillos</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        background: #f5f7fa;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        overflow: hidden;
-        font-family: "Segoe UI", sans-serif;
+        min-height: 100vh;
+        background: #f7faff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
 
-      .circle-container {
+      .container {
         position: relative;
-        width: 400px;
-        height: 400px;
+        width: 600px;
+        height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
-      /* Logo central */
-      .center-logo {
+      /* ===== CÍRCULO CENTRAL ===== */
+      .center-circle {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
-
-      .center-logo img {
-        width: 100px;
-        height: auto;
+        width: 170px;
+        height: 170px;
         border-radius: 50%;
+        border: 5px solid #38b6ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 3;
       }
 
-      .center-logo h2 {
-        margin-top: 10px;
-        color: #004a8f;
-        font-weight: 700;
-        font-size: 1.2rem;
+      .center-circle img {
+        width: 80%;
+        height: auto;
       }
 
-      /* Texto circular */
-      .circle-text {
+      /* ===== CÍRCULO PUNTEADO ===== */
+      .dotted-ring {
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        border: 2px dashed rgba(56, 182, 255, 0.6);
+        z-index: 2;
+      }
+
+      /* ===== ANILLO INTERMEDIO (fondo azul claro) ===== */
+      .middle-ring-bg {
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(56, 182, 255, 0.12) 40%,
+          rgba(255, 255, 255, 0.8) 100%
+        );
+        z-index: 1;
+      }
+
+      /* ===== TEXTOS ROTATORIOS ===== */
+      .ring {
+        position: absolute;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .ring-text {
         position: absolute;
         width: 100%;
         height: 100%;
-        border-radius: 50%;
-        animation: rotateText 15s linear infinite;
+        animation: rotate 45s linear infinite;
       }
 
-      .circle-text span {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform-origin: 0 160px;
-        font-weight: 600;
-        color: #004a8f;
-        font-size: 0.9rem;
-      }
-
-      @keyframes rotateText {
+      @keyframes rotate {
         from {
           transform: rotate(0deg);
         }
@@ -75,77 +96,85 @@
         }
       }
 
-      /* Iconos inferiores */
-      .bottom-icons {
-        position: absolute;
-        bottom: -80px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 100px;
+      .text-path {
+        fill: #1a1b5e;
+        font-weight: 700;
+        letter-spacing: 1.5px;
       }
 
-      .icon-box {
-        text-align: center;
-        color: #004a8f;
+      /* ===== ANILLO 1: Texto exterior grande ===== */
+      .ring-outer {
+        width: 500px;
+        height: 500px;
       }
 
-      .icon-box i {
-        font-size: 40px;
-        margin-bottom: 10px;
+      .ring-outer .text-path {
+        font-size: 22px;
       }
 
-      .icon-box span {
-        display: block;
+      /* ===== ANILLO 2: Texto intermedio más pequeño ===== */
+      .ring-inner {
+        width: 350px;
+        height: 350px;
+      }
+
+      .ring-inner .text-path {
+        font-size: 17px;
         font-weight: 600;
-        font-size: 0.9rem;
+        fill: #2c58a0;
       }
     </style>
   </head>
   <body>
-    <div class="circle-container">
-      <div class="center-logo">
-        <img src="public/assets/images/iconoTEC.png" alt="TEC RIVERA Logo" />
-        <!-- Reemplaza con tu logo -->
-        <h2>TEC RIVERA</h2>
+    <div class="container">
+      <!-- Fondo azul intermedio -->
+      <div class="middle-ring-bg"></div>
+
+      <!-- Círculo punteado -->
+      <div class="dotted-ring"></div>
+
+      <!-- Círculo central -->
+      <div class="center-circle">
+        <img src="public/assets/images/LogoTEC.png" alt="TEC RIVERA Logo" />
       </div>
 
-      <div class="circle-text" id="circleText"></div>
+      <!-- Anillo interior con texto más pequeño -->
+      <div class="ring ring-inner">
+        <svg viewBox="0 0 350 350" width="350" height="350" class="ring-text">
+          <defs>
+            <path
+              id="textPathInner"
+              d="M175,175 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0"
+              fill="none"
+            />
+          </defs>
+          <text class="text-path">
+            <textPath href="#textPathInner" startOffset="0%">
+              • Sistema de Restaurantes • Control de Reportes • Generación de
+              Pedidos • Páginas Web •
+            </textPath>
+          </text>
+        </svg>
+      </div>
 
-      <div class="bottom-icons">
-        <div class="icon-box">
-          <i class="fas fa-store"></i>
-          <span>PEQUEÑOS<br />NEGOCIOS</span>
-        </div>
-        <div class="icon-box">
-          <i class="fas fa-building"></i>
-          <span>GRANDES<br />NEGOCIOS</span>
-        </div>
+      <!-- Anillo exterior con texto grande -->
+      <div class="ring ring-outer">
+        <svg viewBox="0 0 500 500" width="500" height="500" class="ring-text">
+          <defs>
+            <path
+              id="textPathOuter"
+              d="M250,250 m-220,0 a220,220 0 1,1 440,0 a220,220 0 1,1 -440,0"
+              fill="none"
+            />
+          </defs>
+          <text class="text-path">
+            <textPath href="#textPathOuter" startOffset="0%">
+              • Control de Reportes • Análisis de Datos • Generación de Pedidos
+              • Páginas de Datos •
+            </textPath>
+          </text>
+        </svg>
       </div>
     </div>
-
-    <script>
-      const text = [
-        "Control de reportes",
-        "Análisis de datos",
-        "Generación de pedido",
-        "Control de pedidos",
-        "Sisteman de restaurantes",
-        "Páginas web",
-        "Páginas de datos",
-      ];
-
-      const circle = document.getElementById("circleText");
-
-      const step = 360 / text.length;
-      text.forEach((word, i) => {
-        const span = document.createElement("span");
-        span.textContent = word;
-        span.style.transform = `rotate(${
-          i * step
-        }deg) translate(0, -160px) rotate(${-(i * step)}deg)`;
-        circle.appendChild(span);
-      });
-    </script>
   </body>
 </html>
