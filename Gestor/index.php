@@ -172,7 +172,7 @@ if (isset($_SESSION['usuario_id'])) {
                 Administra el contenido de la pagina web tecrivera.com
             </p>
 
-            <a href="Admin/views/tenants.php" class="btn btn-outline-light btn-cta" style="border-width:1.5px;">
+            <a href="views/principal.php" class="btn btn-outline-light btn-cta" style="border-width:1.5px;">
                 <i class="bi bi-arrow-right-short"></i> Administrar Contenido
             </a>
         </div>
