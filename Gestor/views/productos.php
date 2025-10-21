@@ -29,7 +29,7 @@
           <span>Inicio</span>
         </a>
 
-        <a href="principal.php" class="menu-item active">
+        <a href="principal.php" class="menu-item">
           <i class="bx bx-box"></i>
           <span>Principal</span>
         </a>
