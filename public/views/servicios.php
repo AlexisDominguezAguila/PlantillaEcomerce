@@ -21,36 +21,8 @@
   </div>
 
   <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <nav class="nav">
-        <a href="../../index.html" class="logo">
-            <span class="logo-icon">
-              <img
-                src="../assets/images/iconoTEC.png"
-                alt="iconoTEC"
-                style="width: 30px; height: 30px"
-              />
-            </span>
-            <span class="logo-text">TEC RIVERA</span>
-          </a>
+   <?php include('../partials/header.php') ?>
 
-
-        <ul class="nav-menu" id="navMenu">
-          <li><a href="../../index.html">Inicio</a></li>
-          <li><a href="productos.html">Productos</a></li>
-          <li><a class="active" href="#">Servicios</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-        </ul>
-        <div class="nav-actions">
-          <a href="inicio.html" class="btn-primary">Iniciar sesión</a>
-        </div>
-        <button class="mobile-toggle" id="mobileToggle">
-          <span></span><span></span><span></span>
-        </button>
-      </nav>
-    </div>
-  </header>
 
   <!-- Hero Section -->
   <section class="page-hero">

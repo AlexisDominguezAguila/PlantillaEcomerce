@@ -31,7 +31,7 @@
       <div class="container">
         <nav class="nav">
           <!-- Logo -->
-          <a href="../../index.html" class="logo">
+          <a href="../../index.php" class="logo">
             <span class="logo-icon">
               <img
                 src="../assets/images/iconoTEC.png"
@@ -44,11 +44,10 @@
 
           <!-- Menú principal -->
           <ul class="nav-menu" id="navMenu">
-            <li><a href="../../index.html">Inicio</a></li>
-            <li><a class="active" href="productos.html">Productos</a></li>
-            <li><a href="servicios.html">Servicios</a></li>
-            <!-- <li><a href="soluciones.html">Soluciones</a></li> -->
-            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="../../index.php">Inicio</a></li>
+            <li><a class="active" href="productos.php">Productos</a></li>
+            <li><a href="servicios.php">Servicios</a></li>
+            <li><a href="contacto.php">Contacto</a></li>
           </ul>
 
           <!-- Botones principales -->

@@ -1,14 +1,19 @@
+<?php
+session_start();
+if (isset($_SESSION['usuario_id'])) {
+  header("Location: index.php");
+  exit;
+}
+
+$error = $_GET['error'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | Tec Rivera</title>
-    <link rel="stylesheet" href="login.css" />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Tec Rivera</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <style>
       :root {
         --primary: #111344;
@@ -260,104 +265,66 @@
         }
       }
     </style>
-  </head>
-  <body>
-    <div class="login-wrapper">
-      <!-- Columna Izquierda -->
-      <div class="login-left">
-        <div class="logo-container">
-          <img
-            src="/public/assets/images/iconoTEC.png"
-            alt="Tec Rivera"
-            class="logo"
-          />
-          <h2>Tec Rivera</h2>
-          <p>Innovación y tecnología para tu negocio</p>
-        </div>
-      </div>
-
-      <!-- Columna Derecha -->
-      <div class="login-right">
-        <div class="login-card">
-          <h1>Iniciar Sesión</h1>
-          <p class="subtitle">Bienvenido de nuevo</p>
-
-          <form id="loginForm">
-            <div class="input-group">
-              <label for="email">Correo electrónico</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="ejemplo@correo.com"
-                required
-              />
-            </div>
-
-            <div class="input-group password-group">
-              <label for="password">Contraseña</label>
-              <div class="password-wrapper">
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="••••••••"
-                  required
-                />
-                <button
-                  type="button"
-                  id="togglePassword"
-                  class="toggle-password"
-                  aria-label="Mostrar u ocultar contraseña"
-                >
-                  <i class="bx bx-show"></i>
-                </button>
-              </div>
-            </div>
-
-            <button type="submit" class="btn-login">Ingresar</button>
-            <p class="footer-text">
-              Acceso directo para pruebas
-              <a href="##">Click aquí</a>
-            </p>
-          </form>
-        </div>
+</head>
+<body>
+  <div class="login-wrapper">
+    <!-- Columna Izquierda -->
+    <div class="login-left">
+      <div class="logo-container">
+        <img src="assets/images/iconoTEC.png" alt="Tec Rivera" class="logo" />
+        <h2>Tec Rivera</h2>
+        <p>Innovación y tecnología para tu negocio</p>
       </div>
     </div>
 
-    <script>
-      const togglePassword = document.getElementById("togglePassword");
-      const passwordInput = document.getElementById("password");
-      let isVisible = false;
+    <!-- Columna Derecha -->
+    <div class="login-right">
+      <div class="login-card">
+        <h1>Iniciar Sesión</h1>
+        <p class="subtitle">Bienvenido de nuevo</p>
 
-      togglePassword.addEventListener("click", () => {
-        isVisible = !isVisible;
-        passwordInput.type = isVisible ? "text" : "password";
-        togglePassword.innerHTML = isVisible
-          ? '<i class="bx bx-hide"></i>'
-          : '<i class="bx bx-show"></i>';
-      });
+        <?php if ($error): ?>
+          <p style="color:#dc2626; margin-bottom:12px;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
 
-      const loginForm = document.getElementById("loginForm");
+        <form method="POST" action="../config/login_action.php">
+          <div class="input-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" name="email" id="email" placeholder="ejemplo@correo.com" required />
+          </div>
 
-  // Credenciales fijas (puedes cambiarlas)
-  const USER = "admin@tecrivera.com";
-  const PASSWORD = "12345";
+          <div class="input-group password-group">
+            <label for="password">Contraseña</label>
+            <div class="password-wrapper">
+              <input type="password" name="password" id="password" placeholder="••••••••" required />
+              <button type="button" id="togglePassword" class="toggle-password" aria-label="Mostrar u ocultar contraseña">
+                <i class="bx bx-show"></i>
+              </button>
+            </div>
+          </div>
 
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+          <button type="submit" class="btn-login">Ingresar</button>
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+          <p class="footer-text">
+            ¿Olvidaste tu contraseña?
+            <a href="#">Click aquí</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
 
-    if (email === USER && password === PASSWORD) {
-      // Guardar sesión local (opcional)
-      localStorage.setItem("usuarioActivo", USER);
-
-      // Redirigir a otra página (dashboard o panel)
-      window.location.href = "../../Gestor/index.php";
-    } else {
-      alert("Credenciales incorrectas. Intente de nuevo.");
-    }
-  });
-    </script>
-  </body>
+  <script>
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+    let isVisible = false;
+    togglePassword.addEventListener("click", () => {
+      isVisible = !isVisible;
+      passwordInput.type = isVisible ? "text" : "password";
+      togglePassword.innerHTML = isVisible
+        ? '<i class="bx bx-hide"></i>'
+        : '<i class="bx bx-show"></i>';
+    });
+  </script>
+</body>
 </html>
