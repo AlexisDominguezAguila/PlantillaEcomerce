@@ -1,3 +1,22 @@
+<?php
+// ========================================
+// PANEL PRINCIPAL - TEC RIVERA
+// ========================================
+require_once __DIR__ . '/../../config/Auth.php';   
+require_once __DIR__ . '/../../config/db.php';  
+
+// Instancia de conexión 
+$db = new Database();
+$pdo = $db->connect();
+
+// Recuperar usuario activo
+$user = null;
+if (isset($_SESSION['usuario_id'])) {
+    $stmt = $pdo->prepare("SELECT nombre, email, rol FROM usuarios WHERE id = ?");
+    $stmt->execute([$_SESSION['usuario_id']]);
+    $user = $stmt->fetch();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
