@@ -39,6 +39,38 @@ $error = $_GET['error'] ?? '';
         font-family: "Poppins", sans-serif;
       }
 
+      
+      /* ===== Botón Volver (nuevo) ===== */
+      .back-button {
+        position: fixed;
+        top: 18px;
+        left: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.55rem 0.9rem;
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: var(--shadow);
+        transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+        backdrop-filter: blur(6px);
+        z-index: 50;
+      }
+      .back-button i { font-size: 1.1rem; }
+      .back-button:hover {
+        transform: translateY(-1px);
+        background: #fff;
+        box-shadow: 0 12px 28px rgba(17, 19, 68, 0.12);
+      }
+      @media (max-width: 850px) {
+        .back-button { top: 12px; left: 12px; padding: 0.5rem 0.75rem; }
+        .back-button span { display: none; } /* solo el ícono en móvil */
+      }
+
       /* Layout principal */
       .login-wrapper {
         display: flex;
@@ -267,6 +299,12 @@ $error = $_GET['error'] ?? '';
     </style>
 </head>
 <body>
+
+    <!-- Botón Volver -->
+    <a href="../../index.php" class="back-button" id="btnBack" aria-label="Volver a la página anterior">
+      <i class='bx bx-arrow-back'></i><span>Volver</span>
+    </a>
+
   <div class="login-wrapper">
     <!-- Columna Izquierda -->
     <div class="login-left">

@@ -9,12 +9,18 @@
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 </head>
 <body>
+  
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="logo-section">
       <img src="../../public/assets/images/iconoTEC.png" alt="Tec Rivera" class="logo" />
       <h2 class="brand">Tec Rivera</h2>
     </div>
+
+      <!-- Botón Volver -->
+    <a href="../index.php" class="back-button" id="btnBack" aria-label="Volver a la página anterior">
+      <i class='bx bx-arrow-back'></i><span>Volver</span>
+    </a>
 
     <nav class="menu">
       <a href="../index.php" class="menu-item"><i class="bx bx-home"></i><span>Inicio</span></a>

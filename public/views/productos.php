@@ -47,6 +47,7 @@
             <li><a href="../../index.php">Inicio</a></li>
             <li><a class="active" href="productos.php">Productos</a></li>
             <li><a href="servicios.php">Servicios</a></li>
+            <li><a href="restaurantes.php">Restaurantes</a></li>
             <li><a href="contacto.php">Contacto</a></li>
           </ul>
 

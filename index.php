@@ -48,13 +48,13 @@
 
           <ul class="nav-menu" id="navMenu">
             <li><a class="active" href="#">Inicio</a></li>
-            <li><a href="public/views/productos.html">Productos</a></li>
-            <li><a href="public/views/servicios.html">Servicios</a></li>
-            <!-- <li><a href="public/views/soluciones.html">Soluciones</a></li> -->
-            <li><a href="public/views/contacto.html">Contacto</a></li>
+            <li><a href="public/views/productos.php">Productos</a></li>
+            <li><a href="public/views/servicios.php">Servicios</a></li>
+            <li><a href="public/views/restaurantes.php">Restaurantes</a></li>
+            <li><a href="public/views/contacto.php">Contacto</a></li>
 
             <div class="nav-actions-mobile">
-              <a href="public/views/inicio.html" class="btn-primary"
+              <a href="public/views/inicio.php" class="btn-primary"
                 >Iniciar Sesión</a
               >
             </div>
@@ -63,7 +63,7 @@
           <!-- Botones normales (visibles en escritorio) -->
           <div class="nav-actions">
             <!-- <a href="#contacto" class="btn-secondary">Contacto</a> -->
-            <a href="public/views/inicio.html" class="btn-primary"
+            <a href="public/views/inicio.php" class="btn-primary"
               >Iniciar Sesión</a
             >
           </div>

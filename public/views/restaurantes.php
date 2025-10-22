@@ -26,38 +26,9 @@
         <a href="login.html" class="topbar-cta">INGRESA TU ID</a>
       </div>
     </div>
+
     <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <nav class="nav">
-          <a href="../../index.html" class="logo">
-            <span class="logo-icon">
-              <img
-                src="public/assets/images/iconoTEC.png"
-                alt="iconoTEC"
-                style="width: 30px; height: 30px"
-              />
-            </span>
-            <span class="logo-text">TEC RIVERA</span>
-          </a>
-
-
-          <ul class="nav-menu" id="navMenu">
-            <li><a href="../../index.html">Inicio</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="servicios.html">Servicios</a></li>
-            <li><a class="active" href="#">Soluciones</a></li>
-            <li><a href="contacto.html">Contacto</a></li>
-          </ul>
-          <div class="nav-actions">
-            <a href="inicio.html" class="btn-primary">Iniciar sesion</a>
-          </div>
-          <button class="mobile-toggle" id="mobileToggle">
-            <span></span><span></span><span></span>
-          </button>
-        </nav>
-      </div>
-    </header>
+    <?php include('../partials/header.php') ?>
 
     <!-- Hero Section -->
     <section class="page-hero">
@@ -69,53 +40,6 @@
             Soluciones completas diseñadas específicamente para las necesidades
             de tu industria. Tecnología que impulsa resultados reales.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Benefits -->
-    <section class="benefits">
-      <div class="container">
-        <div class="benefits-grid">
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-rocket"></i>
-            </div>
-            <h3>Implementación Rápida</h3>
-            <p>
-              Despliega tus proyectos en días, no en meses, con nuestra
-              metodología ágil probada
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-chart-line"></i>
-            </div>
-            <h3>Escalabilidad Garantizada</h3>
-            <p>
-              Crece sin límites con infraestructura cloud que se adapta a tu
-              ritmo de crecimiento
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-headset"></i>
-            </div>
-            <h3>Soporte Dedicado 24/7</h3>
-            <p>
-              Equipo experto siempre disponible para resolver cualquier
-              incidencia en minutos
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-lightbulb"></i>
-            </div>
-            <h3>Disponibilidad de la información</h3>
-            <p>
-              Información accesible en todo momento, garantizando transparencia y disponibilidad continua (24/7).
-            </p>
-          </div>
         </div>
       </div>
     </section>

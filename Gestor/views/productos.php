@@ -42,6 +42,11 @@ if (isset($_SESSION['usuario_id'])) {
         <h2 class="brand">Tec Rivera</h2>
       </div>
 
+            <!-- Botón Volver -->
+    <a href="../index.php" class="back-button" id="btnBack" aria-label="Volver a la página anterior">
+      <i class='bx bx-arrow-back'></i><span>Volver</span>
+    </a>
+
       <nav class="menu">
         <a href="../index.php" class="menu-item">
           <i class="bx bx-home"></i>
