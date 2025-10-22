@@ -24,11 +24,8 @@ function is_active($files) {
         <li><a class="<?= is_active(['servicios.php']) ?>"  href="servicios.php">Servicios</a></li>
         <li><a class="<?= is_active(['restaurantes.php']) ?>"  href="restaurantes.php">Restaurantes</a></li>
         <li><a class="<?= is_active(['contacto.php']) ?>"   href="contacto.php">Contacto</a></li>
+        <li><a class="<?= is_active(['servic.php']) ?>"   href="servic.php">Alexis</a></li>
       </ul>
-
-      <div class="nav-actions">
-        <a href="inicio.php" class="btn-primary">Iniciar sesión</a>
-      </div>
 
       <button class="mobile-toggle" id="mobileToggle">
         <span></span><span></span><span></span>

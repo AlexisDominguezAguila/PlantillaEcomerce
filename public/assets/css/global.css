@@ -1,16 +1,27 @@
+/*Purga*/
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/*variables globales*/
 :root {
-  --primary: #fafafa;
   --secondary: #111344;
   --dark: #ffffff;
   --accent-blue: #126fa8;
   --accent-orange: #497ac2;
   --accent-red: #1b69c1;
+  --primary: #111344;
+  --primary-light: #1a1a5e;
+  --accent: #00d4ff;
+  --accent-secondary: #6366f1;
+  --text-light: #ffffff;
+  --text-muted: #b0b0c0;
+  --bg-dark: #0a0a1a;
+  --bg-card: #1a1a3e;
+  --border-color: rgba(99, 102, 241, 0.2);
 }
 
 body {
@@ -22,22 +33,24 @@ body {
   line-height: 1.6;
 }
 
+/* ===============================
+   TOPBAR ESTILIZADA
+=============================== */
+/* Barra superior */
 .topbar {
-  background: #3f474f; /* gris oscuro */
+  background: #3f474f;
   color: #e9ecef;
   padding: 2px 16px;
   position: relative;
-  z-index: 10; /* sobre decoraciones del header */
+  z-index: 10;
 }
 
-/* Distribución: texto centrado y CTA a la derecha */
 .topbar-inner {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
 }
 
-/* Mantiene el texto realmente centrado aunque exista el botón a la derecha */
 .topbar-text {
   justify-self: right;
   font-weight: 700;
@@ -46,7 +59,6 @@ body {
   text-align: center;
 }
 
-/* Enlace “INGRESA TU ID” a la derecha con subrayado */
 .topbar-cta {
   color: #eeeeee;
   font-weight: 800;
@@ -73,7 +85,10 @@ body {
   }
 }
 
-/* diseño del navbar */
+/* --------------------------------
+   NAVBAR ESTILIZADA  
+-------------------------------- */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -391,48 +406,36 @@ body {
 /* ===========================
    FOOTER
 =========================== */
+/* ===== FOOTER ===== */
 .footer {
-  background: linear-gradient(135deg, var(--secondary));
-  padding: 60px 20px 20px;
+  background: rgba(10, 10, 26, 0.8);
+  border-top: 1px solid var(--border-color);
+  padding: 60px 0 20px;
+  margin-top: 100px;
 }
 
-/* Grilla principal: logo + agrupación de columnas */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 2fr; /* dos columnas reales */
-  align-items: flex-start;
-  gap: 40px;
+  grid-template-columns: 1.5fr 3fr;
+  gap: 50px;
   margin-bottom: 40px;
-}
-
-/* Grilla interna de las secciones de enlaces */
-.footer-columns-wrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-}
-
-/* --- Estilos generales --- */
-.footer-column h4 {
-  color: var(--accent-blue);
-  margin-bottom: 20px;
-  font-size: 1.1rem;
 }
 
 .footer-logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--accent-blue);
   margin-bottom: 20px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-light);
 }
 
 .footer-description {
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.7;
-  margin-bottom: 25px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 .social-links {
@@ -443,24 +446,35 @@ body {
 .social-links a {
   width: 40px;
   height: 40px;
+  background: rgba(0, 212, 255, 0.1);
   border-radius: 50%;
-  background: var(--secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.social-links a i {
-  font-size: 1.2rem;
-  color: #fff;
+  color: var(--accent);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
 }
 
 .social-links a:hover {
-  background: var(--accent-orange);
-  transform: translateY(-5px);
+  background: var(--accent);
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+
+.footer-columns-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.footer-column h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .footer-column ul {
@@ -468,65 +482,27 @@ body {
 }
 
 .footer-column ul li {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-.footer-column a {
-  color: rgba(255, 255, 255, 0.7);
+.footer-column ul li a {
+  color: var(--text-muted);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
 }
 
-.footer-column a:hover {
-  color: var(--accent-orange);
+.footer-column ul li a:hover {
+  color: var(--accent);
+  padding-left: 5px;
 }
 
 .footer-bottom {
   text-align: center;
-  padding-top: 30px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.5);
-}
-
-/* ===========================
-   RESPONSIVE FOOTER
-=========================== */
-
-/* TABLET (≤1024px) */
-@media (max-width: 1024px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-}
-
-/* MÓVIL (≤768px) */
-@media (max-width: 768px) {
-  .footer-columns-wrapper {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-  }
-
-  .footer-column h4 {
-    font-size: 1rem;
-    margin-bottom: 10px;
-  }
-
-  .footer-column ul li {
-    margin-bottom: 8px;
-  }
-
-  .footer-description {
-    text-align: justify;
-  }
-}
-
-/* Opcional: Para móviles MUY pequeños (≤480px), las columnas de enlaces deben ser 1fr */
-@media (max-width: 480px) {
-  .footer-columns-wrapper {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 @media (max-width: 1024px) {

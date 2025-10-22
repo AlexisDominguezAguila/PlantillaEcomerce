@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Servicios - TEC RIVERA</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/global.css" />
-  <link rel="stylesheet" href="../assets/css/index.css" />
-  <link rel="stylesheet" href="../assets/css/servicios.css" />
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+    <link rel="stylesheet" href="../assets/css/global.css" />
+    <link rel="stylesheet" href="../assets/css/servic.css" />
 </head>
 <body>
-
   <!-- Topbar -->
   <div class="topbar" role="region" aria-label="Ingreso de tenant">
     <div class="container topbar-inner">
@@ -23,9 +21,12 @@
   <!-- Header -->
    <?php include('../partials/header.php') ?>
 
-
   <!-- Hero Section -->
-  <section class="page-hero">
+  <section class="page-hero hero-has-bg" id="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="../assets/images/hero-service.jpg" alt="Servicios TEC RIVERA">
+    </div>
+
     <div class="container">
       <div class="hero-content">
         <p class="hero-label">Nuestros Servicios</p>
@@ -36,6 +37,7 @@
       </div>
     </div>
   </section>
+
 
   <!-- Main Benefits -->
   <section class="benefits">
@@ -97,7 +99,7 @@
         <div class="footer-column">
           <div class="footer-logo">
             <span class="logo-icon">
-              <img src="../assets/images/iconoTEC.png" alt="iconoTEC" style="width: 30px; height: 30px" />
+              <i class="fas fa-cube"></i>
             </span>
             <span class="logo-text">TEC RIVERA</span>
           </div>
@@ -170,8 +172,8 @@
       <div id="modalBody"></div>
     </div>
   </div>
-
-  <script src="../assets/js/home.js"></script>
   <script src="../assets/js/servicios.js"></script>
+
+
 </body>
 </html>
