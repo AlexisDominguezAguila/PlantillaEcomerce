@@ -20,10 +20,10 @@
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
 
-      .container {
+      .container-circle {
         position: relative;
-        width: 600px;
-        height: 600px;
+        width: 500px;
+        height: 500px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -32,8 +32,8 @@
       /* ===== CÍRCULO CENTRAL ===== */
       .center-circle {
         position: absolute;
-        width: 170px;
-        height: 170px;
+        width: 180px;
+        height: 180px;
         border-radius: 50%;
         border: 5px solid #38b6ff;
         display: flex;
@@ -43,15 +43,15 @@
       }
 
       .center-circle img {
-        width: 80%;
+        width: 90%;
         height: auto;
       }
 
       /* ===== CÍRCULO PUNTEADO ===== */
       .dotted-ring {
         position: absolute;
-        width: 250px;
-        height: 250px;
+        width: 220px;
+        height: 220px;
         border-radius: 50%;
         border: 2px dashed rgba(56, 182, 255, 0.6);
         z-index: 2;
@@ -60,8 +60,8 @@
       /* ===== ANILLO INTERMEDIO (fondo azul claro) ===== */
       .middle-ring-bg {
         position: absolute;
-        width: 350px;
-        height: 350px;
+        width: 250px;
+        height: 250px;
         border-radius: 50%;
         background: radial-gradient(
           circle,
@@ -104,29 +104,29 @@
 
       /* ===== ANILLO 1: Texto exterior grande ===== */
       .ring-outer {
-        width: 500px;
-        height: 500px;
+        width: 400px;
+        height: 400px;
       }
 
       .ring-outer .text-path {
-        font-size: 22px;
+        font-size: 31px;
       }
 
       /* ===== ANILLO 2: Texto intermedio más pequeño ===== */
       .ring-inner {
-        width: 350px;
-        height: 350px;
+        width: 300px;
+        height: 300px;
       }
 
       .ring-inner .text-path {
-        font-size: 17px;
+        font-size: 28px;
         font-weight: 600;
         fill: #2c58a0;
       }
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container-circle">
       <!-- Fondo azul intermedio -->
       <div class="middle-ring-bg"></div>
 
@@ -150,8 +150,7 @@
           </defs>
           <text class="text-path">
             <textPath href="#textPathInner" startOffset="0%">
-              • Sistema de Restaurantes • Control de Reportes • Generación de
-              Pedidos • Páginas Web •
+              Sistema de Restaurantes - Digitalizacion de cartas - Páginas Web -
             </textPath>
           </text>
         </svg>
@@ -169,8 +168,8 @@
           </defs>
           <text class="text-path">
             <textPath href="#textPathOuter" startOffset="0%">
-              • Control de Reportes • Análisis de Datos • Generación de Pedidos
-              • Páginas de Datos •
+              Control de Reportes • Análisis de Datos • Generación de Pedidos •
+              Páginas de Datos •
             </textPath>
           </text>
         </svg>

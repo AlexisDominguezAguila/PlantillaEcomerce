@@ -20,6 +20,111 @@
       rel="stylesheet"
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
     />
+    <style>
+         .container-circle {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* ===== CÍRCULO CENTRAL ===== */
+      .center-circle {
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        border: 5px solid #38b6ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 3;
+      }
+
+      .center-circle img {
+        width: 90%;
+        height: auto;
+      }
+
+      /* ===== CÍRCULO PUNTEADO ===== */
+      .dotted-ring {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        border: 2px dashed rgba(56, 182, 255, 0.6);
+        z-index: 2;
+      }
+
+      /* ===== ANILLO INTERMEDIO (fondo azul claro) ===== */
+      .middle-ring-bg {
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(56, 182, 255, 0.12) 40%,
+          rgba(255, 255, 255, 0.8) 100%
+        );
+        z-index: 1;
+      }
+
+      /* ===== TEXTOS ROTATORIOS ===== */
+      .ring {
+        position: absolute;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .ring-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        animation: rotate 45s linear infinite;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .text-path {
+        fill: #1a1b5e;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+      }
+
+      /* ===== ANILLO 1: Texto exterior grande ===== */
+      .ring-outer {
+        width: 400px;
+        height: 400px;
+      }
+
+      .ring-outer .text-path {
+        font-size: 31px;
+      }
+
+      /* ===== ANILLO 2: Texto intermedio más pequeño ===== */
+      .ring-inner {
+        width: 300px;
+        height: 300px;
+      }
+
+      .ring-inner .text-path {
+        font-size: 28px;
+        font-weight: 600;
+        fill: #2c58a0;
+      }
+    </style>
   </head>
   <body>
     <!-- Topbar -->
@@ -89,18 +194,64 @@
             Tu aliado estratégico para llevar tu negocio al siguiente nivel.
           </p>
           <div class="hero-actions">
-            <a href="public/views/contacto.html" class="btn-primary btn-large">Solicitar Demo</a>
-            <a href="public/views/servicios.html" class="btn-secondary btn-large"
+            <a href="public/views/contacto.php" class="btn-primary btn-large">Solicitar Demo</a>
+            <a href="public/views/servicios.php" class="btn-secondary btn-large"
               >Explorar Servicios</a
             >
           </div>
         </div>
 
         <div class="hero-media">
-          <img
-            src="public/assets/images/logoindex.png"
-            alt="Soluciones TEC RIVERA"
-          />
+          <div class="container-circle">
+            <!-- Fondo azul intermedio -->
+            <div class="middle-ring-bg"></div>
+
+            <!-- Círculo punteado -->
+            <div class="dotted-ring"></div>
+
+            <!-- Círculo central -->
+            <div class="center-circle">
+              <img src="public/assets/images/LogoTEC.png" alt="TEC RIVERA Logo" />
+            </div>
+
+            <!-- Anillo interior con texto más pequeño -->
+            <div class="ring ring-inner">
+              <svg viewBox="0 0 350 350" width="350" height="350" class="ring-text">
+                <defs>
+                  <path
+                    id="textPathInner"
+                    d="M175,175 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0"
+                    fill="none"
+                  />
+                </defs>
+                <text class="text-path">
+                  <textPath href="#textPathInner" startOffset="0%">
+                    Sistema de Restaurantes - Digitalizacion de cartas - Páginas Web -
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+
+            <!-- Anillo exterior con texto grande -->
+            <div class="ring ring-outer">
+              <svg viewBox="0 0 500 500" width="500" height="500" class="ring-text">
+                <defs>
+                  <path
+                    id="textPathOuter"
+                    d="M250,250 m-220,0 a220,220 0 1,1 440,0 a220,220 0 1,1 -440,0"
+                    fill="none"
+                  />
+                </defs>
+                <text class="text-path">
+                  <textPath href="#textPathOuter" startOffset="0%">
+                    Control de Reportes • Análisis de Datos • Generación de Pedidos •
+                    Páginas de Datos •
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+          </div>
+             
         </div>
       </div>
     </section>
