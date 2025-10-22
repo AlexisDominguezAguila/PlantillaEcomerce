@@ -3,26 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Soluciones - TEC RIVERA</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
+    <title>Sistema de Restaurante | TEC RIVERA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="../assets/css/global.css" />
     <link rel="stylesheet" href="../assets/css/index.css" />
     <link rel="stylesheet" href="../assets/css/soluciones.css" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"/>
   </head>
   <body>
     <!-- Topbar -->
     <div class="topbar" role="region" aria-label="Ingreso de tenant">
       <div class="container topbar-inner">
-        <span class="topbar-text">
-          SI YA ERES SOCIO, INGRESA CON TU TENANT
-        </span>
+        <span class="topbar-text">SI YA ERES SOCIO, INGRESA CON TU TENANT</span>
         <a href="login.html" class="topbar-cta">INGRESA TU ID</a>
       </div>
     </div>
@@ -30,265 +22,157 @@
     <!-- Header -->
     <?php include('../partials/header.php') ?>
 
-    <!-- Hero Section -->
-    <section class="page-hero">
+    <!-- HERO RESTAURANTE -->
+    <section class="resto-hero">
       <div class="container">
-        <div class="hero-content">
-          <p class="hero-label">✦ Soluciones Empresariales</p>
-          <h1 class="hero-title">Acelera tu transformación digital</h1>
-          <p class="hero-description">
-            Soluciones completas diseñadas específicamente para las necesidades
-            de tu industria. Tecnología que impulsa resultados reales.
-          </p>
+        <p class="hero-label">✦ Sistema de Restaurante</p>
+        <h1 class="hero-title">Gestión operativa completa: pedidos, cocina, caja e inventario</h1>
+        <p class="hero-description">
+          Aplicación integral para restaurantes, cafés y bares. Desde la toma de pedidos (mesero o QR)
+          hasta el control de cocina, cierre de caja y stock—todo en una interfaz sencilla y moderna.
+        </p>
+
+        <div class="resto-highlights">
+          <div class="resto-chip"><i class="fa-solid fa-qrcode"></i> Pedidos por QR o mesero</div>
+          <div class="resto-chip"><i class="fa-solid fa-chart-line"></i> Estadísticas de consumo y rentabilidad</div>
+          <div class="resto-chip"><i class="fa-solid fa-utensils"></i> Adaptable a restaurantes, cafés y bares</div>
         </div>
       </div>
     </section>
 
-    <!-- Industry Solutions -->
-    <section class="industry-solutions">
+    <!-- PLANES Y PRECIOS -->
+    <section class="pricing">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Soluciones por Industria</h2>
-          <p class="section-description">
-            Experiencia específica en diversos sectores empresariales
-          </p>
+          <h2 class="section-title">Planes y precios</h2>
+          <p class="section-description">Elige el plan que se adapte a tu operación</p>
+          <p class="price-range">Desde <strong>S/80</strong> hasta <strong>S/240</strong> (sin IGV)</p>
         </div>
-        <div class="solutions-grid">
-          <!-- Retail -->
-          <div class="solution-card">
-            <div class="solution-image">
-              <i class="fas fa-shopping-cart"></i>
+
+        <div class="pricing-grid">
+          <!-- Básico -->
+          <div class="plan-card">
+            <h3 class="plan-title">Básico</h3>
+            <p class="plan-desc">Lo esencial para empezar a digitalizar tu salón.</p>
+            <div class="plan-price">
+              <span class="currency">S/</span><span class="amount">80</span><span class="note">/mes · sin IGV</span>
             </div>
-            <div class="solution-content">
-              <h3>Retail & E-Commerce</h3>
-              <p>
-                Plataformas de venta online, gestión de inventarios, sistemas
-                POS integrados y análisis de comportamiento de clientes.
-              </p>
-              <ul class="solution-features">
-                <li>
-                  <i class="fas fa-check"></i> E-commerce con pasarelas de pago
-                </li>
-                <li>
-                  <i class="fas fa-check"></i> Sistema de inventario en tiempo
-                  real
-                </li>
-                <li><i class="fas fa-check"></i> CRM para fidelización</li>
-                <li>
-                  <i class="fas fa-check"></i> Analytics y reportes de ventas
-                </li>
-              </ul>
-              <a href="contacto.html" class="solution-link"
-                >Más Información →</a
-              >
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i>Toma de pedidos por mesero</li>
+              <li><i class="fa-solid fa-check"></i>Carta digital básica</li>
+              <li><i class="fa-solid fa-check"></i>1 local · 2 usuarios</li>
+              <li><i class="fa-solid fa-check"></i>Inventario esencial</li>
+              <li><i class="fa-solid fa-check"></i>Soporte por chat (horario laboral)</li>
+            </ul>
+            <div class="plan-cta">
+              <a href="contacto.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Empezar</a>
+              <a href="login.html" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Probar demo</a>
             </div>
           </div>
 
-          <!-- Healthcare -->
-          <div class="solution-card">
-            <div class="solution-image">
-              <i class="fas fa-hospital"></i>
+          <!-- Estándar -->
+          <div class="plan-card">
+            <h3 class="plan-title">Estándar</h3>
+            <p class="plan-desc">Agrega QR y reportes para decisiones rápidas.</p>
+            <div class="plan-price">
+              <span class="currency">S/</span><span class="amount">120</span><span class="note">/mes · sin IGV</span>
             </div>
-            <div class="solution-content">
-              <h3>Salud & Healthcare</h3>
-              <p>
-                Sistemas de gestión hospitalaria, historias clínicas
-                electrónicas, telemedicina y cumplimiento HIPAA.
-              </p>
-              <ul class="solution-features">
-                <li>
-                  <i class="fas fa-check"></i> Historia clínica electrónica
-                </li>
-                <li><i class="fas fa-check"></i> Gestión de citas y turnos</li>
-                <li><i class="fas fa-check"></i> Plataforma de telemedicina</li>
-                <li>
-                  <i class="fas fa-check"></i> Integración con equipos médicos
-                </li>
-              </ul>
-              <a href="contacto.html" class="solution-link"
-                >Más Información →</a
-              >
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i>Pedidos por QR y mesero</li>
+              <li><i class="fa-solid fa-check"></i>KDS básico en cocina</li>
+              <li><i class="fa-solid fa-check"></i>1 local · 3 usuarios</li>
+              <li><i class="fa-solid fa-check"></i>Reportes de ventas diarios</li>
+              <li><i class="fa-solid fa-check"></i>Soporte por chat + email</li>
+            </ul>
+            <div class="plan-cta">
+              <a href="contacto.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Empezar</a>
+              <a href="login.html" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Probar demo</a>
             </div>
           </div>
 
-          <!-- Financial -->
-          <div class="solution-card">
-            <div class="solution-image">
-              <i class="fas fa-landmark"></i>
+          <!-- Pro -->
+          <div class="plan-card plan--pro">
+            <span class="plan-badge">Más elegido</span>
+            <h3 class="plan-title">Pro</h3>
+            <p class="plan-desc">Control avanzado de cocina, caja e inventario.</p>
+            <div class="plan-price">
+              <span class="currency">S/</span><span class="amount">160</span><span class="note">/mes · sin IGV</span>
             </div>
-            <div class="solution-content">
-              <h3>Finanzas & Banca</h3>
-              <p>
-                Soluciones fintech, plataformas de pagos, banca digital, gestión
-                de riesgos y cumplimiento regulatorio.
-              </p>
-              <ul class="solution-features">
-                <li><i class="fas fa-check"></i> Banca móvil y digital</li>
-                <li>
-                  <i class="fas fa-check"></i> Gestión de riesgos y fraude
-                </li>
-                <li><i class="fas fa-check"></i> Procesamiento de pagos</li>
-                <li><i class="fas fa-check"></i> Blockchain y criptomonedas</li>
-              </ul>
-              <a href="contacto.html" class="solution-link"
-                >Más Información →</a
-              >
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i>Pedidos QR, mesero y para llevar</li>
+              <li><i class="fa-solid fa-check"></i>KDS avanzado + estados por partida</li>
+              <li><i class="fa-solid fa-check"></i>2 locales · 5 usuarios</li>
+              <li><i class="fa-solid fa-check"></i>Estadísticas de consumo y rentabilidad</li>
+              <li><i class="fa-solid fa-check"></i>Inventario con mermas y recetas</li>
+            </ul>
+            <div class="plan-cta">
+              <a href="contacto.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Empezar</a>
+              <a href="login.html" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Probar demo</a>
             </div>
           </div>
 
-          <!-- Manufacturing -->
-          <div class="solution-card">
-            <div class="solution-image">
-              <i class="fas fa-industry"></i>
+          <!-- Premium -->
+          <div class="plan-card">
+            <h3 class="plan-title">Premium</h3>
+            <p class="plan-desc">Multi-sucursal, integraciones y soporte prioritario.</p>
+            <div class="plan-price">
+              <span class="currency">S/</span><span class="amount">240</span><span class="note">/mes · sin IGV</span>
             </div>
-            <div class="solution-content">
-              <h3>Manufactura & Logística</h3>
-              <p>
-                ERP industrial, gestión de cadena de suministro, IoT para
-                maquinaria y optimización de producción.
-              </p>
-              <ul class="solution-features">
-                <li><i class="fas fa-check"></i> ERP para manufactura</li>
-                <li><i class="fas fa-check"></i> Tracking de producción IoT</li>
-                <li><i class="fas fa-check"></i> Gestión de supply chain</li>
-                <li><i class="fas fa-check"></i> Mantenimiento predictivo</li>
-              </ul>
-              <a href="contacto.html" class="solution-link"
-                >Más Información →</a
-              >
-            </div>
-          </div>
-
-          <!-- Education -->
-          <div class="solution-card">
-            <div class="solution-image">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <div class="solution-content">
-              <h3>Educación & E-Learning</h3>
-              <p>
-                Plataformas LMS, gestión académica, aulas virtuales y
-                herramientas de evaluación online.
-              </p>
-              <ul class="solution-features">
-                <li><i class="fas fa-check"></i> LMS personalizado</li>
-                <li>
-                  <i class="fas fa-check"></i> Aulas virtuales interactivas
-                </li>
-                <li><i class="fas fa-check"></i> Sistema de calificaciones</li>
-                <li><i class="fas fa-check"></i> Portal para estudiantes</li>
-              </ul>
-              <a href="contacto.html" class="solution-link"
-                >Más Información →</a
-              >
-            </div>
-          </div>
-
-          <!-- Real Estate -->
-          <div class="solution-card">
-            <div class="solution-image">
-              <i class="fas fa-building"></i>
-            </div>
-            <div class="solution-content">
-              <h3>Inmobiliaria & PropTech</h3>
-              <p>
-                Portales inmobiliarios, CRM especializado, tours virtuales 3D y
-                gestión de propiedades.
-              </p>
-              <ul class="solution-features">
-                <li><i class="fas fa-check"></i> Portal de propiedades</li>
-                <li><i class="fas fa-check"></i> Tours virtuales 360°</li>
-                <li><i class="fas fa-check"></i> CRM inmobiliario</li>
-                <li><i class="fas fa-check"></i> Firma digital de contratos</li>
-              </ul>
-              <a href="contacto.html" class="solution-link"
-                >Más Información →</a
-              >
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i>Multi-sucursal · 8 usuarios</li>
+              <li><i class="fa-solid fa-check"></i>Integración con impresoras y contabilidad</li>
+              <li><i class="fa-solid fa-check"></i>Dashboards ejecutivos</li>
+              <li><i class="fa-solid fa-check"></i>Roles y auditoría</li>
+              <li><i class="fa-solid fa-check"></i>Soporte prioritario</li>
+            </ul>
+            <div class="plan-cta">
+              <a href="contacto.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Empezar</a>
+              <a href="login.html" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Probar demo</a>
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Technology Stack -->
-    <section class="tech-stack">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Tecnologías que Dominamos</h2>
-          <p class="description">
-            Stack tecnológico moderno y probado en producción
-          </p>
+        <!-- Comparativa rápida -->
+        <div class="compare" aria-label="Comparativa de planes">
+          <table>
+            <thead>
+              <tr>
+                <th>Características</th>
+                <th>Básico</th>
+                <th>Estándar</th>
+                <th>Pro</th>
+                <th>Premium</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pedidos por QR</td>
+                <td class="na">—</td><td><i class="fa-solid fa-check"></i></td><td><i class="fa-solid fa-check"></i></td><td><i class="fa-solid fa-check"></i></td>
+              </tr>
+              <tr>
+                <td>KDS (Cocina)</td>
+                <td class="na">—</td><td>Básico</td><td>Avanzado</td><td>Avanzado</td>
+              </tr>
+              <tr>
+                <td>Locales / Usuarios</td>
+                <td>1 / 2</td><td>1 / 3</td><td>2 / 5</td><td>Multi / 8</td>
+              </tr>
+              <tr>
+                <td>Inventario</td>
+                <td>Esencial</td><td>Esencial</td><td>Recetas + mermas</td><td>Recetas + mermas</td>
+              </tr>
+              <tr>
+                <td>Reportes / Estadísticas</td>
+                <td>Ventas</td><td>Ventas + diarios</td><td>Consumo + rentabilidad</td><td>Dashboards ejecutivos</td>
+              </tr>
+              <tr>
+                <td>Soporte</td>
+                <td>Chat (horario)</td><td>Chat + email</td><td>Prioridad media</td><td>Prioritario</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="tech-categories">
-          <div class="tech-category">
-            <h3>Frontend</h3>
-            <div class="tech-icons">
-              <div class="tech-item">
-                <i class="fab fa-react"></i>
-                <span>React</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-vuejs"></i>
-                <span>Vue.js</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-angular"></i>
-                <span>Angular</span>
-              </div>
-            </div>
-          </div>
-          <div class="tech-category">
-            <h3>Backend</h3>
-            <div class="tech-icons">
-              <div class="tech-item">
-                <i class="fab fa-node-js"></i>
-                <span>Node.js</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-python"></i>
-                <span>Python</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-java"></i>
-                <span>Java</span>
-              </div>
-            </div>
-          </div>
-          <div class="tech-category">
-            <h3>Cloud</h3>
-            <div class="tech-icons">
-              <div class="tech-item">
-                <i class="fab fa-aws"></i>
-                <span>AWS</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-microsoft"></i>
-                <span>Azure</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-google"></i>
-                <span>GCP</span>
-              </div>
-            </div>
-          </div>
-          <div class="tech-category">
-            <h3>Mobile</h3>
-            <div class="tech-icons">
-              <div class="tech-item">
-                <i class="fab fa-android"></i>
-                <span>Android</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-apple"></i>
-                <span>iOS</span>
-              </div>
-              <div class="tech-item">
-                <i class="fas fa-mobile-alt"></i>
-                <span>React Native</span>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
 
@@ -296,53 +180,42 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-grid">
-          <!-- LOGO / DESCRIPCIÓN -->
           <div class="footer-column">
             <div class="footer-logo">
               <span class="logo-icon">
-                <img
-                  src="../assets/images/iconoTEC.png"
-                  alt="iconoTEC"
-                  style="width: 30px; height: 30px"
-                />
+                <img src="../assets/images/iconoTEC.png" alt="iconoTEC" style="width: 30px; height: 30px"/>
               </span>
               <span class="logo-text">TEC RIVERA</span>
             </div>
             <p class="footer-description">
-              Soluciones tecnológicas integrales para empresas que buscan
-              innovar y crecer.
+              Soluciones tecnológicas integrales para empresas que buscan innovar y crecer.
             </p>
             <div class="social-links">
-              <a href="https://www.facebook.com/multi.per.5" aria-label="Facebook"
-                ><i class="bx bxl-facebook"></i
-              ></a>
-              <a href="https://www.instagram.com/tecrivera_peru?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"
-                ><i class="bx bxl-instagram"></i
-              ></a>
+              <a href="https://www.facebook.com/multi.per.5" aria-label="Facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="https://www.instagram.com/tecrivera_peru?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"><i class="bx bxl-instagram"></i></a>
             </div>
           </div>
 
-          <!-- 🔹 Agrupación nueva de columnas -->
           <div class="footer-columns-wrapper">
             <div class="footer-column">
               <h4>Productos</h4>
               <ul>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Servidores</a></li>
-                <li><a href="#">Networking</a></li>
-                <li><a href="#">Seguridad</a></li>
-                <li><a href="#">Accesorios</a></li>
+                <li><a href="#">POS</a></li>
+                <li><a href="#">Inventario</a></li>
+                <li><a href="#">CRM</a></li>
+                <li><a href="#">Dashboards</a></li>
+                <li><a href="#">Integraciones</a></li>
               </ul>
             </div>
 
             <div class="footer-column">
               <h4>Servicios</h4>
               <ul>
-                <li><a href="#">Análisis de Datos</a></li>
-                <li><a href="#">Punto de Venta</a></li>
-                <li><a href="#">Soporte Técnico</a></li>
-                <li><a href="#">Generación de Reportes</a></li>
-                <li><a href="#">Sistema de Restaurantes</a></li>
+                <li><a href="#">Implementación</a></li>
+                <li><a href="#">Capacitación</a></li>
+                <li><a href="#">Soporte</a></li>
+                <li><a href="#">Desarrollo a medida</a></li>
+                <li><a href="#">Consultoría</a></li>
               </ul>
             </div>
 
@@ -374,6 +247,18 @@
         </div>
       </div>
     </footer>
-    <script src="../assets/js/home.js"></script>
+
+    <script>
+      // (Opcional) Pequeño efecto de entrada para los cards
+      document.querySelectorAll('.plan-card').forEach((card, i)=>{
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(10px)';
+        setTimeout(()=>{
+          card.style.transition = 'opacity .35s ease, transform .35s ease';
+          card.style.opacity = 1;
+          card.style.transform = 'translateY(0)';
+        }, 120 * i);
+      });
+    </script>
   </body>
 </html>

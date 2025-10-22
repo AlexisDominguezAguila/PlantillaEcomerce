@@ -520,14 +520,6 @@
   padding-left: 25px;
 }
 
-/* .service-features li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--accent-orange);
-  font-weight: bold;
-} */
-
 .service-link {
   color: var(--accent-blue);
   text-decoration: none;

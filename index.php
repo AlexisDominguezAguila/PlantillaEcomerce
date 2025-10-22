@@ -128,118 +128,23 @@
     </section>
     <!-- PRODUCTS -->
     <section class="products" id="productos">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Nuestros Productos</h2>
-          <p class="section-description">
-            Nuestras herramientas y productos simplificaran tu gestión
-          </p>
-        </div>
-        <div class="products-grid">
-          <div class="product-card">
-            <div class="product-image">
-              <img src="public/assets/images/hadware2.png" alt="Hardware de Cómputo">
-              <span class="product-badge">Nuevo</span>
-            </div>
-            <div class="product-info">
-              <h3 class="product-title">Hardware de Cómputo</h3>
-              <p class="product-description">
-                Venta de equipos de alto rendimiento para profesionales y
-                empresas
-              </p>
-              <div class="product-footer">
-                <span class="product-price">Originales</span>
-                <button class="btn-product">Ver Detalles</button>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-image">
-              <img src="public/assets/images/tenant.png" alt="Alquiler de Tenant">
-            </div>
-            <div class="product-info">
-              <h3 class="product-title">Alquiler de Tenant</h3>
-              <p class="product-description">
-                Entornos y/o sistemas exclusivos.
-              </p>
-              <div class="product-footer">
-                <span class="product-price">Seguros y Confiables</span>
-                <button class="btn-product">Ver Detalles</button>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-image">
-              <img src="public/assets/images/desarrollo web.png" alt="Páginas Web">
-              <span class="product-badge">Oferta</span>
-            </div>
-            <div class="product-info">
-              <h3 class="product-title">Páginas Web</h3>
-              <p class="product-description">Diseño y desarrollo web.</p>
-              <div class="product-footer">
-                <span class="product-price">Diseños profesionales</span>
-                <button class="btn-product">Ver Detalles</button>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-image">
-              <img src="public/assets/images/licencia.png" alt="Licencias de Software">
-            </div>
-            <div class="product-info">
-              <h3 class="product-title">Licencias de Software</h3>
-              <p class="product-description">
-                Licencias y activación de software oficiales.
-              </p>
-              <div class="product-footer">
-                <span class="product-price">Software autorizado</span>
-                <button class="btn-product">Ver Detalles</button>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-image">
-              <img src="public/assets/images/repuestos.png" alt="Repuestos de Laptops">
-              <span class="product-badge">Oferta</span>
-            </div>
-            <div class="product-info">
-              <h3 class="product-title">Repuestos de Laptops</h3>
-              <p class="product-description">
-                Ensamblaje de piezas y reparación.
-              </p>
-              <div class="product-footer">
-                <span class="product-price">Calidad garantizanda</span>
-                <button class="btn-product">Ver Detalles</button>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-image">
-              <img src="public/assets/images/catalogo.png" alt="Catálogo Virtual">
-              <span class="product-badge">Oferta</span>
-            </div>
-            <div class="product-info">
-              <h3 class="product-title">Catálogo Virtual</h3>
-              <p class="product-description">
-                Productos digitales generales y empresariales.
-              </p>
-              <div class="product-footer">
-                <span class="product-price">Mejor visibilidad</span>
-                <button class="btn-product">Ver Detalles</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="products-actions"
-          style="text-align: center; margin-top: 2rem"
-        >
-          <a href="public/views/productos.html" class="btn-secondary btn-large"
-            >Ver Catálogo Completo</a
-          >
-        </div>
-      </div>
-    </section>
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Nuestros Productos</h2>
+      <p class="section-description">
+        Nuestras herramientas y productos simplificarán tu gestión
+      </p>
+    </div>
+
+    <!-- Grid dinámico -->
+    <div class="products-grid" id="publicProductsGrid"></div>
+
+    <div class="products-actions" style="text-align:center;margin-top:2rem">
+      <a href="public/views/productos.html" class="btn-secondary btn-large">Ver Catálogo Completo</a>
+    </div>
+  </div>
+</section>
+
 
     <!-- SERVICES -->
     <!-- <section class="services" id="servicios">
@@ -495,5 +400,73 @@
     </footer>
 
     <script src="public/assets/js/home.js"></script>
+    <script>
+  // Ajusta la ruta según tu estructura:
+  const PUBLIC_CARDS_API = 'public/controllers/IndexController.php?limit=6';
+
+  const escapeHTML = (str) =>
+    String(str ?? "").replace(/[&<>"']/g, (m) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    }[m]));
+  const escapeAttr = (str) => escapeHTML(String(str)).replace(/"/g, "&quot;");
+
+  function makeCardHTML(c) {
+    const badge = c.badge_text ? `<span class="product-badge">${escapeHTML(c.badge_text)}</span>` : "";
+    const btnUrl = c.button_url && c.button_url !== "#" ? escapeAttr(c.button_url) : "#";
+    const btn = `<button class="btn-product" onclick="if('${btnUrl}'!=='#') window.open('${btnUrl}','_blank')">
+                   ${escapeHTML(c.button_label || 'Ver Detalles')}
+                 </button>`;
+
+    return `
+      <div class="product-card">
+        <div class="product-image">
+          <img src="${escapeAttr(c.image_url)}" alt="${escapeAttr(c.image_alt || 'Imagen')}">
+          ${badge}
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">${escapeHTML(c.title)}</h3>
+          <p class="product-description">${escapeHTML(c.description || '')}</p>
+          <div class="product-footer">
+            <span class="product-price">${escapeHTML(c.footer_text || '')}</span>
+            ${btn}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async function cargarPublicCards() {
+    try {
+      const res = await fetch(PUBLIC_CARDS_API, { cache: 'no-store' });
+      const items = await res.json();
+      const grid = document.getElementById('publicProductsGrid');
+
+      if (!Array.isArray(items) || items.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:2rem;">
+            <i class="bx bx-layer" style="font-size:2rem;"></i>
+            <h3>No hay productos publicados</h3>
+            <p>Vuelve más tarde</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = items.map(makeCardHTML).join('');
+    } catch (err) {
+      console.error('Error cargando cards públicas:', err);
+      const grid = document.getElementById('publicProductsGrid');
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:2rem;">
+          <i class="bx bx-error-circle" style="font-size:2rem;"></i>
+          <h3>Ups, no se pudo cargar</h3>
+          <p>Intenta nuevamente en unos instantes</p>
+        </div>
+      `;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', cargarPublicCards);
+</script>
   </body>
 </html>
