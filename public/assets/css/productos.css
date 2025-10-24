@@ -1371,6 +1371,57 @@ body.modal-open {
   background: #f7f9ff;
 }
 
+/* =========================================
+   Encabezado de pasos (píldoras) - AHORA 6 PASOS
+   ========================================= */
+#checkoutModal .steps {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  padding: 12px;
+  border-bottom: 1px solid #eceff3;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+#checkoutModal .step-indicator {
+  text-align: center;
+  padding: 10px 6px;
+  border-radius: 12px;
+  background: #f2f4f7;
+  color: #475467;
+  font-weight: 800;
+  border: 1px solid #e3e6ef;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 100px;
+}
+#checkoutModal .step-indicator.active {
+  background: #111344;
+  color: #fff;
+  border-color: #111344;
+}
+#checkoutModal .step-indicator.done {
+  background: #e8efff;
+  color: #111344;
+  border-color: #c7d4ff;
+  position: relative;
+}
+#checkoutModal .step-indicator.done::after {
+  content: "✓";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+}
+
 /* =======================================================
    Footer de acciones (pegajoso) + botones
    ======================================================= */

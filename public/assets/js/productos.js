@@ -376,11 +376,15 @@
 
     // ---------------------- Checkout ----------------------
     function openCheckout(){
-    if(!cart.length){showNotification("Carrito vacío");return;}
-    checkoutStep=1;selectedPaymentMethod=null;
-    updateStepUI();renderCheckoutSummary();
-    closeModal("cartModal");openModal("checkoutModal");
+    if (!cart.length) { showNotification("Carrito vacío"); return; }
+    checkoutStep = 1;
+    selectedPaymentMethod = null;
+    closeModal("cartModal");
+    openModal("checkoutModal");
+    updateStepUI();
+    renderCheckoutSummary();
     }
+
     function renderCheckoutSummary(){
     const w=$("#checkoutSummary");
     const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
@@ -391,72 +395,238 @@
     const f=$("#paymentMethodForm");if(!f)return null;
         const fd=new FormData(f);return fd.get("paymentMethod");
     }
-    function renderPaymentMethodView() {
+    function renderPaymentMethodView(){
     const v = $("#paymentMethodView");
-    const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    if (!v) return;
+    const total = cart.reduce((s,i)=>s+i.price*i.quantity,0);
     const totalText = fmtMoney(total);
 
     const setStepTitle = (t) => {
-        const el = $("#step3Title");
+        const el = $("#step6Title"); // <— OJO: ahora es step6Title
         if (el) el.textContent = t;
+    };
+
+    if (selectedPaymentMethod === "card"){
+        setStepTitle("Pagar con tarjeta");
+        v.innerHTML = `
+        <form id="cardForm" class="form-grid" onsubmit="event.preventDefault();">
+            <div class="form-field"><label>Nombre del titular</label><input type="text" required /></div>
+            <div class="form-field"><label>Número de tarjeta</label><input type="text" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" required /></div>
+            <div class="form-row">
+            <div class="form-field"><label>Vencimiento</label><input type="text" inputmode="numeric" maxlength="5" placeholder="MM/AA" required /></div>
+            <div class="form-field"><label>CVV</label><input type="password" inputmode="numeric" maxlength="4" placeholder="***" required /></div>
+            </div>
+            <button class="btn-primary full" id="payCardBtn">Pagar ${totalText}</button>
+        </form>`;
+        $("#payCardBtn").onclick = () => confirmPayment("Tarjeta", total);
+    }
+    else if (selectedPaymentMethod === "wallet"){
+        setStepTitle("Pagar con billetera (Yape / Plin)");
+        v.innerHTML = `
+        <div class="wallet-chooser">
+            <label><input type="radio" name="walletType" value="yape" checked/> Yape</label>
+            <label><input type="radio" name="walletType" value="plin"/> Plin</label>
+        </div>
+        <div class="wallet-box">
+            <div class="wallet-info">
+            <div>Monto: <strong>${totalText}</strong></div>
+            <div id="walletNumber"></div>
+            <div class="hint">* Escanea el QR o envía al número y luego confirma.</div>
+            </div>
+            <div class="wallet-qr" id="walletQr"></div>
+        </div>
+        <button class="btn-primary full" id="walletConfirm">Ya realicé el pago</button>`;
+        const renderWallet = () => {
+        const type = (document.querySelector('input[name="walletType"]:checked')||{}).value || "yape";
+        const phone = type === "yape" ? YAPE_PHONE : PLIN_PHONE;
+        const qr = type === "yape" ? YAPE_QR : PLIN_QR;
+        $("#walletNumber").innerHTML = `Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
+        $("#walletQr").innerHTML = `<img src="${qr}" alt="QR ${type}" class="wallet-qr-img"/>`;
+        };
+        renderWallet();
+        $$('input[name="walletType"]').forEach(r => r.addEventListener("change", renderWallet));
+        $("#walletConfirm").onclick = () => confirmPayment("Billetera (Yape/Plin)", total);
+    }
+    else if (selectedPaymentMethod === "transfer"){
+        setStepTitle("Pagar por transferencia bancaria");
+        v.innerHTML = BANK_ACCOUNTS.map(b => `
+        <div class="bank-card">
+            <div class="bank-title">${b.bank}</div>
+            <div>Titular: <strong>${b.holder}</strong></div>
+            <div>Cuenta: <strong>${b.account}</strong></div>
+            <div>CCI: <strong>${b.cci}</strong></div>
+        </div>`).join("") + `
+        <button id="transferBtn" class="btn-primary w-full mt-4">He transferido</button>`;
+        $("#transferBtn").onclick = () => confirmPayment("Transferencia", total);
+    }
+    else if (selectedPaymentMethod === "whatsapp"){
+        setStepTitle("Coordinar por WhatsApp (efectivo)");
+        const msg = `Hola, quiero coordinar pago en efectivo. Total: ${totalText}. Pedido: ${cart.map(i=>`${i.name} x${i.quantity}`).join(", ")}`;
+        v.innerHTML = `
+        <div class="wa-wrap">
+            <a class="btn-primary full" target="_blank" rel="noopener" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}">Abrir WhatsApp</a>
+            <button class="btn-secondary full" id="waConfirm">Ya coordiné por WhatsApp</button>
+        </div>`;
+        $("#waConfirm").onclick = () => confirmPayment("WhatsApp (efectivo)", total);
+    } else {
+        setStepTitle("Detalles del pago");
+        v.innerHTML = `<p class="hint">Selecciona un método de pago en el paso anterior.</p>`;
+    }
     }
 
-    if(selectedPaymentMethod==="card"){
-        setStepTitle("Pagar con tarjeta");
-        v.innerHTML=`<form id="cardForm" class="form-grid" onsubmit="event.preventDefault();">
-        <div class="form-field"><label>Nombre del titular</label><input type="text" required /></div>
-        <div class="form-field"><label>Número de tarjeta</label><input type="text" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" required /></div>
-        <div class="form-row"><div class="form-field"><label>Vencimiento</label><input type="text" inputmode="numeric" maxlength="5" placeholder="MM/AA" required /></div>
-        <div class="form-field"><label>CVV</label><input type="password" inputmode="numeric" maxlength="4" placeholder="***" required /></div></div>
-        <button class="btn-primary full" id="payCardBtn">Pagar ${totalText}</button></form>`;
-        $("#payCardBtn").onclick=()=>confirmPayment("Tarjeta",total);
+    function confirmPayment(method, total){
+    const box = $("#receiptBox");
+    if (box){
+        box.innerHTML = `<div>Método: ${method}</div><div>Total: ${fmtMoney(total)}</div>`;
     }
-    else if(selectedPaymentMethod==="wallet"){
-        setStepTitle("Pagar con billetera (Yape / Plin)");
-        v.innerHTML=`<div class="wallet-chooser"><label><input type="radio" name="walletType" value="yape" checked/> Yape</label>
-        <label><input type="radio" name="walletType" value="plin"/> Plin</label></div>
-        <div class="wallet-box"><div class="wallet-info"><div>Monto: <strong>${totalText}</strong></div>
-        <div id="walletNumber"></div><div class="hint">* Escanea el QR o envía al número y luego confirma.</div></div>
-        <div class="wallet-qr" id="walletQr"></div></div>
-        <button class="btn-primary full" id="walletConfirm">Ya realicé el pago</button>`;
-        const renderWallet=()=>{const type=(document.querySelector('input[name="walletType"]:checked')||{}).value||"yape";
-        const phone=type==="yape"?YAPE_PHONE:PLIN_PHONE;const qr=type==="yape"?YAPE_QR:PLIN_QR;
-        $("#walletNumber").innerHTML=`Número ${type.toUpperCase()}: <strong>${phone}</strong>`;
-        $("#walletQr").innerHTML=`<img src="${qr}" alt="QR ${type}" class="wallet-qr-img"/>`;};
-        renderWallet();
-        $$('input[name="walletType"]').forEach(r=>r.addEventListener("change",renderWallet));
-        $("#walletConfirm").onclick=()=>confirmPayment("Billetera (Yape/Plin)",total);
-    }
-    else if(selectedPaymentMethod==="transfer"){
-        setStepTitle("Pagar por transferencia bancaria");
-        v.innerHTML=BANK_ACCOUNTS.map(b=>`<div class="bank-card"><div class="bank-title">${b.bank}</div>
-        <div>Titular: <strong>${b.holder}</strong></div><div>Cuenta: <strong>${b.account}</strong></div>
-        <div>CCI: <strong>${b.cci}</strong></div></div>`).join("")+`<button id="transferBtn" class="btn-primary w-full mt-4">He transferido</button>`;
-        $("#transferBtn").onclick=()=>confirmPayment("Transferencia",total);
-    }
-    else if(selectedPaymentMethod==="whatsapp"){
-        setStepTitle("Coordinar por WhatsApp (pago en efectivo)");
-        const msg=`Hola, quiero coordinar pago en efectivo. Total: ${totalText}. Pedido: ${cart.map(i=>`${i.name} x${i.quantity}`).join(", ")}`;
-        v.innerHTML=`<div class="wa-wrap"><a class="btn-primary full" target="_blank" rel="noopener" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}">Abrir WhatsApp</a>
-        <button class="btn-secondary full" id="waConfirm">Ya coordiné por WhatsApp</button></div>`;
-        $("#waConfirm").onclick=()=>confirmPayment("WhatsApp (efectivo)",total);
-    }
-    }
-    function confirmPayment(method,total){
-    $("#receiptBox").innerHTML=`<div>Método: ${method}</div><div>Total: ${fmtMoney(total)}</div>`;
-    cart=[];saveLocal();updateCartCount();renderCart();
-    checkoutStep=4;updateStepUI();
-    }
-    function nextStep(){
-    if(checkoutStep===1){checkoutStep=2;}
-    else if(checkoutStep===2){
-        const m=readSelectedMethod();
-        if(!m){showNotification("Selecciona método de pago");return;}
-        selectedPaymentMethod=m;checkoutStep=3;renderPaymentMethodView();
-    }else if(checkoutStep===4){closeModal("checkoutModal");}
+    cart = [];
+    saveLocal();
+    updateCartCount();
+    renderCart();
+    checkoutStep = 7;     // <— antes era 4; ahora va al panel de confirmación
     updateStepUI();
     }
+
+    function nextStep(){
+    switch (checkoutStep){
+        case 1:
+        checkoutStep = 2;
+        break;
+        case 2: // Datos
+        if (!validateStep2()) return;
+        checkoutStep = 3;
+        break;
+        case 3: // Entrega
+        if (!validateStep3()) return;
+        // preparar UI de dirección/tienda al entrar al paso 4
+        const method = getDeliveryMethod();
+        const addr = $("#addressFormContainer");
+        const store = $("#storeInfoContainer");
+        addr?.classList.toggle("hidden", method !== "delivery");
+        store?.classList.toggle("hidden", method !== "pickup");
+        checkoutStep = 4;
+        break;
+        case 4: // Dirección (si delivery)
+        if (!validateStep4()) return;
+        checkoutStep = 5;
+        break;
+        case 5: // Seleccionar método de pago
+        {
+            const m = readSelectedMethod();
+            if (!m){ showNotification("Selecciona un método de pago"); return; }
+            selectedPaymentMethod = m;
+            renderPaymentMethodView();
+            checkoutStep = 6;
+        }
+        break;
+        case 6: // Detalles del pago → el botón "Finalizar" aquí solo avanza si ya confirmaste
+        // Si aún no se ejecutó confirmPayment(), no forzamos avanzar
+        // (confirmPayment() moverá a step 7)
+        checkoutStep = Math.max(checkoutStep, 6);
+        break;
+        case 7:
+        closeModal("checkoutModal");
+        break;
+    }
+    updateStepUI();
+    }
+
+    function prevStep(){
+    if (checkoutStep === 1){ closeModal("checkoutModal"); return; }
+    // Regla: si estás en 6 y cambias método, vuelves a 5; en general restar 1
+    checkoutStep = Math.max(1, checkoutStep - 1);
+    updateStepUI();
+    }
+
     function prevStep(){if(checkoutStep<=1){closeModal("checkoutModal");return;}checkoutStep--;updateStepUI();}
+
+    function updateStepUI(){
+  // rango válido 1..7 (tenemos 7 paneles, 6 indicadores)
+    checkoutStep = Math.max(1, Math.min(7, checkoutStep));
+
+    const panels = {
+        1: $("#step1"),
+        2: $("#step2"),
+        3: $("#step3"),
+        4: $("#step4"),
+        5: $("#step5"),
+        6: $("#step6"),
+        7: $("#step7"),
+    };
+    Object.values(panels).forEach(p => p && p.classList.add("hidden"));
+    panels[checkoutStep]?.classList.remove("hidden");
+
+    // indicadores de paso (solo 1..6)
+    $$(".step-indicator").forEach(ind => {
+        const s = Number(ind.getAttribute("data-step"));
+        ind.classList.toggle("active", s === checkoutStep);
+        ind.classList.toggle("done", s < checkoutStep);
+    });
+
+    // texto del botón siguiente
+    const nextBtn = $("#nextStepBtn");
+    if (nextBtn){
+        nextBtn.textContent =
+        checkoutStep <= 5 ? "Siguiente" :
+        checkoutStep === 6 ? "Finalizar" :
+        "Cerrar";
+    }
+    }
+
+    function validateStep2(){
+    const f = $("#customerForm");
+    if (!f) return true; // si no existe, no bloquea
+    const req = ["#customerName","#customerLastName","#customerEmail","#customerPhone","#customerDNI"];
+    for (const sel of req){
+        const el = $(sel);
+        if (!el || !el.value?.trim()){
+        showNotification("Completa tus datos obligatorios");
+        el?.focus();
+        return false;
+        }
+    }
+    // DNI sencillo
+    const dni = $("#customerDNI")?.value || "";
+    if (!/^\d{8}$/.test(dni)){
+        showNotification("DNI inválido (8 dígitos)");
+        $("#customerDNI")?.focus();
+        return false;
+    }
+    return true;
+    }
+
+    function getDeliveryMethod(){
+    const r = document.querySelector('input[name="deliveryMethod"]:checked');
+    return r ? r.value : null;
+    }
+
+    function validateStep3(){
+    const m = getDeliveryMethod();
+    if (!m){
+        showNotification("Elige un método de entrega");
+        return false;
+    }
+    return true;
+    }
+
+    function validateStep4(){
+    // solo si eligió delivery
+    if (getDeliveryMethod() !== "delivery") return true;
+    const f = $("#addressForm");
+    if (!f) return true;
+    const req = ["#department","#province","#district","#addressStreet"];
+    for (const sel of req){
+        const el = $(sel);
+        if (!el || !el.value?.trim()){
+        showNotification("Completa la dirección de envío");
+        el?.focus();
+        return false;
+        }
+    }
+    return true;
+    }
+
+
 
     // ---------------------- Modales ----------------------
     function openModal(id){const m=$("#"+id);if(!m)return;m.classList.add("active");document.body.classList.add("modal-open");}
