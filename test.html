@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="public/assets/css/header.css" />
+    <style>
+      /* ===== Base de secciones ===== */
+      body {
+        background: #fff;
+        color: #111;
+      }
+      section {
+        padding: 72px 0;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+      .section-title {
+        font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+        font-weight: 800;
+        color: #111344;
+        letter-spacing: -0.5px;
+      }
+      .section-description {
+        color: #5b6470;
+        max-width: 720px;
+        margin: 10px auto 0;
+        line-height: 1.65;
+      }
+
+      /* Utilidades */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+      .shadow-soft {
+        box-shadow: 0 10px 30px rgba(17, 19, 68, 0.06);
+      }
+      .radius-xl {
+        border-radius: 18px;
+      }
+      .border-subtle {
+        border: 1px solid rgba(17, 19, 68, 0.08);
+      }
+
+      /* ===== STATS ===== */
+      .stats {
+        background: #fff;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .stat-card {
+        background: #fff;
+        border: 1px solid rgba(17, 19, 68, 0.08);
+        border-radius: 16px;
+        padding: 28px 22px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease,
+          border-color 0.25s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(17, 19, 68, 0.08);
+        border-color: rgba(17, 19, 68, 0.16);
+      }
+      .stat-number {
+        font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+        font-weight: 900;
+        color: #111344;
+        line-height: 1;
+      }
+      .stat-label {
+        color: #3a4153;
+        margin-top: 6px;
+        font-weight: 600;
+      }
+      .stat-company {
+        color: #7a8493;
+        margin-top: 2px;
+        font-size: 0.95rem;
+      }
+
+      /* ===== PRODUCTS ===== */
+      .products {
+        background: #fff;
+      }
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+      .product-card {
+        background: #fff;
+        border: 1px solid rgba(17, 19, 68, 0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.25s ease,
+          border-color 0.25s ease;
+      }
+      .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 22px 50px rgba(17, 19, 68, 0.1);
+        border-color: rgba(17, 19, 68, 0.18);
+      }
+      .product-image {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #f6f8fb;
+      }
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.45s ease;
+      }
+      .product-card:hover .product-image img {
+        transform: scale(1.06);
+      }
+      .product-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: #126fa8;
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.75rem;
+        padding: 6px 10px;
+        border-radius: 999px;
+        box-shadow: 0 8px 20px rgba(18, 111, 168, 0.25);
+      }
+      .product-info {
+        padding: 16px 16px 18px;
+      }
+      .product-title {
+        font-weight: 800;
+        color: #111344;
+        margin: 2px 0 6px;
+        font-size: 1.05rem;
+        letter-spacing: -0.2px;
+      }
+      .product-description {
+        color: #5b6470;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .product-footer {
+        margin-top: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .product-price {
+        color: #126fa8;
+        font-weight: 800;
+      }
+
+      /* Botón del card (coincide con tu estilo) */
+      .btn-secondary {
+        background: transparent;
+        color: #126fa8;
+        padding: 10px 22px;
+        border: 2px solid #126fa8;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.25s ease;
+      }
+      .btn-secondary:hover {
+        background: #126fa8;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(18, 111, 168, 0.25);
+      }
+      .btn-large {
+        padding: 14px 28px;
+        font-size: 1rem;
+      }
+
+      /* ===== SOLUTIONS ===== */
+      .solutions {
+        background: #fff;
+      }
+      .solutions-content {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 28px;
+        align-items: center;
+      }
+      .solutions-text .solutions-label {
+        color: #126fa8;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+      .solutions-title {
+        font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+        color: #111344;
+        font-weight: 900;
+        margin: 8px 0 8px;
+        letter-spacing: -0.4px;
+      }
+      .solutions-description {
+        color: #5b6470;
+        line-height: 1.7;
+      }
+      .solutions-features {
+        margin-top: 16px;
+        display: grid;
+        gap: 12px;
+      }
+      .solution-feature {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        background: #fff;
+        border: 1px solid rgba(17, 19, 68, 0.08);
+        border-radius: 14px;
+        padding: 12px 14px;
+      }
+      .feature-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        flex: 0 0 28px;
+        display: grid;
+        place-items: center;
+        background: #e8f2fb;
+        color: #126fa8;
+        font-weight: 900;
+      }
+      .solution-feature h4 {
+        color: #111344;
+        margin-bottom: 2px;
+      }
+      .solution-feature p {
+        color: #5b6470;
+        font-size: 0.95rem;
+      }
+
+      .solutions-image {
+        background: #fff;
+        border: 1px solid rgba(17, 19, 68, 0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 16px 48px rgba(17, 19, 68, 0.08);
+      }
+      .solutions-image img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.02);
+        transition: transform 0.6s ease;
+      }
+      .solutions-image:hover img {
+        transform: scale(1.06);
+      }
+
+      /* ===== CTA ===== */
+      .cta {
+        background: #fff;
+      }
+      .cta-inner {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 26px;
+        align-items: center;
+        background: #fff;
+        border: 1px solid rgba(17, 19, 68, 0.08);
+        border-radius: 18px;
+        padding: 28px;
+        box-shadow: 0 18px 60px rgba(17, 19, 68, 0.08);
+      }
+      .cta-media {
+        position: relative;
+        overflow: hidden;
+        border-radius: 14px;
+        background: #f6f8fb;
+        height: 220px;
+      }
+      .cta-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.04);
+        transition: transform 0.6s ease;
+      }
+      .cta-inner:hover .cta-media img {
+        transform: scale(1.08);
+      }
+
+      .cta-title {
+        font-size: clamp(1.6rem, 2.4vw, 2rem);
+        color: #111344;
+        font-weight: 900;
+        letter-spacing: -0.4px;
+        margin-bottom: 10px;
+      }
+      .cta-description {
+        color: #5b6470;
+        margin-bottom: 18px;
+      }
+
+      /* ===== Responsive ===== */
+      @media (max-width: 992px) {
+        .products-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .solutions-content {
+          grid-template-columns: 1fr;
+        }
+        .cta-inner {
+          grid-template-columns: 1fr;
+        }
+        .cta-media {
+          height: 200px;
+        }
+      }
+      @media (max-width: 620px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- STATS -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">400+</div>
+            <div class="stat-label">Clientes en todo el Perú</div>
+            <div class="stat-company">Empresas Líderes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Modelos de solucion</div>
+            <div class="stat-company">Soporte 24/7</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">13+</div>
+            <div class="stat-label">Años Brindando soluciones</div>
+            <div class="stat-company">En el Mercado</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="products" id="productos">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Nuestros Productos</h2>
+          <p class="section-description">
+            Nuestras herramientas y productos simplificarán tu gestión
+          </p>
+        </div>
+
+        <!-- Grid dinámico -->
+        <div class="products-grid" id="publicProductsGrid"></div>
+
+        <div
+          class="products-actions"
+          style="text-align: center; margin-top: 2rem"
+        >
+          <a href="public/views/productos.php" class="btn-secondary btn-large"
+            >Ver Catálogo Completo</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTIONS -->
+    <section class="solutions" id="soluciones">
+      <div class="container">
+        <div class="solutions-content">
+          <div class="solutions-text">
+            <p class="solutions-label">✦ Soluciones Empresariales</p>
+            <h2 class="solutions-title">Acelera tu transformación digital</h2>
+            <p class="solutions-description">
+              La plataforma para el progreso rápido. Deja que tu equipo se
+              enfoque en innovar mientras nosotros manejamos la infraestructura
+              con automatización, testing integrado y colaboración fluida.
+            </p>
+            <div class="solutions-features">
+              <div class="solution-feature">
+                <div class="feature-icon">✓</div>
+                <div>
+                  <h4>Implementación Rápida</h4>
+                  <p>Despliega tus proyectos en días, no en meses</p>
+                </div>
+              </div>
+              <div class="solution-feature">
+                <div class="feature-icon">✓</div>
+                <div>
+                  <h4>Escalabilidad Garantizada</h4>
+                  <p>Crece sin límites con nuestra infraestructura</p>
+                </div>
+              </div>
+              <div class="solution-feature">
+                <div class="feature-icon">✓</div>
+                <div>
+                  <h4>Soporte Dedicado</h4>
+                  <p>Equipo experto disponible 24/7 para ti</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="solutions-image">
+            <img
+              src="public/assets/images/transformacion.jpg"
+              alt="Soluciones digitales"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="container cta-inner">
+        <div class="cta-media">
+          <img
+            src="public/assets/images/fondoIndex.jpg"
+            alt="Impulsa tu empresa"
+          />
+        </div>
+        <div class="cta-content">
+          <h2 class="cta-title">¿Listo para comenzar?</h2>
+          <p class="cta-description">
+            Únete a cientos de empresas que confían en TEC RIVERA para sus
+            soluciones tecnológicas
+          </p>
+          <div class="cta-actions">
+            <a
+              href="public/views/contacto.html"
+              class="btn-secondary btn-large"
+            >
+              Solicitar Consultoría Gratuita
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      // Ajusta la ruta según tu estructura:
+      const PUBLIC_CARDS_API = "public/controllers/IndexController.php?limit=6";
+      const MAX_SHIFT = 28; // px de desplazamiento máximo para el parallax
+
+      /* ============ Helpers ============ */
+      const escapeHTML = (str) =>
+        String(str ?? "").replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#039;",
+            }[m])
+        );
+      const escapeAttr = (str) =>
+        escapeHTML(String(str)).replace(/"/g, "&quot;");
+
+      /* ============ UI: Cards ============ */
+      function makeCardHTML(c) {
+        const badge = c.badge_text
+          ? `<span class="product-badge">${escapeHTML(c.badge_text)}</span>`
+          : "";
+        const btnUrl =
+          c.button_url && c.button_url !== "#" ? escapeAttr(c.button_url) : "#";
+        const btn = `<button class="btn-product" onclick="if('${btnUrl}'!=='#') window.open('${btnUrl}','_blank')">
+                   ${escapeHTML(c.button_label || "Ver Detalles")}
+                 </button>`;
+
+        return `
+      <div class="product-card">
+        <div class="product-image">
+          <img src="${escapeAttr(c.image_url)}" alt="${escapeAttr(
+          c.image_alt || "Imagen"
+        )}">
+          ${badge}
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">${escapeHTML(c.title)}</h3>
+          <p class="product-description">${escapeHTML(c.description || "")}</p>
+          <div class="product-footer">
+            <span class="product-price">${escapeHTML(
+              c.footer_text || ""
+            )}</span>
+            ${btn}
+          </div>
+        </div>
+      </div>
+    `;
+      }
+
+      async function cargarPublicCards() {
+        try {
+          const res = await fetch(PUBLIC_CARDS_API, { cache: "no-store" });
+          const items = await res.json();
+          const grid = document.getElementById("publicProductsGrid");
+
+          if (!Array.isArray(items) || items.length === 0) {
+            grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:2rem;">
+            <i class="bx bx-layer" style="font-size:2rem;"></i>
+            <h3>No hay productos publicados</h3>
+            <p>Vuelve más tarde</p>
+          </div>
+        `;
+            return;
+          }
+
+          grid.innerHTML = items.map(makeCardHTML).join("");
+
+          // Revelado para las cards recién insertadas
+          revealObserve(grid.querySelectorAll(".product-card"));
+        } catch (err) {
+          console.error("Error cargando cards públicas:", err);
+          const grid = document.getElementById("publicProductsGrid");
+          grid.innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:2rem;">
+          <i class="bx bx-error-circle" style="font-size:2rem;"></i>
+          <h3>Ups, no se pudo cargar</h3>
+          <p>Intenta nuevamente en unos instantes</p>
+        </div>
+      `;
+        }
+      }
+
+      /* ============ Reveal on-scroll (stats, products, solutions, cta) ============ */
+      let _ioReveal = null;
+      function initRevealObserver() {
+        _ioReveal = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.style.transition =
+                  "transform .5s ease, opacity .5s ease";
+                e.target.style.transform = "translateY(0)";
+                e.target.style.opacity = "1";
+                _ioReveal.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.14, rootMargin: "0px 0px -80px 0px" }
+        );
+      }
+
+      function revealObserve(nodes) {
+        if (!_ioReveal) return;
+        nodes.forEach((el) => {
+          el.style.transform = "translateY(14px)";
+          el.style.opacity = "0";
+          _ioReveal.observe(el);
+        });
+      }
+
+      /* ============ CTA Parallax (usa CSS con --py y --scale) ============ */
+      function computeCtaOverscanScale() {
+        const box = document.querySelector(".cta-media");
+        if (!box) return;
+        const img = box.querySelector("img");
+        if (!img) return;
+
+        const h = box.clientHeight || 220;
+        const minScale = 1 + (2 * MAX_SHIFT) / h; // cubrir ±MAX_SHIFT
+        const cssScale =
+          parseFloat(getComputedStyle(img).getPropertyValue("--scale")) || 1.06;
+        img.style.setProperty(
+          "--scale",
+          Math.max(cssScale, minScale).toFixed(3)
+        );
+      }
+
+      function updateCtaParallax() {
+        const box = document.querySelector(".cta-media");
+        if (!box) return;
+        const img = box.querySelector("img");
+        if (!img) return;
+
+        const vh = window.innerHeight || 0;
+        const sec = box.closest(".cta");
+        const rect = sec.getBoundingClientRect();
+
+        if (rect.bottom < 0 || rect.top > vh) {
+          img.style.setProperty("--py", "0px");
+          return;
+        }
+
+        const progress = Math.max(
+          0,
+          Math.min((vh - rect.top) / (vh + rect.height), 1)
+        );
+        const centered = progress - 0.5;
+        const shift = centered * MAX_SHIFT;
+
+        img.style.setProperty("--py", `${Math.round(shift)}px`);
+      }
+
+      /* ============ Boot ============ */
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1) Cargar cards
+        cargarPublicCards();
+
+        // 2) Revelado
+        initRevealObserver();
+        revealObserve(
+          document.querySelectorAll(
+            ".stat-card, .solution-feature, .solutions-image, .cta-inner"
+          )
+        );
+
+        // 3) CTA parallax (listeners)
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) return;
+          requestAnimationFrame(() => {
+            updateCtaParallax();
+            ticking = false;
+          });
+          ticking = true;
+        };
+
+        computeCtaOverscanScale();
+        updateCtaParallax();
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", () => {
+          computeCtaOverscanScale();
+          updateCtaParallax();
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -7,6 +7,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../assets/css/global.css" />
+    <link rel="stylesheet" href="../assets/css/header.css" />
     <link rel="stylesheet" href="../assets/css/productos.css" />
 
     
@@ -51,22 +52,7 @@
             <li><a href="contacto.php">Contacto</a></li>
           </ul>
 
-          <!-- Botones principales -->
-          <div class="nav-actions">
-            <li class="nav-select">
-              <select class="category-filter" id="categoryFilter">
-                <option value="all">Todas las categorías</option>
-              </select>
-            </li>
-            <div class="nav-icon" id="wishlistBtn" title="Lista de deseos">
-              <i class="bx bx-heart"></i>
-              <span id="wishlistCount" class="nav-count">0</span>
-            </div>
-            <div class="nav-icon" id="cartBtn" title="Carrito de compras">
-              <i class="bx bx-cart"></i>
-              <span id="cartCount" class="nav-count">0</span>
-            </div>
-          </div>
+
 
           <!-- Botón móvil -->
           <button class="mobile-toggle" id="mobileToggle">
@@ -96,7 +82,22 @@
         </div>
       </div>
     </section>
-
+          <!-- Botones principales -->
+          <div class="nav-actions">
+            <li class="nav-select">
+              <select class="category-filter" id="categoryFilter">
+                <option value="all">Todas las categorías</option>
+              </select>
+            </li>
+            <div class="nav-icon" id="wishlistBtn" title="Lista de deseos">
+              <i class="bx bx-heart"></i>
+              <span id="wishlistCount" class="nav-count">0</span>
+            </div>
+            <div class="nav-icon" id="cartBtn" title="Carrito de compras">
+              <i class="bx bx-cart"></i>
+              <span id="cartCount" class="nav-count">0</span>
+            </div>
+          </div>
     <!-- Categories -->
     <section class="categories">
       <div class="container">

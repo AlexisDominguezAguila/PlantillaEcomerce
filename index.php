@@ -14,117 +14,14 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="public/assets/css/global.css" />
+    <link rel="stylesheet" href="public/assets/css/header.css" />
     <link rel="stylesheet" href="public/assets/css/index.css" />
+    <link rel="stylesheet" href="public/assets/css/footer.css" />
     <!-- Boxicons -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
     />
-    <style>
-         .container-circle {
-        position: relative;
-        width: 500px;
-        height: 500px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      /* ===== CÍRCULO CENTRAL ===== */
-      .center-circle {
-        position: absolute;
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        border: 5px solid #38b6ff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 3;
-      }
-
-      .center-circle img {
-        width: 90%;
-        height: auto;
-      }
-
-      /* ===== CÍRCULO PUNTEADO ===== */
-      .dotted-ring {
-        position: absolute;
-        width: 220px;
-        height: 220px;
-        border-radius: 50%;
-        border: 2px dashed rgba(56, 182, 255, 0.6);
-        z-index: 2;
-      }
-
-      /* ===== ANILLO INTERMEDIO (fondo azul claro) ===== */
-      .middle-ring-bg {
-        position: absolute;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(56, 182, 255, 0.12) 40%,
-          rgba(255, 255, 255, 0.8) 100%
-        );
-        z-index: 1;
-      }
-
-      /* ===== TEXTOS ROTATORIOS ===== */
-      .ring {
-        position: absolute;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .ring-text {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        animation: rotate 45s linear infinite;
-      }
-
-      @keyframes rotate {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .text-path {
-        fill: #1a1b5e;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-      }
-
-      /* ===== ANILLO 1: Texto exterior grande ===== */
-      .ring-outer {
-        width: 400px;
-        height: 400px;
-      }
-
-      .ring-outer .text-path {
-        font-size: 31px;
-      }
-
-      /* ===== ANILLO 2: Texto intermedio más pequeño ===== */
-      .ring-inner {
-        width: 300px;
-        height: 300px;
-      }
-
-      .ring-inner .text-path {
-        font-size: 28px;
-        font-weight: 600;
-        fill: #2c58a0;
-      }
-    </style>
   </head>
   <body>
     <!-- Topbar -->
@@ -136,7 +33,7 @@
         <a href="public/views/login.html" class="topbar-cta">INGRESA TU ID</a>
       </div>
     </div>
-
+    <!-- HEADER -->
     <header class="header">
       <div class="container">
         <nav class="nav">
@@ -158,28 +55,14 @@
             <li><a href="public/views/restaurantes.php">Restaurantes</a></li>
             <li><a href="public/views/contacto.php">Contacto</a></li>
 
-            <div class="nav-actions-mobile">
-              <a href="public/views/inicio.php" class="btn-primary"
-                >Iniciar Sesión</a
-              >
-            </div>
           </ul>
-
-          <!-- Botones normales (visibles en escritorio) -->
-          <div class="nav-actions">
-            <!-- <a href="#contacto" class="btn-secondary">Contacto</a> -->
-            <a href="public/views/inicio.php" class="btn-primary"
-              >Iniciar Sesión</a
-            >
-          </div>
-
           <button class="mobile-toggle" id="mobileToggle">
             <span></span><span></span><span></span>
           </button>
         </nav>
       </div>
     </header>
-
+    <!-- HERO -->
     <section class="hero">
       <div class="container hero-inner">
         <div class="hero-content">
@@ -256,6 +139,7 @@
       </div>
     </section>
 
+    <!-- STATS -->
     <section class="stats">
       <div class="container">
         <div class="stats-grid">
@@ -277,130 +161,25 @@
         </div>
       </div>
     </section>
+
     <!-- PRODUCTS -->
     <section class="products" id="productos">
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Nuestros Productos</h2>
-      <p class="section-description">
-        Nuestras herramientas y productos simplificarán tu gestión
-      </p>
-    </div>
-
-    <!-- Grid dinámico -->
-    <div class="products-grid" id="publicProductsGrid"></div>
-
-    <div class="products-actions" style="text-align:center;margin-top:2rem">
-      <a href="public/views/productos.html" class="btn-secondary btn-large">Ver Catálogo Completo</a>
-    </div>
-  </div>
-</section>
-
-
-    <!-- SERVICES -->
-    <!-- <section class="services" id="servicios">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Nuestras herramientas</h2>
-          <p class="section-description">
-            Soluciones tecnológicas personalizadas para tu empresa
-          </p>
-        </div>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-code"></i></div>
-            <h3 class="service-title">Sistema de Restaurante</h3>
-            <p class="service-description">
-              Creamos aplicaciones web, móviles y de escritorio personalizadas.
-              Desde MVPs hasta sistemas empresariales complejos.
-            </p>
-            <ul class="service-features">
-              <li>Aplicaciones Web Modernas</li>
-              <li>Apps Móviles iOS/Android</li>
-              <li>Sistemas Empresariales</li>
-              <li>APIs y Microservicios</li>
-            </ul>
-            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-          </div>
-          <div class="service-card featured">
-            <div class="service-badge">Más Popular</div>
-            <div class="service-icon"><i class="fas fa-users"></i></div>
-            <h3 class="service-title">Venta de Productos de Computo</h3>
-            <p class="service-description">
-              Amplía tu equipo con nuestros profesionales especializados.
-              Talento calificado cuando lo necesites.
-            </p>
-            <ul class="service-features">
-              <li>Desarrolladores Full Stack</li>
-              <li>DevOps Engineers</li>
-              <li>QA Testers</li>
-              <li>Project Managers</li>
-            </ul>
-            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-headset"></i></div>
-            <h3 class="service-title">Soporte Técnico</h3>
-            <p class="service-description">
-              Soporte 24/7 para mantener tu infraestructura funcionando sin
-              interrupciones.
-            </p>
-            <ul class="service-features">
-              <li>Soporte 24/7/365</li>
-              <li>Mantenimiento Preventivo</li>
-              <li>Monitoreo Continuo</li>
-              <li>Respuesta Inmediata</li>
-            </ul>
-            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-cloud"></i></div>
-            <h3 class="service-title">Generación de Reportes</h3>
-            <p class="service-description">
-              Migración y optimización de infraestructura en la nube. AWS,
-              Azure, Google Cloud.
-            </p>
-            <ul class="service-features">
-              <li>Migración a la Nube</li>
-              <li>Arquitectura Cloud</li>
-              <li>Optimización de Costos</li>
-              <li>DevOps & CI/CD</li>
-            </ul>
-            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-lock"></i></div>
-            <h3 class="service-title">Punto de Venta</h3>
-            <p class="service-description">
-              Protege tu empresa con nuestras soluciones de seguridad
-              informática avanzada.
-            </p>
-            <ul class="service-features">
-              <li>Auditorías de Seguridad</li>
-              <li>Pentesting</li>
-              <li>Protección DDoS</li>
-              <li>Cumplimiento Normativo</li>
-            </ul>
-            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-            <h3 class="service-title">Análisis de Datos</h3>
-            <p class="service-description">
-              Transforma tus datos en insights accionables con BI y Machine
-              Learning.
-            </p>
-            <ul class="service-features">
-              <li>Business Intelligence</li>
-              <li>Data Analytics</li>
-              <li>Machine Learning</li>
-              <li>Dashboards Personalizados</li>
-            </ul>
-            <a href="#contacto" class="service-link">Solicitar Cotización →</a>
-          </div>
-        </div>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Nuestros Productos</h2>
+        <p class="section-description">
+          Nuestras herramientas y productos simplificarán tu gestión
+        </p>
       </div>
-    </section> -->
+
+      <!-- Grid dinámico -->
+      <div class="products-grid" id="publicProductsGrid"></div>
+
+      <div class="products-actions" style="text-align:center;margin-top:2rem">
+        <a href="public/views/productos.php" class="btn-secondary btn-large">Ver Catálogo Completo</a>
+      </div>
+    </div>
+    </section>
 
     <!-- SOLUTIONS -->
     <section class="solutions" id="soluciones">
@@ -439,7 +218,10 @@
             </div>
           </div>
           <div class="solutions-image">
-            <i class="fas fa-chart-network"></i>
+            <img
+              src="public/assets/images/transformacion.jpg"
+              alt="Soluciones digitales"
+            />
           </div>
         </div>
       </div>
@@ -447,7 +229,13 @@
 
     <!-- CTA -->
     <section class="cta">
-      <div class="container">
+      <div class="container cta-inner">
+        <div class="cta-media">
+          <img
+            src="public/assets/images/confianza.jpg"
+            alt="Impulsa tu empresa"
+          />
+        </div>
         <div class="cta-content">
           <h2 class="cta-title">¿Listo para comenzar?</h2>
           <p class="cta-description">
@@ -455,9 +243,12 @@
             soluciones tecnológicas
           </p>
           <div class="cta-actions">
-            <a href="public/views/contacto.html" class="btn-secondary btn-large"
-              >Solicitar Consultoría Gratuita</a
+            <a
+              href="public/views/contacto.php"
+              class="btn-secondary btn-large"
             >
+              Solicitar Consultoría Gratuita
+            </a>
           </div>
         </div>
       </div>
@@ -472,32 +263,30 @@
             <div class="footer-logo">
               <span class="logo-icon">
                 <img
-                  src="public/assets/images/iconoTEC.png"
-                  alt="iconoTEC"
-                  style="width: 30px; height: 30px"
-                />
+                      src="public/assets/images/iconoTEC.png"
+                      alt="iconoTEC"
+                      style="width: 30px; height: 30px"
+                    />
               </span>
               <span class="logo-text">TEC RIVERA</span>
             </div>
             <p class="footer-description">
-              Soluciones tecnológicas integrales para empresas que buscan
-              innovar y crecer.
+              Soluciones tecnológicas integrales para empresas que buscan innovar y
+              crecer.
             </p>
             <div class="social-links">
-              <a
-                href="https://www.facebook.com/multi.per.5"
-                aria-label="Facebook"
+              <a href="https://www.facebook.com/multi.per.5" aria-label="Facebook"
                 ><i class="bx bxl-facebook"></i
               ></a>
               <a
-                href="https://www.instagram.com/tecrivera_peru?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                href="https://www.instagram.com/tecrivera_peru"
                 aria-label="Instagram"
                 ><i class="bx bxl-instagram"></i
               ></a>
             </div>
           </div>
 
-          <!-- 🔹 Agrupación nueva de columnas -->
+          <!-- Menús -->
           <div class="footer-columns-wrapper">
             <div class="footer-column">
               <h4>Productos</h4>
@@ -551,73 +340,198 @@
     </footer>
 
     <script src="public/assets/js/home.js"></script>
-    <script>
-  // Ajusta la ruta según tu estructura:
-  const PUBLIC_CARDS_API = 'public/controllers/IndexController.php?limit=6';
+        <script>
+      // Ajusta la ruta según tu estructura:
+      const PUBLIC_CARDS_API = "public/controllers/IndexController.php?limit=6";
+      const MAX_SHIFT = 28; // px de desplazamiento máximo para el parallax
 
-  const escapeHTML = (str) =>
-    String(str ?? "").replace(/[&<>"']/g, (m) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
-    }[m]));
-  const escapeAttr = (str) => escapeHTML(String(str)).replace(/"/g, "&quot;");
+      /* ============ Helpers ============ */
+      const escapeHTML = (str) =>
+        String(str ?? "").replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#039;",
+            }[m])
+        );
+      const escapeAttr = (str) =>
+        escapeHTML(String(str)).replace(/"/g, "&quot;");
 
-  function makeCardHTML(c) {
-    const badge = c.badge_text ? `<span class="product-badge">${escapeHTML(c.badge_text)}</span>` : "";
-    const btnUrl = c.button_url && c.button_url !== "#" ? escapeAttr(c.button_url) : "#";
-    const btn = `<button class="btn-product" onclick="if('${btnUrl}'!=='#') window.open('${btnUrl}','_blank')">
-                   ${escapeHTML(c.button_label || 'Ver Detalles')}
+      /* ============ UI: Cards ============ */
+      function makeCardHTML(c) {
+        const badge = c.badge_text
+          ? `<span class="product-badge">${escapeHTML(c.badge_text)}</span>`
+          : "";
+        const btnUrl =
+          c.button_url && c.button_url !== "#" ? escapeAttr(c.button_url) : "#";
+        const btn = `<button class="btn-product" onclick="if('${btnUrl}'!=='#') window.open('${btnUrl}','_blank')">
+                   ${escapeHTML(c.button_label || "Ver Detalles")}
                  </button>`;
 
-    return `
+        return `
       <div class="product-card">
         <div class="product-image">
-          <img src="${escapeAttr(c.image_url)}" alt="${escapeAttr(c.image_alt || 'Imagen')}">
+          <img src="${escapeAttr(c.image_url)}" alt="${escapeAttr(
+          c.image_alt || "Imagen"
+        )}">
           ${badge}
         </div>
         <div class="product-info">
           <h3 class="product-title">${escapeHTML(c.title)}</h3>
-          <p class="product-description">${escapeHTML(c.description || '')}</p>
+          <p class="product-description">${escapeHTML(c.description || "")}</p>
           <div class="product-footer">
-            <span class="product-price">${escapeHTML(c.footer_text || '')}</span>
+            <span class="product-price">${escapeHTML(
+              c.footer_text || ""
+            )}</span>
             ${btn}
           </div>
         </div>
       </div>
     `;
-  }
+      }
 
-  async function cargarPublicCards() {
-    try {
-      const res = await fetch(PUBLIC_CARDS_API, { cache: 'no-store' });
-      const items = await res.json();
-      const grid = document.getElementById('publicProductsGrid');
+      async function cargarPublicCards() {
+        try {
+          const res = await fetch(PUBLIC_CARDS_API, { cache: "no-store" });
+          const items = await res.json();
+          const grid = document.getElementById("publicProductsGrid");
 
-      if (!Array.isArray(items) || items.length === 0) {
-        grid.innerHTML = `
+          if (!Array.isArray(items) || items.length === 0) {
+            grid.innerHTML = `
           <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:2rem;">
             <i class="bx bx-layer" style="font-size:2rem;"></i>
             <h3>No hay productos publicados</h3>
             <p>Vuelve más tarde</p>
           </div>
         `;
-        return;
-      }
+            return;
+          }
 
-      grid.innerHTML = items.map(makeCardHTML).join('');
-    } catch (err) {
-      console.error('Error cargando cards públicas:', err);
-      const grid = document.getElementById('publicProductsGrid');
-      grid.innerHTML = `
+          grid.innerHTML = items.map(makeCardHTML).join("");
+
+          // Revelado para las cards recién insertadas
+          revealObserve(grid.querySelectorAll(".product-card"));
+        } catch (err) {
+          console.error("Error cargando cards públicas:", err);
+          const grid = document.getElementById("publicProductsGrid");
+          grid.innerHTML = `
         <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:2rem;">
           <i class="bx bx-error-circle" style="font-size:2rem;"></i>
           <h3>Ups, no se pudo cargar</h3>
           <p>Intenta nuevamente en unos instantes</p>
         </div>
       `;
-    }
-  }
+        }
+      }
 
-  document.addEventListener('DOMContentLoaded', cargarPublicCards);
-</script>
+      /* ============ Reveal on-scroll (stats, products, solutions, cta) ============ */
+      let _ioReveal = null;
+      function initRevealObserver() {
+        _ioReveal = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.style.transition =
+                  "transform .5s ease, opacity .5s ease";
+                e.target.style.transform = "translateY(0)";
+                e.target.style.opacity = "1";
+                _ioReveal.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.14, rootMargin: "0px 0px -80px 0px" }
+        );
+      }
+
+      function revealObserve(nodes) {
+        if (!_ioReveal) return;
+        nodes.forEach((el) => {
+          el.style.transform = "translateY(14px)";
+          el.style.opacity = "0";
+          _ioReveal.observe(el);
+        });
+      }
+
+      /* ============ CTA Parallax (usa CSS con --py y --scale) ============ */
+      function computeCtaOverscanScale() {
+        const box = document.querySelector(".cta-media");
+        if (!box) return;
+        const img = box.querySelector("img");
+        if (!img) return;
+
+        const h = box.clientHeight || 220;
+        const minScale = 1 + (2 * MAX_SHIFT) / h; // cubrir ±MAX_SHIFT
+        const cssScale =
+          parseFloat(getComputedStyle(img).getPropertyValue("--scale")) || 1.06;
+        img.style.setProperty(
+          "--scale",
+          Math.max(cssScale, minScale).toFixed(3)
+        );
+      }
+
+      function updateCtaParallax() {
+        const box = document.querySelector(".cta-media");
+        if (!box) return;
+        const img = box.querySelector("img");
+        if (!img) return;
+
+        const vh = window.innerHeight || 0;
+        const sec = box.closest(".cta");
+        const rect = sec.getBoundingClientRect();
+
+        if (rect.bottom < 0 || rect.top > vh) {
+          img.style.setProperty("--py", "0px");
+          return;
+        }
+
+        const progress = Math.max(
+          0,
+          Math.min((vh - rect.top) / (vh + rect.height), 1)
+        );
+        const centered = progress - 0.5;
+        const shift = centered * MAX_SHIFT;
+
+        img.style.setProperty("--py", `${Math.round(shift)}px`);
+      }
+
+      /* ============ Boot ============ */
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1) Cargar cards
+        cargarPublicCards();
+
+        // 2) Revelado
+        initRevealObserver();
+        revealObserve(
+          document.querySelectorAll(
+            ".stat-card, .solution-feature, .solutions-image, .cta-inner"
+          )
+        );
+
+        // 3) CTA parallax (listeners)
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) return;
+          requestAnimationFrame(() => {
+            updateCtaParallax();
+            ticking = false;
+          });
+          ticking = true;
+        };
+
+        computeCtaOverscanScale();
+        updateCtaParallax();
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", () => {
+          computeCtaOverscanScale();
+          updateCtaParallax();
+        });
+      });
+    </script>
+
   </body>
 </html>

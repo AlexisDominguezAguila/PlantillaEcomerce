@@ -78,6 +78,11 @@
 
   <!-- CTA Section -->
   <section class="cta">
+    <!-- Imagen con parallax -->
+    <div class="cta-media">
+      <img src="../uploads/servicios/cta.jpg" alt="Soluciones a medida" loading="lazy">
+    </div>
+
     <div class="container">
       <div class="cta-content">
         <h2 class="cta-title">¿No encuentras el servicio que buscas?</h2>
@@ -93,9 +98,8 @@
 
   <!-- FOOTER -->
    <?php include('../partials/footer.php') ?>
-
-      <script src="../assets/js/home.js"></script>
-  <script src="../assets/js/servicios.js"></script>
+   <script src="../assets/js/home.js"></script>
+   <script src="../assets/js/servicios.js"></script>
 
 
 </body>

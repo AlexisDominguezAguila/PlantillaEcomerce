@@ -260,62 +260,76 @@ body {
   align-items: center;
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
+  position: relative; /* asegura capas locales */
 }
 
+/* Alternar disposición izquierda/derecha */
 .service-item.reverse {
   direction: rtl;
 }
-
 .service-item.reverse > * {
   direction: ltr;
 }
 
+/* Marco de la imagen: NO se mueve con scroll; solo escala en hover */
 .service-image {
   position: relative;
   height: 500px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   overflow: hidden;
-  background: linear-gradient(
+  /* background: linear-gradient(
     135deg,
     var(--primary-light),
     var(--accent-secondary)
-  );
+  ); */
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 30px 60px rgba(0, 212, 255, 0.2);
-  transition: all 0.6s ease;
-  /* display: none; */
+  /* box-shadow: 0 30px 60px rgba(0, 212, 255, 0.2); */
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+  z-index: 1; /* por detrás del contenido si hay cruce */
 }
 
-.service-item:hover .service-image {
+/* .service-item:hover .service-image {
   transform: scale(1.05);
   box-shadow: 0 40px 80px rgba(0, 212, 255, 0.3);
-}
+} */
 
-.service-image img {
+/* Contenido interno (img o placeholder): aquí aplicamos parallax + revelado */
+.service-image > img,
+.service-image .service-image-placeholder {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
+  will-change: transform, opacity;
+  /* base: un poquito más grande para cubrir al desplazar */
+  transform: translateY(var(--pY, 0)) scale(var(--pScale, 1.12));
+  transform-origin: center center;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  opacity: 0; /* oculto hasta entrar al viewport */
 }
 
-.service-item:hover .service-image img {
-  transform: scale(1.1);
-}
-
-.service-image-placeholder {
-  width: 100%;
-  height: 100%;
+/* Placeholder cuando no hay imagen */
+.service-image .service-image-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
-  opacity: 0.3;
 }
 
+.service-image .service-image-placeholder i {
+  font-size: 4.5rem;
+}
+
+/* Revelado cuando el item está en viewport */
+.service-item.is-visible .service-image > img,
+.service-item.is-visible .service-image .service-image-placeholder {
+  opacity: 1;
+}
+/* Contenido textual */
 .service-content {
   padding: 20px;
+  position: relative;
+  z-index: 2; /* asegura estar por encima si hubiera traslapes */
 }
 
 .service-number {
@@ -354,6 +368,7 @@ body {
   margin-bottom: 25px;
 }
 
+/* Lista de características */
 .service-features {
   margin-bottom: 30px;
 }
@@ -387,6 +402,7 @@ body {
   font-size: 1.1rem;
 }
 
+/* Precio + CTA */
 .service-pricing {
   display: flex;
   align-items: center;
@@ -411,7 +427,7 @@ body {
   border-radius: 50px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-decoration: none;
   display: inline-block;
   font-size: 0.95rem;
@@ -422,25 +438,78 @@ body {
   box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
 }
 
-/* ===== CTA SECTION ===== */
-.cta {
-  padding: 80px 0;
-  text-align: center;
-  position: relative;
-  margin-top: 60px;
+/* Animación de entrada (coincide con tu JS que setea animation-delay inline) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .service-item {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .service-image {
+    height: 320px;
+  }
+  .service-features ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== CTA SECTION ===== */
+.cta {
+  position: relative;
+  padding: 80px 0;
+  margin-top: 60px;
+  text-align: center;
+  overflow: hidden; /* que no se vea fuera del borde redondo */
+}
+
+/* Imagen de fondo con parallax (va detrás) */
+.cta-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0; /* imagen abajo */
+  pointer-events: none; /* no bloquea clics de los botones */
+}
+.cta-media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform, opacity;
+  /* mismas variables que usamos en servicios */
+  --py: 0px;
+  --scale: 1.12; /* overscan para cubrir el travel del parallax */
+  transform-origin: center;
+  transform: translateY(var(--py)) scale(var(--scale));
+  transition: transform 0.35s ease;
+}
+
+/* Overlay encima de la imagen, debajo del contenido */
 .cta::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1; /* overlay sobre la imagen */
   background: linear-gradient(
     135deg,
-    rgba(99, 102, 241, 0.1),
-    rgba(0, 212, 255, 0.05)
+    rgba(99, 102, 241, 0.18),
+    rgba(0, 212, 255, 0.1)
   );
-  border-radius: 20px;
-  z-index: -1;
+}
+
+/* Contenido por encima de todo */
+.cta .container {
+  position: relative;
+  z-index: 2; /* contenido arriba */
 }
 
 .cta-content {
@@ -474,73 +543,11 @@ body {
   font-size: 1rem;
 }
 
-/* ===== MODAL ===== */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.3s ease;
-}
-
-.modal.active {
-  display: flex;
-}
-
-.modal-content {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 600px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-  animation: slideUp 0.3s ease;
-}
-
-.modal-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 212, 255, 0.1);
-  border: 1px solid var(--border-color);
-  color: var(--accent);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.modal-close:hover {
-  background: var(--accent);
-  color: var(--primary);
-}
-
-#modalBody h2 {
-  color: var(--text-light);
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#modalBody p {
-  color: var(--text-muted);
-  line-height: 1.8;
-  margin-bottom: 15px;
+/* Un poco más de overscan en móvil (contenedor más bajo) */
+@media (max-width: 768px) {
+  .cta-media > img {
+    --scale: 1.2;
+  }
 }
 
 /* ===== ANIMATIONS ===== */
@@ -602,14 +609,6 @@ body {
 
   .service-features ul {
     grid-template-columns: 1fr;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-columns-wrapper {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .cta-title {
