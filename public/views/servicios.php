@@ -8,6 +8,10 @@
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
     <link rel="stylesheet" href="../assets/css/global.css" />
     <link rel="stylesheet" href="../assets/css/servic.css" />
+        <link rel="stylesheet" href="../assets/css/header.css" />
+            <link rel="stylesheet" href="../assets/css/footer.css" />
+
+
 </head>
 <body>
   <!-- Topbar -->
