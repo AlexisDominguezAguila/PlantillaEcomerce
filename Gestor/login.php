@@ -301,7 +301,7 @@ $error = $_GET['error'] ?? '';
 <body>
 
     <!-- Botón Volver -->
-    <a href="../../index.php" class="back-button" id="btnBack" aria-label="Volver a la página anterior">
+    <a href="../index.php" class="back-button" id="btnBack" aria-label="Volver a la página anterior">
       <i class='bx bx-arrow-back'></i><span>Volver</span>
     </a>
 
