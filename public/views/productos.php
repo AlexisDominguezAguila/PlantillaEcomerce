@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tec RIVERA - Catálogo de Productos</title>
-    <!-- Tailwind CSS -->
-
     <link rel="stylesheet" href="../assets/css/global.css" />
     <link rel="stylesheet" href="../assets/css/productos.css" />
     <link rel="stylesheet" href="../assets/css/header.css" />
@@ -237,182 +235,59 @@
       </div>
     </div>
 
-<!-- Modal de Checkout -->
-<div class="modal" id="checkoutModal">
-  <div class="modal-content modal-lg">
-    <button class="modal-close" id="checkoutClose">&times;</button>
+  <!-- Modal de Checkout -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-content modal-lg">
+      <button class="modal-close" id="checkoutClose">&times;</button>
 
-    <div class="checkout">
-      <!-- Indicadores de pasos -->
-      <div class="steps">
-        <div class="step-indicator active" data-step="1">1. Resumen</div>
-        <div class="step-indicator" data-step="2">2. Tus datos</div>
-        <div class="step-indicator" data-step="3">3. Entrega</div>
-        <div class="step-indicator" data-step="4">4. Dirección</div>
-        <div class="step-indicator" data-step="5">5. Pago</div>
-        <div class="step-indicator" data-step="6">6. Confirmación</div>
-      </div>
-
-      <!-- Contenido de pasos -->
-      <div class="steps-body">
-        <!-- ==================== PASO 1: RESUMEN ==================== -->
-        <div class="step-panel" id="step1">
-          <h2>Resumen del pedido</h2>
-          <div id="checkoutSummary"></div>
+      <div class="checkout">
+        <!-- Indicadores de pasos -->
+        <div class="steps">
+          <div class="step-indicator active" data-step="1">1. Resumen</div>
+          <div class="step-indicator" data-step="2">2. Tus datos</div>
+          <div class="step-indicator" data-step="3">3. Entrega</div>
+          <div class="step-indicator" data-step="4">4. Dirección</div>
+          <div class="step-indicator" data-step="5">5. Pago</div>
+          <div class="step-indicator" data-step="6">6. Confirmación</div>
         </div>
 
-        <!-- ==================== PASO 2: DATOS DEL CLIENTE ==================== -->
-        <div class="step-panel hidden" id="step2">
-          <h2>Ingresa tus datos</h2>
-          <p class="hint">Necesitamos algunos datos para procesar tu pedido de forma segura.</p>
-          
-          <form id="customerForm">
-            <div class="form-row">
-              <div class="form-field">
-                <label for="customerName">
-                  NOMBRE <span class="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="customerName"
-                  name="customerName"
-                  placeholder="Ej: Juan"
-                  required
-                />
-              </div>
+        <!-- Contenido de pasos -->
+        <div class="steps-body">
+          <!-- ==================== PASO 1: RESUMEN ==================== -->
+          <div class="step-panel" id="step1">
+            <h2>Resumen del pedido</h2>
+            <div id="checkoutSummary"></div>
+          </div>
 
-              <div class="form-field">
-                <label for="customerLastName">
-                  APELLIDO <span class="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="customerLastName"
-                  name="customerLastName"
-                  placeholder="Ej: Pérez"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-field">
-                <label for="customerEmail">
-                  CORREO ELECTRÓNICO <span class="required">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="customerEmail"
-                  name="customerEmail"
-                  placeholder="ejemplo@correo.com"
-                  required
-                />
-              </div>
-
-              <div class="form-field">
-                <label for="customerPhone">
-                  TELÉFONO / CELULAR <span class="required">*</span>
-                </label>
-                <input
-                  type="tel"
-                  id="customerPhone"
-                  name="customerPhone"
-                  placeholder="999 999 999"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-field">
-                <label for="customerDNI">
-                  DNI <span class="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="customerDNI"
-                  name="customerDNI"
-                  placeholder="12345678"
-                  maxlength="8"
-                  pattern="[0-9]{8}"
-                  required
-                />
-              </div>
-
-              <div class="form-field">
-                <label for="customerDocType">TIPO DE DOCUMENTO</label>
-                <select id="customerDocType" name="customerDocType">
-                  <option value="dni">DNI</option>
-                  <option value="ce">Carnet de Extranjería</option>
-                  <option value="passport">Pasaporte</option>
-                </select>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <!-- ==================== PASO 3: MÉTODO DE ENTREGA ==================== -->
-        <div class="step-panel hidden" id="step3">
-          <h2>¿Cómo quieres recibir tu pedido?</h2>
-          <p class="hint">Elige la opción que más te convenga</p>
-
-          <form id="deliveryMethodForm" class="delivery-methods">
-            <label class="delivery-card">
-              <input type="radio" name="deliveryMethod" value="delivery" />
-              <div class="delivery-card-body">
-                <div class="delivery-icon"></div>
-                <div class="title">Delivery a domicilio</div>
-                <div class="desc">
-                  Recibe tu pedido en la puerta de tu casa.<br>
-                  <strong>Tiempo estimado:</strong> 24-48 horas<br>
-                  <strong>Costo:</strong> S/ 10.00 (Gratis en compras mayores a S/ 200)
-                </div>
-              </div>
-            </label>
-
-            <label class="delivery-card">
-              <input type="radio" name="deliveryMethod" value="pickup" />
-              <div class="delivery-card-body">
-                <div class="delivery-icon"></div>
-                <div class="title">Recojo en tienda</div>
-                <div class="desc">
-                  Recoge tu pedido en nuestra tienda física.<br>
-                  <strong>Tiempo estimado:</strong> 2-4 horas<br>
-                  <strong>Costo:</strong> Gratis
-                </div>
-              </div>
-            </label>
-          </form>
-        </div>
-
-        <!-- ==================== PASO 4: DIRECCIÓN ==================== -->
-        <div class="step-panel hidden" id="step4">
-          <!-- Formulario de dirección (solo si eligió delivery) -->
-          <div id="addressFormContainer" class="hidden">
-            <h2>Dirección de envío</h2>
-            <p class="hint">Indica dónde quieres recibir tu pedido</p>
-
-            <form id="addressForm">
+          <!-- ==================== PASO 2: DATOS DEL CLIENTE ==================== -->
+          <div class="step-panel hidden" id="step2">
+            <h2>Ingresa tus datos</h2>
+            <p class="hint">Necesitamos algunos datos para procesar tu pedido de forma segura.</p>
+            
+            <form id="customerForm">
               <div class="form-row">
                 <div class="form-field">
-                  <label for="department">DEPARTAMENTO</label>
+                  <label for="customerName">
+                    NOMBRE <span class="required">*</span>
+                  </label>
                   <input
                     type="text"
-                    id="department"
-                    name="department"
-                    placeholder="Ej: Piura"
-                    value="Piura"
+                    id="customerName"
+                    name="customerName"
+                    placeholder="Ej: Juan"
                     required
                   />
                 </div>
 
                 <div class="form-field">
-                  <label for="province">PROVINCIA</label>
+                  <label for="customerLastName">
+                    APELLIDO <span class="required">*</span>
+                  </label>
                   <input
                     type="text"
-                    id="province"
-                    name="province"
-                    placeholder="Ej: Piura"
+                    id="customerLastName"
+                    name="customerLastName"
+                    placeholder="Ej: Pérez"
                     required
                   />
                 </div>
@@ -420,131 +295,254 @@
 
               <div class="form-row">
                 <div class="form-field">
-                  <label for="district">DISTRITO</label>
+                  <label for="customerEmail">
+                    CORREO ELECTRÓNICO <span class="required">*</span>
+                  </label>
                   <input
-                    type="text"
-                    id="district"
-                    name="district"
-                    placeholder="Ej: Castilla"
+                    type="email"
+                    id="customerEmail"
+                    name="customerEmail"
+                    placeholder="ejemplo@correo.com"
                     required
                   />
                 </div>
 
                 <div class="form-field">
-                  <label for="postalCode">CÓDIGO POSTAL</label>
+                  <label for="customerPhone">
+                    TELÉFONO / CELULAR <span class="required">*</span>
+                  </label>
                   <input
-                    type="text"
-                    id="postalCode"
-                    name="postalCode"
-                    placeholder="20000"
+                    type="tel"
+                    id="customerPhone"
+                    name="customerPhone"
+                    placeholder="999 999 999"
+                    required
                   />
                 </div>
               </div>
 
-              <div class="form-field full-width">
-                <label for="addressStreet">DIRECCIÓN</label>
-                <input
-                  type="text"
-                  id="addressStreet"
-                  name="addressStreet"
-                  placeholder="Av. Principal 123"
-                  required
-                />
-              </div>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="customerDNI">
+                    DNI <span class="required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="customerDNI"
+                    name="customerDNI"
+                    placeholder="12345678"
+                    maxlength="8"
+                    pattern="[0-9]{8}"
+                    required
+                  />
+                </div>
 
-              <div class="form-field full-width">
-                <label for="addressReference">REFERENCIA</label>
-                <textarea
-                  id="addressReference"
-                  name="addressReference"
-                  placeholder="Ej: Casa de dos pisos, portón verde, frente al parque"
-                ></textarea>
+                <div class="form-field">
+                  <label for="customerDocType">TIPO DE DOCUMENTO</label>
+                  <select id="customerDocType" name="customerDocType">
+                    <option value="dni">DNI</option>
+                    <option value="ce">Carnet de Extranjería</option>
+                    <option value="passport">Pasaporte</option>
+                  </select>
+                </div>
               </div>
             </form>
           </div>
 
-          <!-- Info de tienda (solo si eligió pickup) -->
-          <div id="storeInfoContainer" class="hidden">
-            <h2>Información de la tienda</h2>
-            <div class="store-info">
-              <div class="store-icon">🏪</div>
-              <h4>TEC RIVERA - Tienda Principal</h4>
-              <p><strong>Dirección:</strong> Av. Grau 520, Piura 20001</p>
-              <p><strong>Horario de atención:</strong></p>
-              <p>Lunes a Viernes: 9:00 AM - 7:00 PM</p>
-              <p>Sábados: 9:00 AM - 2:00 PM</p>
-              <p><strong>Teléfono:</strong> (073) 123-4567</p>
-              <p class="hint" style="margin-top: 12px;">
-                Te enviaremos un mensaje cuando tu pedido esté listo para recoger.
-              </p>
+          <!-- ==================== PASO 3: MÉTODO DE ENTREGA ==================== -->
+          <div class="step-panel hidden" id="step3">
+            <h2>¿Cómo quieres recibir tu pedido?</h2>
+            <p class="hint">Elige la opción que más te convenga</p>
+
+            <form id="deliveryMethodForm" class="delivery-methods">
+              <label class="delivery-card">
+                <input type="radio" name="deliveryMethod" value="delivery" />
+                <div class="delivery-card-body">
+                  <div class="delivery-icon"></div>
+                  <div class="title">Delivery a domicilio</div>
+                  <div class="desc">
+                    Recibe tu pedido en la puerta de tu casa.<br>
+                    <strong>Tiempo estimado:</strong> 24-48 horas<br>
+                    <strong>Costo:</strong> S/ 10.00 (Gratis en compras mayores a S/ 200)
+                  </div>
+                </div>
+              </label>
+
+              <label class="delivery-card">
+                <input type="radio" name="deliveryMethod" value="pickup" />
+                <div class="delivery-card-body">
+                  <div class="delivery-icon"></div>
+                  <div class="title">Recojo en tienda</div>
+                  <div class="desc">
+                    Recoge tu pedido en nuestra tienda física.<br>
+                    <strong>Tiempo estimado:</strong> 2-4 horas<br>
+                    <strong>Costo:</strong> Gratis
+                  </div>
+                </div>
+              </label>
+            </form>
+          </div>
+
+          <!-- ==================== PASO 4: DIRECCIÓN ==================== -->
+          <div class="step-panel hidden" id="step4">
+            <!-- Formulario de dirección (solo si eligió delivery) -->
+            <div id="addressFormContainer" class="hidden">
+              <h2>Dirección de envío</h2>
+              <p class="hint">Indica dónde quieres recibir tu pedido</p>
+
+              <form id="addressForm">
+                <div class="form-row">
+                  <div class="form-field">
+                    <label for="department">DEPARTAMENTO</label>
+                    <input
+                      type="text"
+                      id="department"
+                      name="department"
+                      placeholder="Ej: Piura"
+                      value="Piura"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="province">PROVINCIA</label>
+                    <input
+                      type="text"
+                      id="province"
+                      name="province"
+                      placeholder="Ej: Piura"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-field">
+                    <label for="district">DISTRITO</label>
+                    <input
+                      type="text"
+                      id="district"
+                      name="district"
+                      placeholder="Ej: Castilla"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="postalCode">CÓDIGO POSTAL</label>
+                    <input
+                      type="text"
+                      id="postalCode"
+                      name="postalCode"
+                      placeholder="20000"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-field full-width">
+                  <label for="addressStreet">DIRECCIÓN</label>
+                  <input
+                    type="text"
+                    id="addressStreet"
+                    name="addressStreet"
+                    placeholder="Av. Principal 123"
+                    required
+                  />
+                </div>
+
+                <div class="form-field full-width">
+                  <label for="addressReference">REFERENCIA</label>
+                  <textarea
+                    id="addressReference"
+                    name="addressReference"
+                    placeholder="Ej: Casa de dos pisos, portón verde, frente al parque"
+                  ></textarea>
+                </div>
+              </form>
             </div>
+
+            <!-- Info de tienda (solo si eligió pickup) -->
+            <div id="storeInfoContainer" class="hidden">
+              <h2>Información de la tienda</h2>
+              <div class="store-info">
+                <div class="store-icon">🏪</div>
+                <h4>TEC RIVERA - Tienda Principal</h4>
+                <p><strong>Dirección:</strong> Av. Grau 520, Piura 20001</p>
+                <p><strong>Horario de atención:</strong></p>
+                <p>Lunes a Viernes: 9:00 AM - 7:00 PM</p>
+                <p>Sábados: 9:00 AM - 2:00 PM</p>
+                <p><strong>Teléfono:</strong> (073) 123-4567</p>
+                <p class="hint" style="margin-top: 12px;">
+                  Te enviaremos un mensaje cuando tu pedido esté listo para recoger.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== PASO 5: MÉTODO DE PAGO ==================== -->
+          <div class="step-panel hidden" id="step5">
+            <h2>Selecciona un método de pago</h2>
+            <form id="paymentMethodForm" class="payment-methods">
+              <label class="payment-card">
+                <input type="radio" name="paymentMethod" value="card" />
+                <div class="payment-card-body">
+                  <div class="title">Tarjeta</div>
+                  <div class="desc">Crédito o débito</div>
+                </div>
+              </label>
+
+              <label class="payment-card">
+                <input type="radio" name="paymentMethod" value="wallet" />
+                <div class="payment-card-body">
+                  <div class="title">Billetera (Yape/Plin)</div>
+                  <div class="desc">Pago por QR o número</div>
+                </div>
+              </label>
+
+              <label class="payment-card">
+                <input type="radio" name="paymentMethod" value="transfer" />
+                <div class="payment-card-body">
+                  <div class="title">Transferencia bancaria</div>
+                  <div class="desc">BCP/Interbank/BBVA/Scotiabank</div>
+                </div>
+              </label>
+
+              <label class="payment-card">
+                <input type="radio" name="paymentMethod" value="whatsapp" />
+                <div class="payment-card-body">
+                  <div class="title">WhatsApp (efectivo)</div>
+                  <div class="desc">Coordinar pago contra entrega</div>
+                </div>
+              </label>
+            </form>
+          </div>
+
+          <!-- ==================== PASO 6: DETALLES DE PAGO ==================== -->
+          <div class="step-panel hidden paso3" id="step6">
+            <h2 id="step6Title">Detalles del pago</h2>
+            <div id="paymentMethodView"></div>
+          </div>
+
+          <!-- ==================== PASO 7: CONFIRMACIÓN ==================== -->
+          <div class="step-panel hidden" id="step7">
+            <h2>¡Pedido recibido!</h2>
+            <p id="confirmationText">
+              Gracias por tu compra. Te hemos enviado un resumen a tu correo electrónico.
+            </p>
+            <div class="receipt-box" id="receiptBox"></div>
           </div>
         </div>
 
-        <!-- ==================== PASO 5: MÉTODO DE PAGO ==================== -->
-        <div class="step-panel hidden" id="step5">
-          <h2>Selecciona un método de pago</h2>
-          <form id="paymentMethodForm" class="payment-methods">
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="card" />
-              <div class="payment-card-body">
-                <div class="title">Tarjeta</div>
-                <div class="desc">Crédito o débito</div>
-              </div>
-            </label>
-
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="wallet" />
-              <div class="payment-card-body">
-                <div class="title">Billetera (Yape/Plin)</div>
-                <div class="desc">Pago por QR o número</div>
-              </div>
-            </label>
-
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="transfer" />
-              <div class="payment-card-body">
-                <div class="title">Transferencia bancaria</div>
-                <div class="desc">BCP/Interbank/BBVA/Scotiabank</div>
-              </div>
-            </label>
-
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="whatsapp" />
-              <div class="payment-card-body">
-                <div class="title">WhatsApp (efectivo)</div>
-                <div class="desc">Coordinar pago contra entrega</div>
-              </div>
-            </label>
-          </form>
+        <!-- Controles -->
+        <div class="steps-actions">
+          <button class="btn-secondary" id="prevStepBtn">Atrás</button>
+          <button class="btn-primary right-btn" id="nextStepBtn">
+            Siguiente
+          </button>
         </div>
-
-        <!-- ==================== PASO 6: DETALLES DE PAGO ==================== -->
-        <div class="step-panel hidden paso3" id="step6">
-          <h2 id="step6Title">Detalles del pago</h2>
-          <div id="paymentMethodView"></div>
-        </div>
-
-        <!-- ==================== PASO 7: CONFIRMACIÓN ==================== -->
-        <div class="step-panel hidden" id="step7">
-          <h2>¡Pedido recibido!</h2>
-          <p id="confirmationText">
-            Gracias por tu compra. Te hemos enviado un resumen a tu correo electrónico.
-          </p>
-          <div class="receipt-box" id="receiptBox"></div>
-        </div>
-      </div>
-
-      <!-- Controles -->
-      <div class="steps-actions">
-        <button class="btn-secondary" id="prevStepBtn">Atrás</button>
-        <button class="btn-primary right-btn" id="nextStepBtn">
-          Siguiente
-        </button>
       </div>
     </div>
   </div>
-</div>
 
 
     <!-- FOOTER -->
