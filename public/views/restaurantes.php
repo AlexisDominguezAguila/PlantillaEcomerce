@@ -40,140 +40,26 @@
     </section>
 
     <!-- PLANES Y PRECIOS -->
+    <!-- PLANES Y PRECIOS -->
     <section class="pricing">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">Planes y precios</h2>
           <p class="section-description">Elige el plan que se adapte a tu operación</p>
-          <p class="price-range">Desde <strong>S/80</strong> hasta <strong>S/240</strong> (sin IGV)</p>
+          <p class="price-range" id="priceRange">
+            Desde <strong>S/—</strong> hasta <strong>S/—</strong> (sin IGV)
+          </p>
         </div>
 
-        <div class="pricing-grid">
-          <!-- Básico -->
-          <div class="plan-card">
-            <h3 class="plan-title">Básico</h3>
-            <p class="plan-desc">Lo esencial para empezar a digitalizar tu salón.</p>
-            <div class="plan-price">
-              <span class="currency">S/</span><span class="amount">80</span><span class="note">/mes · sin IGV</span>
-            </div>
-            <ul class="plan-features">
-              <li><i class="fa-solid fa-check"></i>Toma de pedidos por mesero</li>
-              <li><i class="fa-solid fa-check"></i>Carta digital básica</li>
-              <li><i class="fa-solid fa-check"></i>1 local · 2 usuarios</li>
-              <li><i class="fa-solid fa-check"></i>Inventario esencial</li>
-              <li><i class="fa-solid fa-check"></i>Soporte por chat (horario laboral)</li>
-            </ul>
-            <div class="plan-cta">
-              <a href="contacto.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Empezar</a>
-              <a href="login.html" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Probar demo</a>
-            </div>
-          </div>
-
-          <!-- Estándar -->
-          <div class="plan-card">
-            <h3 class="plan-title">Estándar</h3>
-            <p class="plan-desc">Agrega QR y reportes para decisiones rápidas.</p>
-            <div class="plan-price">
-              <span class="currency">S/</span><span class="amount">120</span><span class="note">/mes · sin IGV</span>
-            </div>
-            <ul class="plan-features">
-              <li><i class="fa-solid fa-check"></i>Pedidos por QR y mesero</li>
-              <li><i class="fa-solid fa-check"></i>KDS básico en cocina</li>
-              <li><i class="fa-solid fa-check"></i>1 local · 3 usuarios</li>
-              <li><i class="fa-solid fa-check"></i>Reportes de ventas diarios</li>
-              <li><i class="fa-solid fa-check"></i>Soporte por chat + email</li>
-            </ul>
-            <div class="plan-cta">
-              <a href="contacto.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Empezar</a>
-              <a href="login.html" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Probar demo</a>
-            </div>
-          </div>
-
-          <!-- Pro -->
-          <div class="plan-card plan--pro">
-            <span class="plan-badge">Más elegido</span>
-            <h3 class="plan-title">Pro</h3>
-            <p class="plan-desc">Control avanzado de cocina, caja e inventario.</p>
-            <div class="plan-price">
-              <span class="currency">S/</span><span class="amount">160</span><span class="note">/mes · sin IGV</span>
-            </div>
-            <ul class="plan-features">
-              <li><i class="fa-solid fa-check"></i>Pedidos QR, mesero y para llevar</li>
-              <li><i class="fa-solid fa-check"></i>KDS avanzado + estados por partida</li>
-              <li><i class="fa-solid fa-check"></i>2 locales · 5 usuarios</li>
-              <li><i class="fa-solid fa-check"></i>Estadísticas de consumo y rentabilidad</li>
-              <li><i class="fa-solid fa-check"></i>Inventario con mermas y recetas</li>
-            </ul>
-            <div class="plan-cta">
-              <a href="contacto.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Empezar</a>
-              <a href="login.html" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Probar demo</a>
-            </div>
-          </div>
-
-          <!-- Premium -->
-          <div class="plan-card">
-            <h3 class="plan-title">Premium</h3>
-            <p class="plan-desc">Multi-sucursal, integraciones y soporte prioritario.</p>
-            <div class="plan-price">
-              <span class="currency">S/</span><span class="amount">240</span><span class="note">/mes · sin IGV</span>
-            </div>
-            <ul class="plan-features">
-              <li><i class="fa-solid fa-check"></i>Multi-sucursal · 8 usuarios</li>
-              <li><i class="fa-solid fa-check"></i>Integración con impresoras y contabilidad</li>
-              <li><i class="fa-solid fa-check"></i>Dashboards ejecutivos</li>
-              <li><i class="fa-solid fa-check"></i>Roles y auditoría</li>
-              <li><i class="fa-solid fa-check"></i>Soporte prioritario</li>
-            </ul>
-            <div class="plan-cta">
-              <a href="contacto.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Empezar</a>
-              <a href="login.html" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Probar demo</a>
-            </div>
-          </div>
-        </div>
+        <div class="pricing-grid" id="pricingGrid"></div>
 
         <!-- Comparativa rápida -->
         <div class="compare" aria-label="Comparativa de planes">
-          <table>
-            <thead>
-              <tr>
-                <th>Características</th>
-                <th>Básico</th>
-                <th>Estándar</th>
-                <th>Pro</th>
-                <th>Premium</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Pedidos por QR</td>
-                <td class="na">—</td><td><i class="fa-solid fa-check"></i></td><td><i class="fa-solid fa-check"></i></td><td><i class="fa-solid fa-check"></i></td>
-              </tr>
-              <tr>
-                <td>KDS (Cocina)</td>
-                <td class="na">—</td><td>Básico</td><td>Avanzado</td><td>Avanzado</td>
-              </tr>
-              <tr>
-                <td>Locales / Usuarios</td>
-                <td>1 / 2</td><td>1 / 3</td><td>2 / 5</td><td>Multi / 8</td>
-              </tr>
-              <tr>
-                <td>Inventario</td>
-                <td>Esencial</td><td>Esencial</td><td>Recetas + mermas</td><td>Recetas + mermas</td>
-              </tr>
-              <tr>
-                <td>Reportes / Estadísticas</td>
-                <td>Ventas</td><td>Ventas + diarios</td><td>Consumo + rentabilidad</td><td>Dashboards ejecutivos</td>
-              </tr>
-              <tr>
-                <td>Soporte</td>
-                <td>Chat (horario)</td><td>Chat + email</td><td>Prioridad media</td><td>Prioritario</td>
-              </tr>
-            </tbody>
-          </table>
+          <table id="pricingCompareTable"></table>
         </div>
-
       </div>
     </section>
+
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -246,6 +132,170 @@
         </div>
       </div>
     </footer>
+
+    <script src="https://kit.fontawesome.com/a2e0e6ad54.js" crossorigin="anonymous"></script>
+    <script>
+    const PRICING_API = "../controllers/PricingSimpleController.php";
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+    document.addEventListener('DOMContentLoaded', loadPricing);
+
+    async function loadPricing() {
+      await loadRange();
+      const plans = await loadPlans();
+      if (plans.length) {
+        renderPlans(plans);
+        renderCompareFromPlans(plans);
+        animateCards();
+      } else {
+        document.getElementById('pricingGrid').innerHTML =
+          `<div class="empty-state">No se encontraron planes.</div>`;
+      }
+    }
+
+    async function loadRange() {
+      try {
+        const r = await fetch(`${PRICING_API}?action=rango`, {cache:'no-store'});
+        const jr = await r.json();
+        const rangeEl = document.getElementById("priceRange");
+        if (jr && jr.success && jr.data && rangeEl) {
+          const { min_price, max_price } = jr.data;
+          rangeEl.innerHTML = `Desde <strong>S/${Number(min_price).toFixed(0)}</strong> hasta <strong>S/${Number(max_price).toFixed(0)}</strong> (sin IGV)`;
+        }
+      } catch (e) { console.warn('rango:', e); }
+    }
+
+    async function loadPlans() {
+      try {
+        const res = await fetch(`${PRICING_API}?action=listar`, {cache:'no-store'});
+        const json = await res.json();
+        // Soporta {success:true,data:[...]} o respuesta directa [...]
+        if (Array.isArray(json)) return json;
+        if (json && json.success && Array.isArray(json.data)) return json.data;
+      } catch(e) {
+        console.error('listar:', e);
+      }
+      return [];
+    }
+
+    function renderPlans(plans) {
+      const grid = document.getElementById('pricingGrid');
+      grid.innerHTML = "";
+      plans.forEach(p => {
+        const badge = (Number(p.is_featured) === 1 && p.badge_text)
+          ? `<span class="plan-badge">${esc(p.badge_text)}</span>` : '';
+
+        const featuredClass = Number(p.is_featured) === 1 ? ' plan--pro' : '';
+        const feats = Array.isArray(p.features) ? p.features : [];
+        const featsHTML = feats.map(f => `<li><i class="fa-solid fa-check"></i>${esc(f)}</li>`).join('');
+
+        const card = document.createElement('div');
+        card.className = `plan-card${featuredClass}`;
+        card.innerHTML = `
+          ${badge}
+          <h3 class="plan-title">${esc(p.name)}</h3>
+          <p class="plan-desc">${esc(p.description)}</p>
+          <div class="plan-price">
+            <span class="currency">S/</span>
+            <span class="amount">${Number(p.price_amount).toFixed(0)}</span>
+            <span class="note">${esc(p.period_note || '/mes · sin IGV')}</span>
+          </div>
+          <ul class="plan-features">
+            ${featsHTML}
+          </ul>
+          <div class="plan-cta">
+            <a href="${esc(p.cta1_url || 'contacto.html')}" class="btn btn-primary">
+              <i class="fa-solid fa-rocket"></i> ${esc(p.cta1_label || 'Empezar')}
+            </a>
+            <a href="${esc(p.cta2_url || 'login.html')}" class="btn btn-outline">
+              <i class="fa-regular fa-eye"></i> ${esc(p.cta2_label || 'Probar demo')}
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    /**
+     * Construye la comparativa a partir de la MISMA tabla.
+     * Reglas:
+     * - Si una característica tiene formato "Clave: Valor", en la tabla se muestra ese Valor.
+     * - Si no tiene ":", se marca ✓ para ese plan.
+     * - Si no existe en un plan, se muestra "—".
+     */
+    function renderCompareFromPlans(plans) {
+      // 1) Recolecta el conjunto de claves
+      const featureMapPerPlan = new Map(); // slug -> Map<key, valueOrTrue>
+      const featureKeys = new Set();
+
+      plans.forEach(p => {
+        const map = new Map();
+        (p.features || []).forEach(raw => {
+          if (typeof raw !== 'string') return;
+          const idx = raw.indexOf(':');
+          if (idx > -1) {
+            const key = raw.slice(0, idx).trim();
+            const val = raw.slice(idx+1).trim();
+            if (key) {
+              map.set(key, val || true);
+              featureKeys.add(key);
+            }
+          } else {
+            const key = raw.trim();
+            if (key) {
+              map.set(key, true);
+              featureKeys.add(key);
+            }
+          }
+        });
+        featureMapPerPlan.set(p.slug || p.id || p.name, { plan:p, features: map });
+      });
+
+      // 2) Construye tabla
+      const table = document.getElementById('pricingCompareTable');
+      if (!table) return;
+
+      // Header
+      const thead = `
+        <thead>
+          <tr>
+            <th>Características</th>
+            ${plans.map(p => `<th>${esc(p.name)}</th>`).join('')}
+          </tr>
+        </thead>
+      `;
+
+      // Body
+      const rowsHTML = Array.from(featureKeys).map(key => {
+        const cells = plans.map(p => {
+          const rec = featureMapPerPlan.get(p.slug || p.id || p.name);
+          const val = rec?.features.get(key);
+          if (val === true) {
+            return `<td><i class="fa-solid fa-check"></i></td>`;
+          } else if (val) {
+            return `<td>${esc(String(val))}</td>`;
+          } else {
+            return `<td class="na">—</td>`;
+          }
+        }).join('');
+        return `<tr><td>${esc(key)}</td>${cells}</tr>`;
+      }).join('');
+
+      table.innerHTML = thead + `<tbody>${rowsHTML}</tbody>`;
+    }
+
+    function animateCards() {
+      document.querySelectorAll('.plan-card').forEach((card, i)=>{
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(10px)';
+        setTimeout(()=>{
+          card.style.transition = 'opacity .35s ease, transform .35s ease';
+          card.style.opacity = 1;
+          card.style.transform = 'translateY(0)';
+        }, 120 * i);
+      });
+    }
+    </script>
 
     <script>
       // (Opcional) Pequeño efecto de entrada para los cards
