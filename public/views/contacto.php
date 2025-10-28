@@ -724,16 +724,11 @@
     </style>
 </head>
 <body>
-  <!-- Topbar -->
-  <div class="topbar" role="region" aria-label="Ingreso de tenant">
-    <div class="container topbar-inner">
-      <span class="topbar-text">SI YA ERES SOCIO, INGRESA CON TU TENANT</span>
-      <a href="login.html" class="topbar-cta">INGRESA TU ID</a>
-    </div>
-  </div>
+    <!-- Topbar -->
+     <?php include_once '../partials/topbar.php'; ?>
 
-  <!-- Header -->
-   <?php include('../partials/header.php') ?>
+    <!-- Header -->
+    <?php include_once  '../partials/header.php'; ?>
     <!-- Hero Section -->
     <section class="page-hero">
         <div class="container">

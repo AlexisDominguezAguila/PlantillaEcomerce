@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tec RIVERA - Catálogo de Productos</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../assets/css/global.css" />
-    <link rel="stylesheet" href="../assets/css/header.css" />
-    <link rel="stylesheet" href="../assets/css/footer.css" />
-    <link rel="stylesheet" href="../assets/css/productos.css" />
 
-    
+    <link rel="stylesheet" href="../assets/css/global.css" />
+    <link rel="stylesheet" href="../assets/css/productos.css" />
+    <link rel="stylesheet" href="../assets/css/header.css" />
     <!-- Boxicons -->
     <link
       rel="stylesheet"
@@ -20,48 +17,10 @@
   </head>
   <body>
     <!-- Topbar -->
-    <div class="topbar" role="region" aria-label="Ingreso de tenant">
-      <div class="container topbar-inner">
-        <span class="topbar-text">
-          SI YA ERES SOCIO, INGRESA CON TU TENANT
-        </span>
-        <a href="login.html" class="topbar-cta">INGRESA TU ID</a>
-      </div>
-    </div>
+     <?php include_once '../partials/topbar.php'; ?>
+
     <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <nav class="nav">
-          <!-- Logo -->
-          <a href="../../index.php" class="logo">
-            <span class="logo-icon">
-              <img
-                src="../assets/images/iconoTEC.png"
-                alt="iconoTEC"
-                style="width: 30px; height: 30px"
-              />
-            </span>
-            <span class="logo-text">TEC RIVERA</span>
-          </a>
-
-          <!-- Menú principal -->
-          <ul class="nav-menu" id="navMenu">
-            <li><a href="../../index.php">Inicio</a></li>
-            <li><a class="active" href="productos.php">Productos</a></li>
-            <li><a href="servicios.php">Servicios</a></li>
-            <li><a href="restaurantes.php">Restaurantes</a></li>
-            <li><a href="contacto.php">Contacto</a></li>
-          </ul>
-
-
-
-          <!-- Botón móvil -->
-          <button class="mobile-toggle" id="mobileToggle">
-            <span></span><span></span><span></span>
-          </button>
-        </nav>
-      </div>
-    </header>
+    <?php include_once  '../partials/header.php'; ?>
 
     <!-- Hero Slider -->
     <section class="hero-slider">
@@ -83,6 +42,7 @@
         </div>
       </div>
     </section>
+    <!-- Navegación secundaria -->
           <!-- Botones principales -->
           <div class="nav-actions">
             <li class="nav-select">
@@ -588,91 +548,7 @@
 
 
     <!-- FOOTER -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <!-- LOGO / DESCRIPCIÓN -->
-          <div class="footer-column">
-            <div class="footer-logo">
-              <span class="logo-icon">
-                <img
-                  src="../assets/images/iconoTEC.png"
-                  alt="iconoTEC"
-                  style="width: 30px; height: 30px"
-                />
-              </span>
-              <span class="logo-text">TEC RIVERA</span>
-            </div>
-            <p class="footer-description">
-              Soluciones tecnológicas integrales para empresas que buscan
-              innovar y crecer.
-            </p>
-            <div class="social-links">
-              <a
-                href="https://www.facebook.com/multi.per.5"
-                aria-label="Facebook"
-                ><i class="bx bxl-facebook"></i
-              ></a>
-              <a
-                href="https://www.instagram.com/tecrivera_peru?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                aria-label="Instagram"
-                ><i class="bx bxl-instagram"></i
-              ></a>
-            </div>
-          </div>
-
-          <!-- 🔹 Agrupación nueva de columnas -->
-          <div class="footer-columns-wrapper">
-            <div class="footer-column">
-              <h4>Productos</h4>
-              <ul>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Servidores</a></li>
-                <li><a href="#">Networking</a></li>
-                <li><a href="#">Seguridad</a></li>
-                <li><a href="#">Accesorios</a></li>
-              </ul>
-            </div>
-
-            <div class="footer-column">
-              <h4>Servicios</h4>
-              <ul>
-                <li><a href="#">Análisis de Datos</a></li>
-                <li><a href="#">Punto de Venta</a></li>
-                <li><a href="#">Soporte Técnico</a></li>
-                <li><a href="#">Generación de Reportes</a></li>
-                <li><a href="#">Sistema de Restaurantes</a></li>
-              </ul>
-            </div>
-
-            <div class="footer-column">
-              <h4>Empresa</h4>
-              <ul>
-                <li><a href="#">Nosotros</a></li>
-                <li><a href="#">Casos de Éxito</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Carreras</a></li>
-                <li><a href="#">Contacto</a></li>
-              </ul>
-            </div>
-
-            <div class="footer-column">
-              <h4>Legal</h4>
-              <ul>
-                <li><a href="#">Privacidad</a></li>
-                <li><a href="#">Términos</a></li>
-                <li><a href="#">Cookies</a></li>
-                <li><a href="#">Licencias</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer-bottom">
-          <p>&copy; 2025 TEC RIVERA. Todos los derechos reservados.</p>
-        </div>
-      </div>
-    </footer>
+    <?php include_once  '../partials/footer.php'; ?>  
     <script src="../assets/js/home.js"></script>
     <script src="../assets/js/productos.js"></script>
   </body>

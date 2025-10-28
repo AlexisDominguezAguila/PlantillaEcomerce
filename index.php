@@ -25,43 +25,43 @@
   </head>
   <body>
     <!-- Topbar -->
-    <div class="topbar" role="region" aria-label="Ingreso de tenant">
-      <div class="container topbar-inner">
-        <span class="topbar-text">
+    <div class="xr-topbar" role="region" aria-label="Ingreso de tenant">
+      <div class="xr-topbar-inner">
+        <span class="xr-topbar-text">
           SI YA ERES SOCIO, INGRESA CON TU TENANT
         </span>
-        <a href="public/views/login.html" class="topbar-cta">INGRESA TU ID</a>
+        <a href="#" class="xr-topbar-cta">INGRESA TU ID</a>
       </div>
     </div>
+
     <!-- HEADER -->
-    <header class="header">
-      <div class="container">
-        <nav class="nav">
-          <a href="index.html" class="logo">
-            <span class="logo-icon">
-              <img
-                src="public/assets/images/iconoTEC.png"
-                alt="iconoTEC"
-                style="width: 30px; height: 30px"
-              />
+    <header class="xr-header">
+      <div class="xr-container">
+        <nav class="xr-nav">
+          <a href="../../index.php" class="xr-logo">
+            <span class="xr-logo-icon">
+              <img src="public/assets/images/iconoTEC.png" alt="iconoTEC" style="width:30px;height:30px" />
             </span>
-            <span class="logo-text">TEC RIVERA</span>
+            <span class="xr-logo-text">TEC RIVERA</span>
           </a>
 
-          <ul class="nav-menu" id="navMenu">
-            <li><a class="active" href="#">Inicio</a></li>
-            <li><a href="public/views/productos.php">Productos</a></li>
-            <li><a href="public/views/servicios.php">Servicios</a></li>
-            <li><a href="public/views/restaurantes.php">Restaurantes</a></li>
-            <li><a href="public/views/contacto.php">Contacto</a></li>
-
+          <ul class="xr-nav-menu" id="navMenu">
+            <li><a class="active" href="index.php">Inicio</a></li>
+            <li><a  href="public/views/productos.php">Productos</a></li>
+            <li><a  href="public/views/servicios.php">Servicios</a></li>
+            <li><a  href="public/views/restaurantes.php">Restaurantes</a></li>
+            <li><a  href="public/views/contacto.php">Contacto</a></li>
           </ul>
-          <button class="mobile-toggle" id="mobileToggle">
+
+          <button class="xr-mobile-toggle" id="mobileToggle">
             <span></span><span></span><span></span>
           </button>
         </nav>
       </div>
     </header>
+
+
+
     <!-- HERO -->
     <section class="hero">
       <div class="container hero-inner">

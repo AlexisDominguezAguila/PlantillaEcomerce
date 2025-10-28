@@ -8,17 +8,17 @@ function is_active($files) {
   return in_array($current_page, (array)$files, true) ? 'active' : '';
 }
 ?>
-<header class="header">
-  <div class="container">
-    <nav class="nav">
-      <a href="../../index.php" class="logo">
-        <span class="logo-icon">
+<header class="xr-header">
+  <div class="xr-container">
+    <nav class="xr-nav">
+      <a href="../../index.php" class="xr-logo">
+        <span class="xr-logo-icon">
           <img src="../assets/images/iconoTEC.png" alt="iconoTEC" style="width:30px;height:30px" />
         </span>
-        <span class="logo-text">TEC RIVERA</span>
+        <span class="xr-logo-text">TEC RIVERA</span>
       </a>
 
-      <ul class="nav-menu" id="navMenu">
+      <ul class="xr-nav-menu" id="navMenu">
         <li><a class="<?= is_active(['index.php']) ?>"      href="../../index.php">Inicio</a></li>
         <li><a class="<?= is_active(['productos.php']) ?>"  href="productos.php">Productos</a></li>
         <li><a class="<?= is_active(['servicios.php']) ?>"  href="servicios.php">Servicios</a></li>
@@ -26,7 +26,7 @@ function is_active($files) {
         <li><a class="<?= is_active(['contacto.php']) ?>"   href="contacto.php">Contacto</a></li>
       </ul>
 
-      <button class="mobile-toggle" id="mobileToggle">
+      <button class="xr-mobile-toggle" id="mobileToggle">
         <span></span><span></span><span></span>
       </button>
     </nav>
