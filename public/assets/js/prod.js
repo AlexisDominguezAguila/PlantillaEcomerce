@@ -397,10 +397,6 @@ function renderProductGrid(list) {
 
 /* =========================================================
    CARRITO & WISHLIST
-   Requiere:
-   - FAB con ids: #fabCart, #fabWishlist, #cartCountFab, #wishCountFab
-   - Modales con ids: #cartModal, #wishlistModal, #cartModalClose, #wishlistModalClose
-   - Contenedores en modales: #cartItems, #cartTotal, #wishlistItems
 ========================================================= */
 const els = {
   // FAB

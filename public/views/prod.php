@@ -52,46 +52,45 @@
     <!-- ================ CATÁLOGO ================ -->
     <section id="catalogo" class="catalogo">
         <header id="catalogoHeader" class="catalogo-header sticky">
-        <!-- Barra de categorías: horizontal scroll + sticky -->
-        <div class="category-bar">
-            <button class="cat-scroll" id="catScrollLeft" aria-label="Desplazar categorías a la izquierda">
-            <i class="bx bx-chevron-left"></i>
-            </button>
+            <!-- Barra de categorías: horizontal scroll + sticky -->
+            <div class="category-bar">
+                <button class="cat-scroll" id="catScrollLeft" aria-label="Desplazar categorías a la izquierda">
+                <i class="bx bx-chevron-left"></i>
+                </button>
 
-            <nav id="categoryList" class="category-list scroller" aria-label="Categorías" tabindex="0">
-            <!-- cat-pill generadas por JS -->
-            </nav>
+                <nav id="categoryList" class="category-list scroller" aria-label="Categorías" tabindex="0">
+                <!-- cat-pill generadas por JS -->
+                </nav>
 
-            <button class="cat-scroll" id="catScrollRight" aria-label="Desplazar categorías a la derecha">
-            <i class="bx bx-chevron-right"></i>
-            </button>
-        </div>
-
-        <!-- Filtros (en móvil se ocultan tras hamburguesa) -->
-        <div class="catalogo-filters">
-            <button id="filterToggle" class="filter-toggle" aria-controls="filtersExtra" aria-expanded="false">
-            <i class="bx bx-slider-alt"></i> Filtros
-            </button>
-
-            <div id="filtersExtra" class="filters-extra">
-            <!-- Select de respaldo de categoría -->
-            <label for="categorySelect" class="sr-only">Categoría</label>
-            <select id="categorySelect" class="category-select" aria-label="Seleccionar categoría"></select>
-
-            <!-- Orden y vista (se pliegan en móvil) -->
-            <select id="sortSelect" class="sort-select" aria-label="Ordenar">
-                <option value="relevance">Relevancia</option>
-                <option value="price_asc">Precio: menor a mayor</option>
-                <option value="price_desc">Precio: mayor a menor</option>
-                <option value="new">Novedades</option>
-            </select>
-
-            <div class="view-switch" role="group" aria-label="Cambiar vista">
-                <button id="viewGrid" class="btn-icon is-active" aria-label="Vista grid"><i class="bx bx-grid-alt"></i></button>
-                <button id="viewList" class="btn-icon" aria-label="Vista lista"><i class="bx bx-list-ul"></i></button>
+                <button class="cat-scroll" id="catScrollRight" aria-label="Desplazar categorías a la derecha">
+                <i class="bx bx-chevron-right"></i>
+                </button>
             </div>
+                    <!-- Filtros (en móvil se ocultan tras hamburguesa) -->
+            <div class="catalogo-filters">
+                <button id="filterToggle" class="filter-toggle" aria-controls="filtersExtra" aria-expanded="false">
+                <i class="bx bx-slider-alt"></i> Filtros
+                </button>
+
+                <div id="filtersExtra" class="filters-extra">
+                    <!-- Select de respaldo de categoría -->
+                    <label for="categorySelect" class="sr-only">Categoría</label>
+                    <select id="categorySelect" class="category-select" aria-label="Seleccionar categoría"></select>
+
+                    <!-- Orden y vista (se pliegan en móvil) -->
+                    <select id="sortSelect" class="sort-select" aria-label="Ordenar">
+                        <option value="relevance">Relevancia</option>
+                        <option value="price_asc">Precio: menor a mayor</option>
+                        <option value="price_desc">Precio: mayor a menor</option>
+                        <option value="new">Novedades</option>
+                    </select>
+
+                    <div class="view-switch" role="group" aria-label="Cambiar vista">
+                        <button id="viewGrid" class="btn-icon is-active" aria-label="Vista grid"><i class="bx bx-grid-alt"></i></button>
+                        <button id="viewList" class="btn-icon" aria-label="Vista lista"><i class="bx bx-list-ul"></i></button>
+                    </div>
+                </div>
             </div>
-        </div>
         </header>
 
 
