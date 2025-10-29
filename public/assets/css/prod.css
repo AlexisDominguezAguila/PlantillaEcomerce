@@ -2,157 +2,155 @@
   /* Paleta TEC RIVERA */
   --primary-prod: #111344;
   --primary-light-prod: #1a1d5e;
-  --accent-prod: #126fa8;
+  --text-hero-prod: #d1d3e0;
   --accent-orange-prod: #fb8500;
   --accent-red-prod: #e53935;
   --white-prod: #fff;
   --text-prod: #e8e9f1;
   --text-dark: #2a2a2a;
   --shadow-hero: 0 30px 80px rgba(0, 0, 0, 0.25);
+  --sticky-top: 80px;
 }
-
-/* =========================
-   HERO 
-========================= */
+/* ==========================
+   HERO SLIDER
+========================== */
 .hero-slider {
   position: relative;
-  width: 100%;
-  min-height: clamp(340px, 46vh, 460px);
   overflow: hidden;
-  background: #000;
-  isolation: isolate;
+  height: 500px;
 }
+
+/* Fondo de video fusionado con gradiente */
 .hero-video {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: brightness(0.45) saturate(1.2);
   z-index: 0;
 }
-.hero-overlay {
+
+.hero-slider::before {
+  content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
   background: linear-gradient(
-    to bottom,
-    rgba(8, 10, 30, 0.68),
-    rgba(8, 10, 30, 0.74)
+    to right,
+    rgba(36, 36, 62, 0.85),
+    rgba(48, 43, 99, 0.75),
+    rgba(15, 12, 41, 0.85)
   );
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  pointer-events: none;
+  z-index: 1;
 }
 
-/* =========================
-   SLIDER
-========================= */
+/* Contenedor principal */
 .slider-container {
   position: relative;
+  height: 100%;
   z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: clamp(18px, 3vw, 28px);
-  height: 100%;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
 }
-.hero-content-slide {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+
+/* Track de slides */
 .slider-track {
   display: flex;
-  height: 100%;
-  transition: transform 0.6s ease;
-  will-change: transform;
+  transition: transform 0.5s ease;
+  width: 100%;
 }
-.hero-slide {
-  flex: 0 0 100%;
+
+/* Cada slide */
+.slide {
   min-width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(16px, 4vw, 36px);
+  display: flex;
   align-items: center;
-  padding: clamp(18px, 4vw, 36px);
-  color: var(--text-prod);
+  justify-content: center;
+  padding: 2rem;
 }
 
-/* =========================
-   Columna izquierda (texto)
-========================= */
-.hero-left {
+/* Layout interno del slide */
+.slide-inner {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 680px;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  gap: 2rem;
+}
+
+/* Texto */
+.slide-content {
+  flex: 1;
   text-align: left;
-  padding: 20px 40px;
+  max-width: 50%;
 }
-.hero-title {
-  font-weight: 800;
-  line-height: 1.08;
-  font-size: clamp(80px, 6vw, 60px);
-  color: #fff;
-  text-shadow: 0 6px 28px rgba(0, 0, 0, 0.28);
+
+.slide-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-hero-prod);
 }
-.hero-price {
+
+.slide-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-hero-prod);
+}
+
+.slide-content .price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--price-hero-prod);
+}
+
+/* Imagen */
+.slide-image {
+  flex: 1;
   display: flex;
-  align-items: baseline;
-  gap: 12px;
-}
-.price {
-  font-weight: 800;
-  font-size: clamp(20px, 3.4vw, 32px);
-  color: #fff;
+  justify-content: center;
+  align-items: center;
 }
 
-/* =========================
-   Columna derecha (imagen)
-========================= */
-.hero-right {
-  position: relative;
-  display: grid;
-  place-items: center;
-}
-.hero-media {
-  width: min(420px, 82%);
-  aspect-ratio: 4/3;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.28));
-}
-.hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transform: none;
-  animation: none;
+.slide-image img {
+  width: 70%;
+  max-width: 400px;
+  height: auto;
+  animation: float 4s ease-in-out infinite;
 }
 
-/* =========================
-   Controles (flechas / dots)
-========================= */
+/* Flotación suave */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Flechas */
 .slider-btn {
   position: absolute;
-  inset: 50% auto auto auto;
+  top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
-  z-index: 3;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: var(--white);
+  font-size: 3rem;
+  padding: 0.8rem 1.2rem;
   cursor: pointer;
-  transition: background 0.2s, transform 0.18s ease;
-  backdrop-filter: blur(6px);
+  transition: background 0.3s ease;
+  z-index: 3;
+  backdrop-filter: blur(10px);
 }
+
 .slider-btn:hover {
-  transform: translateY(calc(-50% - 1px));
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.3);
 }
 .slider-btn.prev {
   left: 10px;
@@ -160,65 +158,121 @@
 .slider-btn.next {
   right: 10px;
 }
-.slider-btn i {
-  font-size: 24px;
-}
 
+/* Dots */
 .slider-dots {
   position: absolute;
+  bottom: 20px;
   left: 50%;
-  bottom: 16px;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 10px;
   z-index: 3;
 }
+
 .dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transition: transform 0.18s ease, background 0.2s;
+  transition: all 0.3s ease;
 }
+
 .dot.active {
-  background: #fff;
-  transform: scale(1.15);
+  background: var(--white-prod);
+  width: 30px;
+  border-radius: 6px;
 }
 
-/* =========================
-   Responsivo
-========================= */
-@media (max-width: 900px) {
-  .hero-slide {
-    grid-template-columns: 1fr;
-    text-align: center;
+/* ==========================
+   ANIMACIÓN DE ENTRADA
+========================== */
+.hero-content-slide {
+  animation: slideInBottom 1s ease-out;
+}
+
+@keyframes slideInBottom {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
   }
-  .hero-right {
-    order: -1;
-  } /* imagen arriba */
-  .hero-media {
-    width: min(360px, 90%);
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  .slider-btn {
-    top: auto;
-    bottom: 56px;
-    transform: none;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .hero-slider {
+    height: 450px;
   }
-  .slider-btn.prev {
-    left: 14px;
+  .slide-content h2 {
+    font-size: 2rem;
   }
+  .slide-content p {
+    font-size: 1rem;
+  }
+  .slide-content .price {
+    font-size: 1.6rem;
+  }
+  .slide-inner {
+    width: 85%;
+  }
+  .slide-image img {
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    animation: float 4s ease-in-out infinite;
+  }
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 90vh;
+  }
+  .slider-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .slide-inner {
+    flex-direction: column;
+    padding-top: 60px;
+  }
+  .slide-content {
+    width: 70%;
+  }
+  .slide-content h2 {
+    font-size: 1.8rem;
+  }
+  .slide-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .slide-content .price {
+    font-size: 1.4rem;
+  }
+  .slide-image {
+    width: 60%;
+    height: auto;
+  }
+  .slide-image img {
+    width: 100%;
+    height: auto;
+    animation: float 4s ease-in-out infinite;
+  }
+  .slider-btn.prev,
   .slider-btn.next {
-    right: 14px;
+    display: none;
   }
 }
-@media (max-width: 480px) {
-  .hero-media {
-    width: 88%;
-  }
-}
-
 /* === FAB flotantes === */
 .fab-group {
   position: fixed;
@@ -394,42 +448,79 @@
     grid-column: 1 / -1;
   }
 }
+/* ====== CATALOGO ====== */
 
-/* ====== CATEGORÍAS sticky debajo del nav ====== */
-:root {
-  --sticky-top: 80px;
-} /* JS la recalcula con topbar+header reales */
+/* ===== Header sticky debajo del nav ===== */
 .catalogo-header.sticky {
   position: sticky;
   top: var(--sticky-top);
   z-index: 15;
-  background: #a71313;
+  background: var(--primary-prod);
   border-bottom: 1px solid #eceff4;
-  box-shadow: 0 4px 18px rgba(17, 19, 68, 0.04);
+  padding: 10px 20px;
 }
 
-/* Barra de categorías con scroll */
-.category-bar {
+/* ===== Toolbar en una sola línea ===== */
+.catalogo-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+/* Buscar */
+.toolbar-search {
   position: relative;
+  flex: 1 1 320px;
+  min-width: 220px;
+  max-width: 100%;
+}
+.toolbar-search i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #6b7390;
+  pointer-events: none;
+}
+#prodSearch {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px 0 34px;
+  border: 1px solid #e6e9f3;
+  border-radius: 10px;
+  background: #fff;
+  font: 500 14px/40px ui-sans-serif, system-ui, Inter, Roboto, Segoe UI,
+    sans-serif;
+}
+
+/* Píldoras: ancho controlado */
+.category-wrap {
+  flex: 0 1 clamp(320px, 38vw, 520px);
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 8px;
-  padding: 10px 0;
+  min-width: 220px;
+  overflow: hidden;
 }
 .category-list.scroller {
   display: flex;
   gap: 8px;
   overflow-x: auto;
   scroll-snap-type: x proximity;
-  scrollbar-width: thin;
-  padding: 4px 2px;
+  scrollbar-width: none;
+  padding: 2px;
+  min-width: 0;
 }
 .category-list.scroller::-webkit-scrollbar {
   height: 8px;
 }
 .category-list.scroller::-webkit-scrollbar-thumb {
-  background: #d9deea;
+  background: #18326d;
   border-radius: 999px;
 }
 
@@ -447,87 +538,121 @@
   font-size: 20px;
 }
 
-/* Píldoras */
 .cat-pill {
   scroll-snap-align: start;
+  white-space: nowrap;
+  cursor: pointer;
   border: 1px solid #e3e7f2;
   background: #fff;
   color: #111;
   padding: 8px 14px;
   border-radius: 999px;
   font: 600 13px/1 ui-sans-serif, system-ui, Inter, Roboto, Segoe UI, sans-serif;
-  white-space: nowrap;
-  cursor: pointer;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 .cat-pill:hover {
   border-color: #cfd6ea;
 }
 .cat-pill.is-active {
-  background: linear-gradient(135deg, var(--accent-prod), #2da4ff);
+  background: var(--accent-prod, #126fa8);
   border-color: transparent;
   color: #fff;
 }
 
-/* Contenedor de filtros */
-.catalogo-filters {
+/* Select + precio */
+.filters-group {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 8px 0 12px;
-  border-top: 1px dashed #eef1f7;
+  gap: 10px;
+  flex: 0 0 auto;
+  min-width: 260px;
 }
-.filter-toggle {
-  display: none; /* visible solo en móvil */
-  gap: 8px;
-  align-items: center;
+.category-select {
+  height: 40px;
+  padding: 0 12px;
   border: 1px solid #e6e9f3;
-  background: #fff;
-  color: #111;
-  padding: 8px 12px;
   border-radius: 10px;
-  cursor: pointer;
+  background: #fff;
 }
-.filters-extra {
+.price-filter {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.category-select,
-.sort-select {
+  gap: 6px;
+  white-space: nowrap;
   border: 1px solid #e6e9f3;
   border-radius: 10px;
-  padding: 8px 12px;
+  padding: 6px 10px;
   background: #fff;
 }
-.view-switch .btn-icon {
-  width: 38px;
-  height: 38px;
+.price-filter .pf-label {
+  color: #4b5170;
+  font-weight: 600;
+}
+.price-filter input {
+  width: 88px;
+  height: 28px;
   border: 1px solid #e6e9f3;
-  border-radius: 10px;
-  background: #fff;
-  cursor: pointer;
+  border-radius: 8px;
+  padding: 0 8px;
+  font: 500 13px/28px ui-sans-serif, system-ui, Inter, Roboto, Segoe UI,
+    sans-serif;
 }
-.view-switch .btn-icon.is-active {
-  border-color: var(--accent-prod);
+.price-filter .pf-sep {
+  color: #98a0be;
 }
 
-/* === Móvil: solo categorías visibles, resto bajo hamburguesa === */
+/* Hamburguesa (solo móvil) */
+.toolbar-more {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e6e9f3;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  place-items: center;
+}
+.toolbar-more i {
+  font-size: 20px;
+}
+
+/* Accesibilidad sr-only */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
-  .filter-toggle {
-    display: inline-flex;
+  .catalogo-toolbar {
+    flex-wrap: wrap;
+    row-gap: 8px;
   }
-  .filters-extra {
+  .category-wrap,
+  .filters-group {
     display: none;
     width: 100%;
-    padding-top: 8px;
   }
-  .filters-extra.is-open {
+  .toolbar-more {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+  }
+
+  /* Al abrir hamburguesa: mostramos categorías y filtros debajo en la misma sección sticky */
+  .catalogo-header.show-extra .category-wrap,
+  .catalogo-header.show-extra .filters-group {
+    display: grid;
+    grid-auto-flow: row;
+    width: 100%;
+  }
+  .category-wrap {
+    grid-template-columns: auto 1fr auto;
   }
 }
 
@@ -644,4 +769,934 @@
   color: #4a539c;
   padding: 6px 10px;
   border-radius: 999px;
+}
+/* ================================
+  CHECKOUT — Estilos completos y responsivos (scoped)
+   ================================ */
+/* =======================================================
+   CHECKOUT (PASOS 1–4) — Estilo Uiverse adaptado
+   Estructura existente: .steps, .step-panel, #checkoutSummary,
+   .payment-methods, #cardForm, .receipt-box, .steps-actions
+   ======================================================= */
+
+/* Caja del modal de checkout con sombra y radios “Uiverse” */
+#checkoutModal .modal-content {
+  background: #ffffff;
+  color: #111344;
+  border-radius: 26px; /* más suave */
+  overflow: hidden;
+  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01),
+    0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09),
+    0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor del wizard */
+#checkoutModal .checkout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* =========================================
+   Encabezado de pasos (píldoras)
+   ========================================= */
+#checkoutModal .steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  padding: 12px;
+  border-bottom: 1px solid #eceff3;
+}
+
+#checkoutModal .step-indicator {
+  text-align: center;
+  padding: 10px 8px;
+  border-radius: 12px;
+  background: #f2f4f7;
+  color: #475467;
+  font-weight: 800;
+  border: 1px solid #e3e6ef;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#checkoutModal .step-indicator.active {
+  background: #111344;
+  color: #fff;
+  border-color: #111344;
+}
+#checkoutModal .step-indicator.done {
+  background: #e8efff;
+  color: #111344;
+  border-color: #c7d4ff;
+}
+
+/* =========================================
+   Cuerpo / tipografía
+   ========================================= */
+#checkoutModal .steps-body {
+  padding: 16px 18px 0;
+  min-height: 320px;
+}
+#checkoutModal .step-panel.hidden {
+  display: none;
+}
+#checkoutModal h2 {
+  margin: 6px 0 14px;
+  font-size: 1.6rem;
+  line-height: 1.25;
+  color: #0f172a;
+  font-weight: 900;
+}
+#checkoutModal p,
+#checkoutModal label,
+#checkoutModal span,
+#checkoutModal li,
+#checkoutModal div {
+  color: #111;
+}
+
+#checkoutModal .hint {
+  color: #8b8e98;
+  font-size: 0.92rem;
+}
+
+/* =======================================================
+   PASO 1 — RESUMEN
+   ======================================================= */
+#checkoutModal #checkoutSummary {
+  display: grid;
+  gap: 10px;
+}
+#checkoutModal .co-items {
+  display: grid;
+  gap: 10px;
+}
+
+/* Fila: nombre — qty — precio */
+#checkoutModal .co-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid #e9e9f1;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+#checkoutModal .co-item-info {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 0;
+}
+#checkoutModal .co-name {
+  font-weight: 800;
+  color: #0a0c2a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#checkoutModal .co-qty {
+  color: #667085;
+  font-size: 0.95rem;
+  background: #f2f2f2;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+#checkoutModal .co-price {
+  font-weight: 900;
+  color: #0a0c2a;
+}
+
+/* Total */
+#checkoutModal .co-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  margin-top: 4px;
+  border-top: 1px dashed #d8dde7;
+  font-size: 1.1rem;
+}
+#checkoutModal .co-total span {
+  color: #555;
+}
+#checkoutModal .co-total strong {
+  color: #0a0c2a;
+}
+
+/* =======================================================
+   PASO 2 — MÉTODOS DE PAGO (cards + radios ocultos)
+   ======================================================= */
+#checkoutModal .payment-methods {
+  --card-gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--card-gap);
+  margin-top: 6px;
+}
+
+/* Cada método es un <label> con input + .payment-card-body */
+#checkoutModal .payment-card {
+  display: grid;
+  grid-template-columns: 22px 1fr; /* espacio para el radio */
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e3e6ef;
+  border-radius: 12px;
+  padding: 12px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+#checkoutModal .payment-card:hover {
+  border-color: #b9c5ff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+/* Oculta visualmente el radio, mantenemos accesibilidad */
+#checkoutModal .payment-card input {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #c2c7d6;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+#checkoutModal .payment-card input:checked {
+  border-color: #111344;
+}
+#checkoutModal .payment-card input:checked::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: #111344;
+  border-radius: 50%;
+}
+
+/* Texto interno */
+#checkoutModal .payment-card .payment-card-body .title {
+  font-weight: 900;
+  color: #111;
+}
+#checkoutModal .payment-card .payment-card-body .desc {
+  color: #667085;
+  font-size: 0.95rem;
+}
+
+/* Estado activo (fallback sin :has()) */
+#checkoutModal .payment-card input:checked + .payment-card-body .title {
+  color: #111344;
+}
+#checkoutModal .payment-card input:checked ~ .payment-card-body {
+  outline: 2px solid #b9c5ff;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* =======================================================
+   PASO 3 — DETALLES (todas las variantes)
+   ======================================================= */
+
+/* (A) Tarjeta — ya estabas usando #cardForm, lo maquillamos Uiverse */
+#checkoutModal #cardForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  max-width: 100%;
+}
+#checkoutModal #cardForm .form-row {
+  display: grid;
+  grid-template-columns: 4fr 2fr; /* MM/AA : CVV */
+  gap: 15px;
+}
+#checkoutModal #cardForm .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#checkoutModal #cardForm .form-field label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8b8e98;
+  letter-spacing: 0.2px;
+}
+#checkoutModal #cardForm .form-field input,
+#checkoutModal #cardForm .form-field select,
+#checkoutModal #cardForm .form-field textarea {
+  height: 44px;
+  padding: 0 0 0 16px;
+  border-radius: 9px;
+  outline: none;
+  background-color: #f2f2f2;
+  border: 1px solid transparent;
+  color: #111;
+  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+#checkoutModal #cardForm .form-field input::placeholder {
+  color: #9aa0a6;
+}
+#checkoutModal #cardForm .form-field input:focus,
+#checkoutModal #cardForm .form-field select:focus,
+#checkoutModal #cardForm .form-field textarea:focus {
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 2px #242424;
+  background-color: #fff;
+}
+
+/* Botón pagar (gradiente Uiverse) */
+#checkoutModal #payCardBtn {
+  height: 55px;
+  border-radius: 11px;
+  border: 0;
+  outline: none;
+  color: #fff;
+  font-size: 13px !important;
+  font-weight: 800;
+  background: linear-gradient(180deg, #363636 0%, #1b1b1b 50%, #000000 100%);
+  box-shadow: 0 0 0 0 #ffffff, 0 0 0 0 #000000;
+  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+#checkoutModal #payCardBtn:hover {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0000003a;
+}
+
+/* Reset numérico si cambias tipos */
+#checkoutModal #cardForm .form-field input::-webkit-outer-spin-button,
+#checkoutModal #cardForm .form-field input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#checkoutModal #cardForm .form-field input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* (B) Wallet (Yape/Plin) */
+#checkoutModal .wallet-chooser {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 14px;
+  margin: 6px 0 12px;
+}
+#checkoutModal .wallet-chooser label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f2f2f2;
+  font-weight: 700;
+}
+#checkoutModal .wallet-box {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 16px;
+  align-items: center;
+}
+#checkoutModal .wallet-info div {
+  margin-bottom: 4px;
+}
+#checkoutModal .wallet-qr img {
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  border: 1px solid #e3e6ef;
+  background: #fff;
+}
+
+/* (C) Transferencias */
+#checkoutModal .bank-card {
+  border: 1px solid #e3e6ef;
+  border-radius: 12px;
+  padding: 12px;
+  background: #ffffff;
+  margin-bottom: 10px;
+}
+#checkoutModal .bank-title {
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+#checkoutModal .voucher {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  background: #f2f2f2;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+/* (D) WhatsApp */
+#checkoutModal .wa-wrap p {
+  margin-bottom: 12px;
+}
+
+/* =======================================================
+   PASO 4 — CONFIRMACIÓN
+   ======================================================= */
+#checkoutModal .receipt-box {
+  margin-top: 12px;
+  border: 1px dashed #b9c5ff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f7f9ff;
+}
+
+/* =========================================
+   Encabezado de pasos (píldoras) - AHORA 6 PASOS
+   ========================================= */
+#checkoutModal .steps {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  padding: 12px;
+  border-bottom: 1px solid #eceff3;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+#checkoutModal .step-indicator {
+  text-align: center;
+  padding: 10px 6px;
+  border-radius: 12px;
+  background: #f2f4f7;
+  color: #475467;
+  font-weight: 800;
+  border: 1px solid #e3e6ef;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 100px;
+}
+#checkoutModal .step-indicator.active {
+  background: #111344;
+  color: #fff;
+  border-color: #111344;
+}
+#checkoutModal .step-indicator.done {
+  background: #e8efff;
+  color: #111344;
+  border-color: #c7d4ff;
+  position: relative;
+}
+#checkoutModal .step-indicator.done::after {
+  content: "✓";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+}
+
+/* =======================================================
+   Footer de acciones (pegajoso) + botones
+   ======================================================= */
+#checkoutModal .steps-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  background: #fff;
+  border-top: 1px solid #eceff3;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Botones “Uiverse” */
+#checkoutModal .steps-actions .btn-primary {
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 11px;
+  border: 0;
+  outline: none;
+  color: #fff;
+  font-weight: 900;
+  background: linear-gradient(180deg, #111344 0%, #111344 50%, #111344 100%);
+  transition: box-shadow 0.25s ease;
+}
+#checkoutModal .steps-actions .btn-primary:hover {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0000003a;
+}
+
+#checkoutModal .steps-actions .btn-secondary {
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 11px;
+  border: 0;
+  outline: none;
+  background: #f2f2f2;
+  color: #111;
+  font-weight: 900;
+  transition: background 0.2s ease;
+}
+#checkoutModal .steps-actions .btn-secondary:hover {
+  background: #e7e7e7;
+}
+
+/* =======================================================
+   Responsive
+   ======================================================= */
+@media (max-width: 900px) {
+  #checkoutModal .wallet-box {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  #checkoutModal .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #checkoutModal .co-item {
+    grid-template-columns: 1fr auto;
+  }
+  #checkoutModal .co-price {
+    justify-self: end;
+  }
+}
+@media (max-width: 520px) {
+  #checkoutModal #cardForm .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+/* =========================================================
+   DETALLE DE PRODUCTO (sin Tailwind) — drop-in para prod.css
+   No requiere tocar tu HTML.
+========================================================= */
+:root {
+  --tr-brand: #111344;
+  --tr-accent: #126fa8;
+  --tr-accent-2: #1b69c1;
+  --tr-muted: #6a6f85;
+  --tr-surface: #fff;
+  --tr-soft: #f7f9ff;
+  --tr-border: #e8ecf6;
+}
+
+/* Visibilidad / animación */
+.hidden {
+  display: none !important;
+}
+@keyframes trFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+#productDetailSection:not(.hidden) {
+  animation: trFadeIn 0.28s ease both;
+}
+
+/* --------- Utilidades (shim de las que usas en el HTML) --------- */
+.max-w-7xl {
+  max-width: 1200px;
+}
+.mx-auto {
+  margin-inline: auto;
+}
+.px-4 {
+  padding-inline: 1rem;
+}
+.py-8 {
+  padding-block: 2rem;
+}
+.mb-12 {
+  margin-bottom: 3rem;
+}
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+.pt-6 {
+  padding-top: 1.5rem;
+}
+
+.grid {
+  display: grid;
+}
+.grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+.gap-8 {
+  gap: 2rem;
+}
+/* clases con ":" se escapan con backslash */
+.lg\:grid-cols-2 {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 992px) {
+  .lg\:grid-cols-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.bg-white {
+  background: #fff;
+}
+.bg-blue-50 {
+  background: #f0f6ff;
+}
+.rounded-2xl {
+  border-radius: 20px;
+}
+.rounded-xl {
+  border-radius: 16px;
+}
+.rounded-lg {
+  border-radius: 12px;
+}
+.shadow-lg {
+  box-shadow: 0 18px 40px rgba(17, 19, 68, 0.08);
+}
+.p-6 {
+  padding: 1.5rem;
+}
+
+.text-sm {
+  font-size: 0.9rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+}
+.font-medium {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+.text-gray-500 {
+  color: #8a90a6;
+}
+.text-gray-600 {
+  color: #6a6f85;
+}
+.text-gray-700 {
+  color: #3d425a;
+}
+.text-gray-900 {
+  color: #12142a;
+}
+.text-green-600 {
+  color: #16a34a;
+}
+.text-black {
+  color: #121212;
+}
+
+.border {
+  border: 1px solid var(--tr-border);
+}
+.border-t {
+  border-top: 1px solid var(--tr-border);
+}
+.border-b {
+  border-bottom: 1px solid var(--tr-border);
+}
+.border-gray-300 {
+  border-color: #e3e6ef;
+}
+.border-gray-200 {
+  border-color: #ebeff7;
+}
+.border-x {
+  border-left: 1px solid var(--tr-border);
+  border-right: 1px solid var(--tr-border);
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.flex {
+  display: flex;
+}
+.items-center {
+  align-items: center;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.w-16 {
+  width: 4rem;
+}
+.text-center {
+  text-align: center;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.hover\:bg-gray-100:hover {
+  background: #f5f7fb;
+}
+
+/* --------- Estructura del detalle --------- */
+#productDetailSection {
+  background: transparent;
+}
+#productDetailSection .breadcrumb,
+#productDetailSection .text-sm.text-gray-600 {
+  color: #6a6f85;
+}
+
+/* Panel genérico del detalle (las cajas blancas) */
+#productDetailSection .panel,
+#productDetailSection .bg-white {
+  background: #fff;
+  border: 1px solid var(--tr-border);
+  border-radius: 20px;
+}
+
+/* ---------- Galería ---------- */
+#productDetailSection .product-detail-actions #fav-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e6e9f3;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(17, 19, 68, 0.08);
+}
+#productDetailSection .aspect-square {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: #f3f6ff;
+  border-radius: 16px;
+  overflow: hidden;
+}
+#main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+#prev-img,
+#next-img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid #e6e9f3;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 24px rgba(17, 19, 68, 0.08);
+  cursor: pointer;
+}
+#prev-img {
+  left: 10px;
+}
+#next-img {
+  right: 10px;
+}
+
+#thumbs {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#thumbs button {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #e3e6ef;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+#thumbs button:hover {
+  transform: translateY(-2px);
+}
+#thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Títulos / precios / bloques ---------- */
+#name {
+  font: 700 1.5rem/1.3 ui-sans-serif, system-ui, Inter, Roboto, Segoe UI,
+    sans-serif;
+  color: #14172b;
+}
+#prices {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+#prices .old {
+  color: #8a90a6;
+  text-decoration: line-through;
+  font-weight: 500;
+}
+#shipping {
+  border: 1px dashed #cfe2ff;
+  background: #f5f9ff;
+  border-radius: 14px;
+}
+#stock {
+  color: #15803d;
+  font-weight: 600;
+}
+
+#seller {
+  color: #6a6f85;
+  font-size: 0.95rem;
+}
+#specs h2,
+#related h2 {
+  margin-bottom: 1rem;
+}
+#specs p {
+  color: #3d425a;
+  line-height: 1.6;
+}
+
+/* ---------- Cantidad + botones ---------- */
+#quantity {
+  border: none;
+  outline: none;
+  background: #fff;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 600;
+  color: #12142a;
+}
+#increment,
+#decrement {
+  border: 0;
+  background: #fff;
+  cursor: pointer;
+  height: 40px;
+  min-width: 40px;
+}
+
+.btn-add-cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--tr-accent), var(--tr-accent-2));
+  box-shadow: 0 12px 30px rgba(18, 111, 168, 0.25);
+  transition: filter 0.2s ease, transform 0.06s ease;
+}
+.btn-add-cart:active {
+  transform: translateY(1px);
+}
+#checkoutBtnDetail {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--tr-border);
+  background: #12131f;
+  color: #fff;
+  font-weight: 700;
+  transition: opacity 0.2s ease, transform 0.06s ease;
+}
+#checkoutBtnDetail:hover {
+  opacity: 0.95;
+}
+#checkoutBtnDetail:active {
+  transform: translateY(1px);
+}
+
+/* ---------- Enlaces ---------- */
+#backToProducts {
+  color: var(--tr-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+#backToProducts:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Relacionados + Recomendaciones ---------- */
+#related .grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  #related .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+#recommendations {
+  margin-top: 24px;
+  border: 1px solid var(--tr-border);
+  border-radius: 20px;
+  background: #fff;
+}
+#recommendations h2 {
+  font: 700 1.25rem/1.2 ui-sans-serif, system-ui, Inter, Roboto, Segoe UI,
+    sans-serif;
+  color: #14172b;
+  margin-bottom: 12px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eef1fb;
+}
+
+/* ---------- Hero (botones dentro del slide) opcional ---------- */
+.slide-ctas .btn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.slide-ctas .btn.btn-primary {
+  color: #fff;
+  background: linear-gradient(90deg, var(--tr-accent), var(--tr-accent-2));
+  box-shadow: 0 12px 30px rgba(18, 111, 168, 0.25);
+}
+.slide-ctas .btn.btn-secondary {
+  background: #fff;
+  color: #14172b;
+  border-color: #e6e9f3;
 }
