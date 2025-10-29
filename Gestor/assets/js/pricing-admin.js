@@ -1,156 +1,143 @@
-// Igual que tu otro módulo: si no te inyectan una ruta, usa la relativa por defecto
-if (typeof window.PRICING_API === 'undefined') {
-  window.PRICING_API = "../controllers/PricingController.php";
-}
+// Path canónico (ajústalo si tu vista está en otra carpeta):
+const API_URL = (window.API_URL) || "../controllers/PricingController.php";
 
-const esc = s => String(s ?? "").replace(/[&<>"']/g, m => (
-  {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]
+const esc = s => String(s ?? '').replace(/[&<>"']/g, m => (
+  {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]
 ));
 
 let plans = [];
 let editId = null;
 
-// -------- util para leer JSON y diagnosticar 404/HTML --------
-async function fetchJson(url, opts) {
-  const res  = await fetch(url, opts);
-  const text = await res.text();
-  try {
-    return JSON.parse(text);
-  } catch {
-    throw new Error(`No recibí JSON de ${url}\nHTTP ${res.status}\n${text.slice(0,200)}`);
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   loadPlans();
-  document.getElementById('btnNewPlan')?.addEventListener('click', () => openModal());
-  document.getElementById('planForm')?.addEventListener('submit', onSubmit);
+
+  const btnNew = document.getElementById('btnNewPlan');
+  btnNew && btnNew.addEventListener('click', () => openModal());
+
+  const form = document.getElementById('planForm');
+  form && form.addEventListener('submit', onSubmit);
+
   document.getElementById('modalClose')?.addEventListener('click', closeModal);
-  document.getElementById('adminModal')?.addEventListener('click', e => {
+  document.getElementById('adminModal')?.addEventListener('click', (e)=>{
     if (e.target.id === 'adminModal') closeModal();
   });
 });
 
 async function loadPlans() {
   try {
-    const j = await fetchJson(`${window.PRICING_API}?action=listar`, { cache:'no-store' });
+    const r = await fetch(`${API_URL}?action=listar`, {cache:'no-store'});
+    const j = await r.json();
     plans = (j && j.success && Array.isArray(j.data)) ? j.data : [];
   } catch (e) {
-    console.error(e);
-    alert(e.message);
+    console.warn('No se pudo cargar:', e);
     plans = [];
   }
   renderList();
+  updateCounters();
+}
+
+function updateCounters() {
+  const total = plans.length;
+  const featured = plans.filter(p => Number(p.is_featured)===1).length;
+  document.getElementById('plansCount')?.replaceChildren(document.createTextNode(total));
+  document.getElementById('totalPlans')?.replaceChildren(document.createTextNode(total));
+  document.getElementById('featuredPlans')?.replaceChildren(document.createTextNode(featured));
+
+  const empty = document.getElementById('emptyState');
+  if (empty) empty.style.display = total === 0 ? 'block':'none';
 }
 
 function renderList() {
   const tbody = document.getElementById('plansTbody');
-  const empty = document.getElementById('emptyState');
   if (!tbody) return;
-
   tbody.innerHTML = plans.map(p => `
     <tr>
       <td>${esc(p.name)}</td>
-      <td>S/${Number(p.price_amount ?? 0).toFixed(0)}</td>
+      <td>S/${Number(p.price_amount).toFixed(0)}</td>
       <td>${esc(p.period_note || '')}</td>
       <td>${Number(p.is_featured)===1 ? '<span class="badge badge-green">Destacado</span>' : '<span class="badge">—</span>'}</td>
       <td>${esc(p.badge_text || '')}</td>
-      <td class="nowrap">${Number(p.display_order ?? 0)}</td>
       <td class="nowrap">
         <button class="btn sm" title="Subir" onclick="movePlan(${p.id}, 'up')"><i class="bx bx-chevron-up"></i></button>
         <button class="btn sm" title="Bajar" onclick="movePlan(${p.id}, 'down')"><i class="bx bx-chevron-down"></i></button>
+      </td>
+      <td class="nowrap">
         <button class="btn sm" onclick="editPlan(${p.id})"><i class="bx bx-edit"></i></button>
         <button class="btn sm danger" onclick="deletePlan(${p.id})"><i class="bx bx-trash"></i></button>
       </td>
     </tr>
   `).join('');
-
-  const isEmpty = plans.length === 0;
-  if (empty) empty.style.display = isEmpty ? 'block' : 'none';
-
-  // Counters opcionales (tu vista los define)
-  if (window.counters?.update) window.counters.update(plans);
 }
 
 function openModal(plan=null) {
   editId = plan ? Number(plan.id) : null;
   const f = document.getElementById('planForm');
-  const titleEl = document.getElementById('modalTitle');
+  if (!f) return;
   f.reset();
-
-  // hidden correcto
-  f.elements['id'].value = plan ? plan.id : "";
+  document.getElementById('modalTitle').textContent = plan ? 'Editar plan' : 'Nuevo plan';
 
   if (plan) {
-    titleEl.textContent = "Editar plan";
-    f.elements['name'].value          = plan.name || '';
-    f.elements['slug'].value          = plan.slug || '';
-    f.elements['description'].value   = plan.description || '';
-    f.elements['price_amount'].value  = plan.price_amount ?? '';
-    f.elements['period_note'].value   = plan.period_note || '/mes · sin IGV';
-    f.elements['is_featured'].checked = Number(plan.is_featured) === 1;
-    f.elements['badge_text'].value    = plan.badge_text || '';
-    f.elements['cta1_label'].value    = plan.cta1_label || 'Empezar';
-    f.elements['cta1_url'].value      = plan.cta1_url || 'contacto.html';
-    f.elements['cta2_label'].value    = plan.cta2_label || 'Probar demo';
-    f.elements['cta2_url'].value      = plan.cta2_url || 'login.html';
-    f.elements['display_order'].value = Number(plan.display_order ?? 0);
-    f.elements['features_text'].value = (Array.isArray(plan.features) ? plan.features : []).join('\n');
-  } else {
-    titleEl.textContent = "Nuevo plan";
-    const ft = document.getElementById('featuresText');
-    if (ft) ft.value = '';
+    f.id.value            = plan.id;
+    f.name.value          = plan.name || '';
+    f.slug.value          = plan.slug || '';
+    f.description.value   = plan.description || '';
+    f.price_amount.value  = plan.price_amount || '';
+    f.period_note.value   = plan.period_note || '/mes · sin IGV';
+    f.is_featured.checked = Number(plan.is_featured) === 1;
+    f.badge_text.value    = plan.badge_text || '';
+    f.cta1_label.value    = plan.cta1_label || 'Empezar';
+    f.cta1_url.value      = plan.cta1_url || 'contacto.html';
+    f.cta2_label.value    = plan.cta2_label || 'Probar demo';
+    f.cta2_url.value      = plan.cta2_url || 'login.html';
+    f.display_order.value = plan.display_order ?? 0;
+    f.features_text.value = (Array.isArray(plan.features) ? plan.features : []).join('\n');
   }
 
-  document.getElementById('adminModal').classList.add('show');
+  document.getElementById('adminModal')?.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-  document.getElementById('adminModal').classList.remove('show');
+  document.getElementById('adminModal')?.classList.remove('show');
   document.body.style.overflow = 'auto';
   editId = null;
 }
 
 function editPlan(id) {
-  const plan = plans.find(p => Number(p.id) === Number(id));
+  const plan = plans.find(p => Number(p.id)===Number(id));
   if (!plan) return;
   openModal(plan);
 }
 
 async function deletePlan(id) {
   if (!confirm('¿Eliminar este plan?')) return;
-  try {
-    const fd = new FormData(); fd.append('id', id);
-    const j = await fetchJson(`${window.PRICING_API}?action=eliminar`, { method:'POST', body: fd });
-    if (j && j.success) { await loadPlans(); alert('Eliminado'); }
-    else alert(j?.error || 'No se pudo eliminar');
-  } catch (e) {
-    console.error(e);
-    alert(e.message);
-  }
+  const fd = new FormData(); fd.append('id', id);
+  const r = await fetch(`${API_URL}?action=eliminar`, { method:'POST', body: fd });
+  const j = await r.json();
+  if (j && j.success) { await loadPlans(); alert('Eliminado'); }
+  else alert(j?.error || 'No se pudo eliminar');
 }
 
 async function movePlan(id, direction) {
-  try {
-    const fd = new FormData(); fd.append('id', id); fd.append('direction', direction);
-    const j = await fetchJson(`${window.PRICING_API}?action=move`, { method:'POST', body: fd });
-    if (j && j.success) loadPlans();
-  } catch (e) {
-    console.error(e);
-    alert(e.message);
-  }
+  const fd = new FormData(); fd.append('id', id); fd.append('direction', direction);
+  const r = await fetch(`${API_URL}?action=move`, { method:'POST', body: fd });
+  const j = await r.json();
+  if (j && j.success) loadPlans();
 }
 
 async function onSubmit(e) {
   e.preventDefault();
   const f = e.target;
-  const idVal = f.elements['id']?.value?.trim();
-  const action = idVal ? 'actualizar' : 'crear';
+  const fd = new FormData(f);
+  // normalizar checkbox
+  if (f.is_featured) {
+    if (f.is_featured.checked) fd.set('is_featured','1'); else fd.delete('is_featured');
+  }
+  const action = f.id.value ? 'actualizar' : 'crear';
 
   try {
-    const fd = new FormData(f);
-    const j = await fetchJson(`${window.PRICING_API}?action=${action}`, { method:'POST', body: fd });
+    const r = await fetch(`${API_URL}?action=${action}`, { method:'POST', body: fd });
+    const j = await r.json();
     if (j && j.success) {
       closeModal();
       await loadPlans();
@@ -158,8 +145,8 @@ async function onSubmit(e) {
     } else {
       alert(j?.error || 'Error al guardar');
     }
-  } catch (e) {
-    console.error(e);
-    alert(e.message);
+  } catch (err) {
+    console.error(err);
+    alert('Error de red');
   }
 }

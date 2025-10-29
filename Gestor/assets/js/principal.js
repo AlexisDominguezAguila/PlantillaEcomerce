@@ -79,8 +79,10 @@ function removeStoredImage() {
 async function cargarCards() {
   try {
     const res = await fetch(`${API_URL}?action=list`, { cache: "no-store" });
-    const data = await res.json();
-    cards = Array.isArray(data) ? data : [];
+    const raw = await res.json();
+    // Soporta array directo o {success:true, data:[...]}
+    const data = Array.isArray(raw) ? raw : (Array.isArray(raw?.data) ? raw.data : []);
+    cards = data;
     renderCards(cards);
   } catch (e) {
     console.error("Error listando cards:", e);
@@ -95,8 +97,8 @@ function renderCards(lista) {
   const empty = document.getElementById("emptyState");
 
   grid.innerHTML = "";
-  count.textContent = lista.length;
-  empty.style.display = (lista.length === 0) ? "block" : "none";
+  if (count) count.textContent = lista.length;
+  if (empty) empty.style.display = (lista.length === 0) ? "block" : "none";
 
   // Contadores
   const total    = lista.length;
@@ -116,8 +118,8 @@ function renderCards(lista) {
     const colorEstado = visible ? "in-stock" : "out-stock";
     const badge       = s.badge_text ? `<span class="product-badge">${escapeHTML(s.badge_text)}</span>` : "";
 
-    // Usar dataURL si viene de BD; si no, fallback a image_src (compat)
-    const imgSrc = s.image_data_url ? s.image_data_url : (s.image_src || "");
+    // Ahora el backend garantiza image_src listo para <img>
+    const imgSrc = s.image_src || "";
 
     const card = document.createElement("div");
     card.className = "product-card";
@@ -196,8 +198,6 @@ document.getElementById("serviceForm").addEventListener("submit", async (e) => {
   fd.set("is_active", chk && chk.checked ? 1 : 0);
 
   // keep_current_image:
-  // - Si se sube una nueva imagen, el handler ya puso "0"
-  // - Si usuario quitó imagen actual (removeStoredImage), también "0"
   if (removedStoredImage) fd.set("keep_current_image", "0");
 
   const action = editId ? "update" : "create";
@@ -247,7 +247,7 @@ function editarCard(id) {
   const keep = document.getElementById("keepCurrentImage");
   if (keep) keep.value = "1"; // mantener por defecto
 
-  const currentSrc = s.image_data_url ? s.image_data_url : (s.image_src || "");
+  const currentSrc = s.image_src || "";
   if (currentSrc) {
     const box = document.createElement("div");
     box.className = "image-thumb";

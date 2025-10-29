@@ -3,23 +3,25 @@ require_once __DIR__ . '/../../config/db.php'; // conexión PDO
 
 /**
  * Modelo nativo para la tabla product_cards
- * Campos: id, image_mime, image_data, image_alt, badge_text, title, description,
- *         footer_text, button_label, button_url, is_active, display_order,
- *         created_at, updated_at, (image_src opcional como compat)
+ * Tabla esperada:
+ * id, image_src (NOT NULL), image_data (filename), image_mime, image_alt, badge_text,
+ * title, description, footer_text, button_label, button_url, is_active, display_order,
+ * created_at, updated_at
  */
 class ProductCard {
     private PDO $conn;
 
     public function __construct(PDO $db) {
         $this->conn = $db;
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     /** Listado (opcionalmente solo activos) */
     public function listar(bool $soloActivos = false): array {
-        $sql = "SELECT id, image_mime, image_data, image_alt, badge_text, title, description,
+        $sql = "SELECT id, image_src, image_data, image_mime, image_alt, badge_text, title, description,
                        footer_text, button_label, button_url, is_active, display_order,
-                       created_at, updated_at, image_src
-                FROM product_cards";
+                       created_at, updated_at
+                  FROM product_cards";
         if ($soloActivos) $sql .= " WHERE is_active = 1";
         $sql .= " ORDER BY display_order ASC, id ASC";
 
@@ -31,26 +33,29 @@ class ProductCard {
     /** Obtener por ID */
     public function obtener(int $id): ?array {
         $stmt = $this->conn->prepare(
-            "SELECT id, image_mime, image_data, image_alt, badge_text, title, description,
+            "SELECT id, image_src, image_data, image_mime, image_alt, badge_text, title, description,
                     footer_text, button_label, button_url, is_active, display_order,
-                    created_at, updated_at, image_src
-             FROM product_cards WHERE id = :id"
+                    created_at, updated_at
+               FROM product_cards WHERE id = :id"
         );
         $stmt->execute([':id' => $id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row ?: null;
     }
 
-    /** Crear (sin imagen; la imagen se sube con actualizarImagen) */
+    /** Crear (incluye campos de imagen) */
     public function crear(array $data): int {
         $sql = "INSERT INTO product_cards
-                (image_alt, badge_text, title, description, footer_text,
-                 button_label, button_url, is_active, display_order)
+                (image_src, image_data, image_mime, image_alt, badge_text, title, description,
+                 footer_text, button_label, button_url, is_active, display_order, created_at, updated_at)
                 VALUES
-                (:image_alt, :badge_text, :title, :description, :footer_text,
-                 :button_label, :button_url, :is_active, :display_order)";
+                (:image_src, :image_data, :image_mime, :image_alt, :badge_text, :title, :description,
+                 :footer_text, :button_label, :button_url, :is_active, :display_order, NOW(), NOW())";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
+            ':image_src'     => ($data['image_src'] ?? '') !== null ? (string)$data['image_src'] : '',
+            ':image_data'    => $data['image_data'] ?? null,
+            ':image_mime'    => $data['image_mime'] ?? null,
             ':image_alt'     => trim($data['image_alt'] ?? 'Imagen'),
             ':badge_text'    => ($data['badge_text'] ?? null) ?: null,
             ':title'         => trim($data['title'] ?? ''),
@@ -64,21 +69,28 @@ class ProductCard {
         return (int)$this->conn->lastInsertId();
     }
 
-    /** Actualizar (metadatos; NO toca imagen) */
+    /** Actualizar (incluye campos de imagen y metadatos) */
     public function actualizar(int $id, array $data): bool {
         $sql = "UPDATE product_cards SET
-                    image_alt = :image_alt,
-                    badge_text = :badge_text,
-                    title = :title,
-                    description = :description,
-                    footer_text = :footer_text,
-                    button_label = :button_label,
-                    button_url = :button_url,
-                    is_active = :is_active,
-                    display_order = :display_order
+                    image_src     = :image_src,
+                    image_data    = :image_data,
+                    image_mime    = :image_mime,
+                    image_alt     = :image_alt,
+                    badge_text    = :badge_text,
+                    title         = :title,
+                    description   = :description,
+                    footer_text   = :footer_text,
+                    button_label  = :button_label,
+                    button_url    = :button_url,
+                    is_active     = :is_active,
+                    display_order = :display_order,
+                    updated_at    = NOW()
                 WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
+            ':image_src'     => ($data['image_src'] ?? '') !== null ? (string)$data['image_src'] : '',
+            ':image_data'    => $data['image_data'] ?? null,
+            ':image_mime'    => $data['image_mime'] ?? null,
             ':image_alt'     => trim($data['image_alt'] ?? 'Imagen'),
             ':badge_text'    => ($data['badge_text'] ?? null) ?: null,
             ':title'         => trim($data['title'] ?? ''),
@@ -90,26 +102,6 @@ class ProductCard {
             ':display_order' => (int)($data['display_order'] ?? 0),
             ':id'            => $id
         ]);
-    }
-
-    /** Actualizar SOLO la imagen (binario + mime) */
-    public function actualizarImagen(int $id, ?string $mime, ?string $blob): bool {
-        $stmt = $this->conn->prepare(
-            "UPDATE product_cards SET image_mime = :mime, image_data = :data WHERE id = :id"
-        );
-        return $stmt->execute([
-            ':mime' => $mime,
-            ':data' => $blob,
-            ':id'   => $id
-        ]);
-    }
-
-    /** Eliminar imagen (dejar NULL) */
-    public function limpiarImagen(int $id): bool {
-        $stmt = $this->conn->prepare(
-            "UPDATE product_cards SET image_mime = NULL, image_data = NULL WHERE id = :id"
-        );
-        return $stmt->execute([':id' => $id]);
     }
 
     /** Eliminar registro */
@@ -126,8 +118,7 @@ class ProductCard {
 }
 
 /**
- * Adaptador de compatibilidad para código existente que usa la clase Servicio.
- * (Mantiene compat; ignora manejo de imagen, que ahora va en image_data/image_mime)
+ * Adaptador de compatibilidad (opcional)
  */
 class ServicioCompat {
     private ProductCard $pc;
@@ -142,6 +133,9 @@ class ServicioCompat {
 
     public function crearServicio(array $data): bool {
         $mapped = [
+            'image_src'     => '',
+            'image_data'    => null,
+            'image_mime'    => null,
             'image_alt'     => $data['titulo']        ?? 'Imagen',
             'badge_text'    => $data['etiqueta']      ?? null,
             'title'         => $data['titulo']        ?? '',
@@ -161,6 +155,9 @@ class ServicioCompat {
         if ($id <= 0) return false;
 
         $mapped = [
+            'image_src'     => '',
+            'image_data'    => null,
+            'image_mime'    => null,
             'image_alt'     => $data['titulo']        ?? 'Imagen',
             'badge_text'    => $data['etiqueta']      ?? null,
             'title'         => $data['titulo']        ?? '',
