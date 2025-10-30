@@ -208,13 +208,10 @@
                     <div id="related" class="bg-white rounded-2xl shadow-lg p-6"></div>
                 </div>
         </div>
-        <!-- Recomendaciones de productos similares se mostrarán cuando esté activo el detalle de un producto -->
-        <div id="recommendations" class="bg-white rounded-2xl shadow-lg p-6">
-            <h2 class="text-xl font-bold text-gray-900 mb-6">También te puede interesar</h2>
-            <div id="recommendationGrid" class="product-grid">
+         <div id="recommendationGrid" class="product-grid">
             <!-- Cards generadas dinámicamente por JS -->
             </div>
-        </div>
+
 
     </section>
     </main>

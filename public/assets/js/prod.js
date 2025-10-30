@@ -407,42 +407,206 @@ async function handleCategoryChange(cid) {
    GRID DE PRODUCTOS
 ========================================================= */
 function productCardHTML(p) {
+  // Determinar etiquetas basadas en propiedades del producto
+  const etiquetas = [];
+  if (p.is_hot) etiquetas.push('<span class="etiqueta-hot">Hot</span>');
+  if (p.is_offer) etiquetas.push('<span class="etiqueta-oferta">Oferta</span>');
+  if (p.is_new) etiquetas.push('<span class="etiqueta-nueva">Nuevo</span>');
+
+  // Usar la segunda imagen para el hover si existe
+  const hoverImage = p.images && p.images.length > 1 ? p.images[1] : null;
+
+  // Si hay badge_text personalizado, usarlo como etiqueta adicional
+  if (p.badge_text) {
+    etiquetas.push(
+      `<span class="etiqueta-personalizada">${p.badge_text}</span>`
+    );
+  }
+
   return `
-    <article class="product-card" data-id="${p.id}">
-      <div class="product-media" data-action="open-detail">
-        <img src="${p.image}" alt="${p.name}" loading="lazy" />
-        <div class="product-actions">
-          <button class="btn-icon" data-action="add-cart" data-id="${
-            p.id
-          }" title="Agregar al carrito"><i class="bx bx-cart"></i></button>
-          <button class="btn-icon" data-action="add-wish" data-id="${
-            p.id
-          }" title="Agregar a deseos"><i class="bx bx-heart"></i></button>
-        </div>
-      </div>
-      <div class="product-body">
-        <h4 class="product-title" data-action="open-detail">${p.name}</h4>
-        <div class="product-meta">
-          <span class="product-price">${fmtMoney(p.price)}</span>
-          ${p.category ? `<span class="product-cat">${p.category}</span>` : ""}
-        </div>
-        <button class="btn btn-primary btn-block" data-action="add-cart" data-id="${
+    <article class="card-prod" data-id="${p.id}">
+      <div class="header-prod">
+        <!-- Imagen principal -->
+        <img src="${p.image}" alt="${
+    p.name
+  }" class="product-image" loading="lazy" />
+        
+        <!-- Imagen hover (si existe) -->
+        ${
+          hoverImage
+            ? `
+          <div class="hover-image">
+            <img src="${hoverImage}" alt="${p.name}" class="product-image-hover" loading="lazy" />
+          </div>
+        `
+            : ""
+        }
+        
+        <!-- Wishlist icon -->
+        <button class="wishlist-icon" data-action="add-wish" data-id="${
           p.id
-        }">
-          <i class="bx bx-cart"></i> Añadir
+        }" title="Agregar a deseos">
+          <i class="bx bx-heart"></i>
         </button>
+        
+        <!-- Etiquetas del producto -->
+        ${
+          etiquetas.length > 0
+            ? `
+          <div class="etiquetas-prod">
+            ${etiquetas.join("")}
+          </div>
+        `
+            : ""
+        }
+      </div>
+      
+      <div class="body-prod">
+        <!-- Categoría -->
+        ${
+          p.category
+            ? `
+          <div class="categoria-prod">
+            <span class="pill-prod">${p.category}</span>
+          </div>
+        `
+            : ""
+        }
+        
+        <!-- Nombre del producto -->
+        <h3 class="nombre-prod" data-action="open-detail" data-id="${p.id}">${
+    p.name
+  }</h3>
+        
+        <!-- Descripción (opcional) -->
+        ${
+          p.description
+            ? `
+          <p class="product-description">${p.description.substring(0, 80)}${
+                p.description.length > 80 ? "..." : ""
+              }</p>
+        `
+            : ""
+        }
+        
+        <!-- Precios -->
+        <div class="precios-prod">
+          <span class="precio-actual">${fmtMoney(p.price)}</span>
+        </div>
+        
+        <!-- Botones -->
+        <div class="botones-prod">
+          <button class="buy-now" data-action="add-cart" data-id="${p.id}">
+            Comprar ahora
+          </button>
+          <div class="botones-secundarios">
+            <button class="add-to-cart" data-action="add-cart" data-id="${
+              p.id
+            }">
+              <i class='bx bx-cart'></i> Agregar
+            </button>
+            <button class="view-details" data-action="open-detail" data-id="${
+              p.id
+            }">
+              <i class='bx bx-info-circle'></i> Detalles
+            </button>
+          </div>
+        </div>
       </div>
     </article>
   `;
 }
+
+// Función para renderizar la grid de productos
 function renderProductGrid(list) {
   const grid = $("#productGrid");
   if (!grid) return;
+
   if (!list || !list.length) {
     grid.innerHTML = `<div class="list-empty">No hay productos disponibles en esta categoría.</div>`;
     return;
   }
+
   grid.innerHTML = list.map(productCardHTML).join("");
+
+  // Agregar event listeners para los iconos de wishlist
+  setTimeout(() => {
+    document.querySelectorAll(".wishlist-icon").forEach((icon) => {
+      icon.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const productId = this.getAttribute("data-id");
+        const heartIcon = this.querySelector("i");
+
+        // Toggle visual
+        this.classList.toggle("active");
+        if (this.classList.contains("active")) {
+          heartIcon.className = "bx bxs-heart";
+        } else {
+          heartIcon.className = "bx bx-heart";
+        }
+
+        // Llamar a la función para manejar el wishlist
+        toggleWishlist(productId, this);
+      });
+    });
+  }, 0);
+}
+
+// Función para manejar el toggle del wishlist
+async function toggleWishlist(productId, element) {
+  try {
+    const response = await fetch(`${API_URL}?action=toggle_wish`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `product_id=${productId}`,
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+      // Revertir cambio visual si falla
+      element.classList.toggle("active");
+      const heartIcon = element.querySelector("i");
+      heartIcon.className = element.classList.contains("active")
+        ? "bx bxs-heart"
+        : "bx bx-heart";
+
+      console.error("Error al actualizar wishlist:", result.error);
+    }
+  } catch (error) {
+    console.error("Error al actualizar wishlist:", error);
+    // Revertir cambio visual
+    element.classList.toggle("active");
+    const heartIcon = element.querySelector("i");
+    heartIcon.className = element.classList.contains("active")
+      ? "bx bxs-heart"
+      : "bx bx-heart";
+  }
+}
+
+// Función para cargar y mostrar productos
+async function loadAndRenderProducts(categoryId = null) {
+  try {
+    // Mostrar loading
+    const grid = $("#productGrid");
+    if (grid) {
+      grid.innerHTML = '<div class="loading">Cargando productos...</div>';
+    }
+
+    // Obtener productos
+    const productos = await fetchProductos(categoryId);
+
+    // Renderizar grid
+    renderProductGrid(productos);
+  } catch (error) {
+    console.error("Error al cargar productos:", error);
+    const grid = $("#productGrid");
+    if (grid) {
+      grid.innerHTML = '<div class="error">Error al cargar los productos</div>';
+    }
+  }
 }
 
 /* ---------------------- Filtros y búsqueda ---------------------- */
