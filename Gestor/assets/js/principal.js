@@ -125,7 +125,7 @@ function renderCards(lista) {
     card.className = "product-card";
     card.innerHTML = `
       <div class="product-image">
-        <img src="${escapeAttr(imgSrc)}" alt="${escapeAttr(s.image_alt || "Imagen")}">
+        <img src="../..${escapeAttr(imgSrc)}" alt="${escapeAttr(s.image_alt || "Imagen")}">
         ${badge}
       </div>
       <div class="product-info">

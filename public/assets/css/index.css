@@ -367,13 +367,15 @@ section {
 
 .product-image {
   position: relative;
-  height: 220px; /* un toque más alto */
+  height: 400px; /* un toque más alto */
   overflow: hidden;
   background: #f6f8fb;
 }
 .product-image img {
-  width: 100%;
-  height: 100%;
+  width: 98%;
+  max-width: 100%;
+  height: 90%;
+  max-height: 100%;
   object-fit: cover;
   will-change: transform;
   --py: 0px;

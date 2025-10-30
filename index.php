@@ -340,198 +340,55 @@
     </footer>
 
     <script src="public/assets/js/home.js"></script>
-        <script>
-      // Ajusta la ruta según tu estructura:
-      const PUBLIC_CARDS_API = "public/controllers/IndexController.php?limit=6";
-      const MAX_SHIFT = 28; // px de desplazamiento máximo para el parallax
+  <script>
+const PUBLIC_API = "public/controllers/IndexController.php"; // ajusta a tu ruta real
 
-      /* ============ Helpers ============ */
-      const escapeHTML = (str) =>
-        String(str ?? "").replace(
-          /[&<>"']/g,
-          (m) =>
-            ({
-              "&": "&amp;",
-              "<": "&lt;",
-              ">": "&gt;",
-              '"': "&quot;",
-              "'": "&#039;",
-            }[m])
-        );
-      const escapeAttr = (str) =>
-        escapeHTML(String(str)).replace(/"/g, "&quot;");
+const esc = s => String(s ?? '').replace(/[&<>"']/g, m => (
+  {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]
+));
 
-      /* ============ UI: Cards ============ */
-      function makeCardHTML(c) {
-        const badge = c.badge_text
-          ? `<span class="product-badge">${escapeHTML(c.badge_text)}</span>`
-          : "";
-        const btnUrl =
-          c.button_url && c.button_url !== "#" ? escapeAttr(c.button_url) : "#";
-        const btn = `<button class="btn-product" onclick="if('${btnUrl}'!=='#') window.open('${btnUrl}','_blank')">
-                   ${escapeHTML(c.button_label || "Ver Detalles")}
-                 </button>`;
+async function cargarPublicCards() {
+  try {
+    const r = await fetch(`${PUBLIC_API}?limit=6`, {cache:'no-store'});
+    const data = await r.json();
+    if (!Array.isArray(data)) throw new Error('Respuesta inesperada');
 
-        return `
-      <div class="product-card">
+    const grid = document.getElementById('publicProductsGrid');
+    grid.innerHTML = '';
+
+    data.forEach(item => {
+      const badge = item.badge_text ? `<span class="product-badge">${esc(item.badge_text)}</span>` : '';
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
         <div class="product-image">
-          <img src="${escapeAttr(c.image_url)}" alt="${escapeAttr(
-          c.image_alt || "Imagen"
-        )}">
+          <img src=" public/uploads/cards/${esc(item.image_url)}" alt="${esc(item.image_alt)}">
           ${badge}
         </div>
         <div class="product-info">
-          <h3 class="product-title">${escapeHTML(c.title)}</h3>
-          <p class="product-description">${escapeHTML(c.description || "")}</p>
+          <h3 class="product-title">${esc(item.title)}</h3>
+          <p class="product-description">${esc(item.description)}</p>
           <div class="product-footer">
-            <span class="product-price">${escapeHTML(
-              c.footer_text || ""
-            )}</span>
-            ${btn}
+            <span class="product-price">${esc(item.footer_text)}</span>
+            <button class="btn-product" onclick="irA('${esc(item.button_url)}')">
+              ${esc(item.button_label)}
+            </button>
           </div>
-        </div>
-      </div>
-    `;
-      }
-
-      async function cargarPublicCards() {
-        try {
-          const res = await fetch(PUBLIC_CARDS_API, { cache: "no-store" });
-          const items = await res.json();
-          const grid = document.getElementById("publicProductsGrid");
-
-          if (!Array.isArray(items) || items.length === 0) {
-            grid.innerHTML = `
-          <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:2rem;">
-            <i class="bx bx-layer" style="font-size:2rem;"></i>
-            <h3>No hay productos publicados</h3>
-            <p>Vuelve más tarde</p>
-          </div>
-        `;
-            return;
-          }
-
-          grid.innerHTML = items.map(makeCardHTML).join("");
-
-          // Revelado para las cards recién insertadas
-          revealObserve(grid.querySelectorAll(".product-card"));
-        } catch (err) {
-          console.error("Error cargando cards públicas:", err);
-          const grid = document.getElementById("publicProductsGrid");
-          grid.innerHTML = `
-        <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:2rem;">
-          <i class="bx bx-error-circle" style="font-size:2rem;"></i>
-          <h3>Ups, no se pudo cargar</h3>
-          <p>Intenta nuevamente en unos instantes</p>
         </div>
       `;
-        }
-      }
+      grid.appendChild(card);
+    });
+  } catch (e) {
+    console.error(e);
+    document.getElementById('publicProductsGrid').innerHTML =
+      `<div class="empty-state">No se pudieron cargar los productos.</div>`;
+  }
+}
 
-      /* ============ Reveal on-scroll (stats, products, solutions, cta) ============ */
-      let _ioReveal = null;
-      function initRevealObserver() {
-        _ioReveal = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                e.target.style.transition =
-                  "transform .5s ease, opacity .5s ease";
-                e.target.style.transform = "translateY(0)";
-                e.target.style.opacity = "1";
-                _ioReveal.unobserve(e.target);
-              }
-            });
-          },
-          { threshold: 0.14, rootMargin: "0px 0px -80px 0px" }
-        );
-      }
+function irA(u){ if(!u || u==='#') return; window.open(u,'_blank'); }
 
-      function revealObserve(nodes) {
-        if (!_ioReveal) return;
-        nodes.forEach((el) => {
-          el.style.transform = "translateY(14px)";
-          el.style.opacity = "0";
-          _ioReveal.observe(el);
-        });
-      }
-
-      /* ============ CTA Parallax (usa CSS con --py y --scale) ============ */
-      function computeCtaOverscanScale() {
-        const box = document.querySelector(".cta-media");
-        if (!box) return;
-        const img = box.querySelector("img");
-        if (!img) return;
-
-        const h = box.clientHeight || 220;
-        const minScale = 1 + (2 * MAX_SHIFT) / h; // cubrir ±MAX_SHIFT
-        const cssScale =
-          parseFloat(getComputedStyle(img).getPropertyValue("--scale")) || 1.06;
-        img.style.setProperty(
-          "--scale",
-          Math.max(cssScale, minScale).toFixed(3)
-        );
-      }
-
-      function updateCtaParallax() {
-        const box = document.querySelector(".cta-media");
-        if (!box) return;
-        const img = box.querySelector("img");
-        if (!img) return;
-
-        const vh = window.innerHeight || 0;
-        const sec = box.closest(".cta");
-        const rect = sec.getBoundingClientRect();
-
-        if (rect.bottom < 0 || rect.top > vh) {
-          img.style.setProperty("--py", "0px");
-          return;
-        }
-
-        const progress = Math.max(
-          0,
-          Math.min((vh - rect.top) / (vh + rect.height), 1)
-        );
-        const centered = progress - 0.5;
-        const shift = centered * MAX_SHIFT;
-
-        img.style.setProperty("--py", `${Math.round(shift)}px`);
-      }
-
-      /* ============ Boot ============ */
-      document.addEventListener("DOMContentLoaded", () => {
-        // 1) Cargar cards
-        cargarPublicCards();
-
-        // 2) Revelado
-        initRevealObserver();
-        revealObserve(
-          document.querySelectorAll(
-            ".stat-card, .solution-feature, .solutions-image, .cta-inner"
-          )
-        );
-
-        // 3) CTA parallax (listeners)
-        let ticking = false;
-        const onScroll = () => {
-          if (ticking) return;
-          requestAnimationFrame(() => {
-            updateCtaParallax();
-            ticking = false;
-          });
-          ticking = true;
-        };
-
-        computeCtaOverscanScale();
-        updateCtaParallax();
-
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", () => {
-          computeCtaOverscanScale();
-          updateCtaParallax();
-        });
-      });
-    </script>
+document.addEventListener('DOMContentLoaded', cargarPublicCards);
+</script>
 
   </body>
 </html>

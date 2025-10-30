@@ -1,0 +1,56 @@
+/* ===== PRICING ADMIN (aislado) ===== */
+:root{
+  --primary:#111344; --text:#151625; --bg:#f6f7fb; --surface:#fff;
+  --border:#e7e8ee; --radius:14px; --shadow:0 10px 25px rgba(17,19,68,.08);
+}
+
+/* Contenedor */
+.main-content{ padding:2rem; background:var(--bg); color:var(--text); }
+
+/* Tabla SIEMPRE visible en admin */
+.products-table{
+  width:100%; border-collapse:collapse; background:var(--surface);
+  border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);
+  display:table; /* <- sin toggle */
+}
+.products-table thead{ background:#eef1f6; }
+.products-table th, .products-table td{
+  padding:1rem; border-bottom:1px solid var(--border); text-align:left;
+}
+.table-responsive{ width:100%; overflow-x:auto; }
+
+/* Badges y acciones */
+.badge{ padding:.25rem .6rem; border-radius:999px; font-size:.75rem; background:#eef1f6; }
+.badge-green{ background:#d2f4df; }
+.table-actions .btn{ padding:.4rem .6rem; border:1px solid var(--border); border-radius:8px; background:#fff; cursor:pointer; }
+.table-actions .btn.danger{ border-color:#ffd6d6; background:#ffecec; }
+
+/* Modal (aislado al ID #adminModal) */
+#adminModal{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+  padding:24px; background:rgba(0,0,0,.55); backdrop-filter:blur(3px); z-index: 1001;
+}
+#adminModal.active{ display:flex; animation:fadeIn .18s ease; }
+@keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+
+#adminModal .modal-content{
+  width:min(860px,96vw); max-height:90vh; overflow:auto; background:var(--surface);
+  border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+#adminModal .modal-header, #adminModal .modal-footer{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:16px 18px; border-bottom:1px solid var(--border);
+}
+#adminModal .modal-footer{ border-top:1px solid var(--border); border-bottom:0; }
+#adminModal .modal-body{ padding:16px 18px; }
+#adminModal .modal-close{ border:0; background:transparent; cursor:pointer; font-size:22px; }
+
+/* Inputs */
+.form-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:1rem; }
+.form-group{ display:flex; flex-direction:column; gap:.5rem; }
+.form-group.full-width{ grid-column:1 / -1; }
+.form-input{
+  padding:.8rem; border:2px solid var(--border); border-radius:12px; font:inherit;
+}
+.form-input:focus{ outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(17,19,68,.12); }
+.checkbox-group{ display:flex; gap:1rem; align-items:center; }

@@ -60,8 +60,13 @@ if (isset($_SESSION['usuario_id'])) {
         
       
         <a href="#" class="menu-item active">
-          <i class="bx bx-box"></i>
+          <i class="bx bx-package"></i>
           <span>Productos</span>
+        </a>
+
+        <a href="restaurante.php" class="menu-item">
+          <i class="bx bx-purchase-tag"></i>
+          <span>Planes</span>
         </a>
 
         <a href="Servicios.php" class="menu-item">

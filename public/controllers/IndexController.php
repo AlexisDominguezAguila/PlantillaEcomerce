@@ -4,28 +4,57 @@ header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../models/IndexModel.php';
 require_once __DIR__ . '/../../config/db.php';
 
+function is_base64_loose(string $s): bool {
+    // Base64 “crudo” (sin prefijo data:) suele contener solo estos chars
+    // Nota: esto es heurístico y tolerante; si falla, igual habrá fallbacks abajo.
+    return (bool)preg_match('#^[A-Za-z0-9+/]+={0,2}$#', $s);
+}
+
+function looks_like_path_or_url(string $s): bool {
+    // Rutas relativas o absolutas típicas o URLs
+    if (preg_match('#^(https?:)?//#i', $s)) return true;        // http(s):// o //cdn...
+    if ($s[0] === '/') return true;                             // /uploads/...
+    if (str_starts_with($s, 'public/') || str_starts_with($s, 'uploads/')) return true;
+    if (str_contains($s, '.')) return true;                     // algo.jpg, .png, .webp, etc.
+    return false;
+}
+
 try {
     $db     = (new Database())->connect();
     $model  = new IndexModel($db);
 
-    // Parámetros opcionales
+    // Parámetro opcional
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 6;
 
     $rows = $model->listarActivas($limit);
 
-    // Normalizar salida: image_url (prioriza binario, si no hay, usa image_src)
+    $placeholder = 'uploads/cards/no-image.png'; // ajusta a tu estructura real
+
     $out = [];
     foreach ($rows as $r) {
         $image_url = null;
+        $raw = isset($r['image_data']) ? trim((string)$r['image_data']) : '';
+        $mime = trim((string)($r['image_mime'] ?? ''));
 
-        if (!empty($r['image_data']) && !empty($r['image_mime'])) {
-            $image_url = 'data:' . $r['image_mime'] . ';base64,' . base64_encode($r['image_data']);
-        } elseif (!empty($r['image_src'])) {
-            // Compatibilidad con registros viejos que guardaban una ruta
+        if ($raw !== '') {
+            if (str_starts_with($raw, 'data:')) {
+                // Caso 1: ya viene como data URL completo
+                $image_url = $raw;
+            } elseif (looks_like_path_or_url($raw)) {
+                // Caso 2: ruta/URL
+                $image_url = $raw;
+            } elseif ($mime !== '' && is_base64_loose($raw)) {
+                // Caso 3: parece base64 crudo + tenemos mime -> envolver
+                $image_url = 'data:' . $mime . ';base64,' . $raw;
+            }
+        }
+
+        // Fallbacks
+        if (!$image_url && !empty($r['image_src'])) {
             $image_url = $r['image_src'];
-        } else {
-            // Tu placeholder público si no hay imagen
-            $image_url = 'public/assets/images/no-image.png';
+        }
+        if (!$image_url) {
+            $image_url = $placeholder;
         }
 
         $out[] = [
@@ -41,7 +70,7 @@ try {
         ];
     }
 
-    echo json_encode($out);
+    echo json_encode($out, JSON_UNESCAPED_UNICODE);
 } catch (Throwable $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Error interno', 'message' => $e->getMessage()]);

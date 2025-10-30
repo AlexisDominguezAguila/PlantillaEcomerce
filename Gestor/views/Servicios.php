@@ -25,7 +25,8 @@
     <nav class="menu">
       <a href="../index.php" class="menu-item"><i class="bx bx-home"></i><span>Inicio</span></a>
             <a href="principal.php" class="menu-item"><i class="bx bx-box"></i><span>Principal</span></a>
-      <a href="productos.php" class="menu-item"><i class="bx bx-box"></i><span>Productos</span></a>
+      <a href="productos.php" class="menu-item"><i class="bx bx-package"></i><span>Productos</span></a>
+      <a href="restaurante.php" class="menu-item"><i class="bx bx-purchase-tag"></i><span>Planes</span></a>
       <a href="#" class="menu-item active"><i class="bx bx-cog"></i><span>Servicios</span></a>
     </nav>
 

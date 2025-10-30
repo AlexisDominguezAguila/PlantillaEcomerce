@@ -74,31 +74,35 @@ function openModal(plan=null) {
   const f = document.getElementById('planForm');
   if (!f) return;
   f.reset();
+
   document.getElementById('modalTitle').textContent = plan ? 'Editar plan' : 'Nuevo plan';
 
+  const idInput = f.elements['id'];        // <input type="hidden" name="id">
   if (plan) {
-    f.id.value            = plan.id;
-    f.name.value          = plan.name || '';
-    f.slug.value          = plan.slug || '';
-    f.description.value   = plan.description || '';
-    f.price_amount.value  = plan.price_amount || '';
-    f.period_note.value   = plan.period_note || '/mes · sin IGV';
-    f.is_featured.checked = Number(plan.is_featured) === 1;
-    f.badge_text.value    = plan.badge_text || '';
-    f.cta1_label.value    = plan.cta1_label || 'Empezar';
-    f.cta1_url.value      = plan.cta1_url || 'contacto.html';
-    f.cta2_label.value    = plan.cta2_label || 'Probar demo';
-    f.cta2_url.value      = plan.cta2_url || 'login.html';
-    f.display_order.value = plan.display_order ?? 0;
-    f.features_text.value = (Array.isArray(plan.features) ? plan.features : []).join('\n');
+    idInput.value         = plan.id;
+    f.elements['name'].value         = plan.name || '';
+    f.elements['slug'].value         = plan.slug || '';
+    f.elements['description'].value  = plan.description || '';
+    f.elements['price_amount'].value = plan.price_amount || '';
+    f.elements['period_note'].value  = plan.period_note || '/mes · sin IGV';
+    f.elements['is_featured'].checked= Number(plan.is_featured) === 1;
+    f.elements['badge_text'].value   = plan.badge_text || '';
+    f.elements['cta1_label'].value   = plan.cta1_label || 'Empezar';
+    f.elements['cta1_url'].value     = plan.cta1_url || 'contacto.html';
+    f.elements['cta2_label'].value   = plan.cta2_label || 'Probar demo';
+    f.elements['cta2_url'].value     = plan.cta2_url || 'login.html';
+    f.elements['display_order'].value= plan.display_order ?? 0;
+    f.elements['features_text'].value= (Array.isArray(plan.features) ? plan.features : []).join('\n');
+  } else {
+    idInput.value = ''; // creación
   }
 
-  document.getElementById('adminModal')?.classList.add('show');
+  document.getElementById('adminModal')?.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-  document.getElementById('adminModal')?.classList.remove('show');
+  document.getElementById('adminModal')?.classList.remove('active');
   document.body.style.overflow = 'auto';
   editId = null;
 }
@@ -127,13 +131,15 @@ async function movePlan(id, direction) {
 
 async function onSubmit(e) {
   e.preventDefault();
-  const f = e.target;
+  const f  = e.target;
   const fd = new FormData(f);
+
   // normalizar checkbox
-  if (f.is_featured) {
-    if (f.is_featured.checked) fd.set('is_featured','1'); else fd.delete('is_featured');
-  }
-  const action = f.id.value ? 'actualizar' : 'crear';
+  if (f.elements['is_featured']?.checked) fd.set('is_featured','1');
+  else fd.delete('is_featured');
+
+  const editing = !!f.elements['id'].value;
+  const action  = editing ? 'actualizar' : 'crear';
 
   try {
     const r = await fetch(`${API_URL}?action=${action}`, { method:'POST', body: fd });
@@ -150,3 +156,16 @@ async function onSubmit(e) {
     alert('Error de red');
   }
 }
+document.addEventListener('keydown', (e)=>{
+  if (e.key === 'Escape') closeModal();
+});
+document.getElementById('adminModal')?.addEventListener('click', (e)=>{
+  if (e.target.id === 'adminModal') closeModal();
+});
+
+// Hacer disponibles para los onclick inline del HTML:
+window.editPlan   = editPlan;
+window.deletePlan = deletePlan;
+window.movePlan   = movePlan;
+window.openModal  = openModal;
+window.closeModal = closeModal;

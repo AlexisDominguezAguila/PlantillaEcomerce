@@ -23,7 +23,8 @@ if (isset($_SESSION['usuario_id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planes | Tec Rivera</title>
   <link rel="stylesheet" href="../assets/css/sidebar.css" />
-  <link rel="stylesheet" href="../assets/css/productos.css" /> <!-- Reusa estilos de tablas / grids -->
+  <link rel="stylesheet" href="../assets/css/productos.css" />
+  <link rel="stylesheet" href="../assets/css/pricing-admin.css" /> <!-- Reusa estilos de tablas / grids -->
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <style>
@@ -37,6 +38,52 @@ if (isset($_SESSION['usuario_id'])) {
     .table-actions { display:flex; gap:.5rem; }
     .btn.sm { padding:.35rem .5rem; }
   </style>
+  <style>
+/* ==== MODAL (independiente de otros estilos) ==== */
+.modal{
+  position: fixed; inset: 0;
+  display: none;               /* oculto por defecto */
+  align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(2px);
+  z-index: 9999;               /* por encima del sidebar */
+}
+.modal.show{                   /* cuando JS agrega .show -> aparece */
+  display: flex;
+  animation: modalIn .18s ease;
+}
+@keyframes modalIn{
+  from{ opacity:0; transform: translateY(6px) }
+  to  { opacity:1; transform:none }
+}
+
+.modal-content{
+  width: min(820px, 96vw);
+  max-height: 90vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+.modal-header, .modal-footer{
+  display:flex; align-items:center; justify-content:space-between;
+  gap: 12px; padding: 16px 18px; border-bottom: 1px solid #eef1f6;
+}
+.modal-footer{ border-top: 1px solid #eef1f6; border-bottom: 0; }
+.modal-body{ padding: 16px 18px; }
+
+.modal-close{
+  border: 0; background: transparent; cursor: pointer; font-size: 22px; line-height: 1;
+}
+
+/* Dark mode amistoso (opcional) */
+@media (prefers-color-scheme: dark){
+  .modal-content{ background:#0f1220; color:#e8ebff; border:1px solid #21264a; }
+  .modal-header, .modal-footer{ border-color:#21264a; }
+}
+</style>
+
 </head>
 <body>
   <!-- Sidebar -->
@@ -118,7 +165,7 @@ if (isset($_SESSION['usuario_id'])) {
       </div>
 
       <div class="table-responsive">
-        <table class="products-table">
+        <table class="products-table active">
           <thead>
             <tr>
               <th>Plan</th>
@@ -238,41 +285,6 @@ if (isset($_SESSION['usuario_id'])) {
   </div>
 
   <script src="../assets/js/sidebar.js"></script>
-  <script>
-    // Hook simple para contar / filtrar como en productos
-    const counters = {
-      update(plans) {
-        document.getElementById('plansCount').textContent  = plans.length;
-        document.getElementById('totalPlans').textContent  = plans.length;
-        document.getElementById('featuredPlans').textContent = plans.filter(p => Number(p.is_featured)===1).length;
-      }
-    };
-    // Delegamos todo al JS del módulo (render, CRUD, mover, modal…)
-  </script>
   <script src="../assets/js/pricing-admin.js"></script>
-  <script>
-    // Integración mínima con tu buscador para filtrar en memoria (opcional)
-    const _search = document.getElementById('searchInput');
-    _search?.addEventListener('input', () => {
-      // El JS del módulo no trae filtros por defecto; podrías extenderlo si lo necesitas.
-      // Como alternativa, puedes implementar el filtrado en pricing-admin.js para
-      // rehacer 'renderList()' con el término de búsqueda.
-      // Aquí solo dejamos el wiring listo.
-    });
-
-    // Botón crear desde empty state
-    document.getElementById('emptyAddBtn')?.addEventListener('click', () => {
-      document.getElementById('btnNewPlan').click();
-    });
-
-    // Botón limpiar del modal
-    document.getElementById('btnReset')?.addEventListener('click', ()=> {
-      document.getElementById('planForm').reset();
-      document.getElementById('featuresText').value = '';
-    });
-
-    // Parches visuales: mostrar/ocultar empty state según carga (se maneja en pricing-admin.js)
-    // y actualizar contadores (también puedes hacerlo en loadPlans() del JS)
-  </script>
 </body>
 </html>
