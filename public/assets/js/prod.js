@@ -491,7 +491,11 @@ function productCardHTML(p) {
         
         <!-- Precios -->
         <div class="precios-prod">
+          <span class="precio-anterior">${fmtMoney(p.price_before)}</span>
           <span class="precio-actual">${fmtMoney(p.price)}</span>
+          <span class="precio-descuento">${fmtMoney(
+            p.price_before - p.price
+          )}</span>
         </div>
         
         <!-- Botones -->
