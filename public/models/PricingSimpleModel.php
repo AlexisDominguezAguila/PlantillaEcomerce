@@ -12,9 +12,9 @@ class PricingSimpleModel {
 
     public function listarActivos(): array {
         $sql = "SELECT id, slug, name, description, currency, price_amount, period_note,
-                       is_featured, badge_text, features_json,
-                       cta1_label, cta1_url, cta2_label, cta2_url,
-                       display_order
+                        is_featured, badge_text, features_json,
+                        cta1_label, cta1_url, cta2_label, cta2_url,
+                        display_order
                 FROM pricing_plans_simple
                 WHERE is_active = 1
                 ORDER BY display_order ASC, id ASC";
