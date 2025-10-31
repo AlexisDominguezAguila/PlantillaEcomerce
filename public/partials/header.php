@@ -21,7 +21,6 @@ function is_active($files) {
       <ul class="xr-nav-menu" id="navMenu">
         <li><a class="<?= is_active(['index.php']) ?>"      href="../../index.php">Inicio</a></li>
         <li><a class="<?= is_active(['productos.php']) ?>"  href="productos.php">Productos</a></li>
-        <li><a class="<?= is_active(['prod.php']) ?>"  href="prod.php">Test Productos</a></li>
         <li><a class="<?= is_active(['servicios.php']) ?>"  href="servicios.php">Servicios</a></li>
         <li><a class="<?= is_active(['restaurantes.php']) ?>"  href="restaurantes.php">Restaurantes</a></li>
         <li><a class="<?= is_active(['contacto.php']) ?>"   href="contacto.php">Contacto</a></li>
