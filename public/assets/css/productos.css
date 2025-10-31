@@ -1462,6 +1462,9 @@
   padding: 20px;
   overflow: auto;
 }
+.modal-body h2 {
+  color: var(--text);
+}
 
 /* Listas carrito/deseos */
 .list-empty {
@@ -1506,6 +1509,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+.cart-controls span {
+  font-weight: 700;
+  color: var(--text);
 }
 .qty-btn {
   width: 30px;
@@ -1681,7 +1688,50 @@
   display: block;
   margin-bottom: 8px;
 }
+/* Agrega esto a tu CSS */
+.empty-detail-state {
+  text-align: center;
+  padding: 60px 20px;
+  grid-column: 1 / -1;
+}
 
+.empty-detail-state i {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-detail-state h2 {
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.empty-detail-state p {
+  color: #888;
+  margin-bottom: 24px;
+}
+
+.empty-specs,
+.empty-recommendations {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.no-images {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Estados de botones deshabilitados */
+.btn-add-cart:disabled,
+.btn-buy-now:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 /* ==========================================================================
    10) Ajustes menores y helpers
    ========================================================================== */

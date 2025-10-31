@@ -217,11 +217,7 @@
         </div>
 
         <!-- ===== Más vendidos ===== -->
-        <div
-          id="bestSellersContainer"
-          class="best-sellers-container"
-          aria-label="Más vendidos"
-        >
+        <div id="bestSellersContainer" class="best-sellers-container" aria-label="Más vendidos">
           <h2>Más Vendidos</h2>
           <div class="slider-best-sellers-timer">
             <div id="bestSellersGrid" class="product-grid-sales" role="list">
@@ -251,11 +247,7 @@
         </div>
 
         <!-- ===== Paginación mostrara 16 productos por página ===== -->
-        <nav
-          id="catalogPagination"
-          class="pagination"
-          aria-label="Paginación de catálogo"
-        >
+        <nav id="catalogPagination" class="pagination" aria-label="Paginación de catálogo">
           <button class="page-prev" disabled>Anterior</button>
           <ul class="page-list">
             <li><button class="page-btn is-active">1</button></li>
@@ -265,93 +257,51 @@
           <button class="page-next">Siguiente</button>
         </nav>
 
-        <!-- ====== Sección Detalle de producto (se muestra al abrir "Detalles") ====== -->
-        <div
-          id="productDetailSection"
-          class="product-detail hidden"
-          aria-label="Detalle del producto"
-        >
+        <!-- ====== Sección Detalle de producto ====== -->
+        <div id="productDetailSection" class="product-detail hidden" aria-label="Detalle del producto">
           <div class="detail-breadcrumb">
             <a href="#" id="backToProducts" class="breadcrumb-back">← Volver</a>
             &nbsp;/ Detalles /
-            <span id="breadcrumb-name">Laptop Gaming Ultra Deluxe 15.6"</span>
+            <span id="breadcrumb-name">Cargando...</span>
           </div>
 
           <div class="detail-grid">
             <!-- Galería -->
             <div class="detail-gallery">
               <div class="product-detail-actions">
-                <button
-                  id="fav-btn"
-                  class="btn-like"
-                  aria-label="Añadir a favoritos"
-                >
+                <button id="fav-btn" class="btn-like" aria-label="Añadir a favoritos">
                   <i class="bx bx-heart"></i>
                 </button>
               </div>
 
               <div class="detail-mainmedia">
-                <img
-                  id="main-img"
-                  src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&q=80&auto=format"
-                  alt="Laptop Gaming - imagen principal"
-                  class="detail-image"
-                />
-
-                <button
-                  id="prev-img"
-                  class="nav-thumb prev"
-                  aria-label="Imagen anterior"
-                >
+                <img id="main-img" src="" alt="" class="detail-image" />
+                <button id="prev-img" class="nav-thumb prev" aria-label="Imagen anterior">
                   <i class="bx bx-chevron-left"></i>
                 </button>
-                <button
-                  id="next-img"
-                  class="nav-thumb next"
-                  aria-label="Imagen siguiente"
-                >
+                <button id="next-img" class="nav-thumb next" aria-label="Imagen siguiente">
                   <i class="bx bx-chevron-right"></i>
                 </button>
               </div>
 
               <div id="thumbs" class="detail-thumbs">
-                <!-- Ejemplo de thumb -->
-                <button class="thumb is-active">
-                  <img
-                    src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&q=80&auto=format"
-                    alt="Vista 1"
-                  />
-                </button>
-                <button class="thumb">
-                  <img
-                    src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=300&q=80&auto=format"
-                    alt="Vista 2"
-                  />
-                </button>
-                <button class="thumb">
-                  <img
-                    src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&q=80&auto=format"
-                    alt="Vista 3"
-                  />
-                </button>
+                <!-- Thumbs se llenarán dinámicamente -->
               </div>
             </div>
 
             <!-- Info -->
             <div class="detail-info">
               <div class="info-card">
-                <div id="brand" class="info-brand">Marca: Tec RIVERA</div>
-                <h1 id="name" class="info-title">
-                  Laptop Gaming Ultra Deluxe 15.6"
-                </h1>
-                <div id="rating" class="info-rating">★★★★★ (124)</div>
-                <div id="sku" class="info-sku">SKU: LAP-ULTRA-15</div>
+                <div id="brand" class="info-brand">Tec Rivera</div>
+                <h1 id="name" class="info-title">Cargando producto...</h1>
+                <div id="rating" class="info-rating">★★★★★ (0)</div>
+                <div id="sku" class="info-sku">SKU: Cargando...</div>
 
                 <div class="info-pricing">
                   <div id="prices" class="price-line">
-                    <span class="price-old">S/ 4,299.00</span>
-                    <span class="price-new">S/ 3,299.00</span>
-                    <span class="price-off">-23%</span>
+                    <span class="price-old"></span>
+                    <span class="price-new">S/ 0.00</span>
+                    <span class="price-off"></span>
                   </div>
                   <div class="price-note">
                     Ver opciones de pago y promociones
@@ -363,33 +313,15 @@
                   <strong>Costo:</strong> S/ 10 (gratis &gt; S/ 200)
                 </div>
 
-                <div id="stock" class="info-stock">Disponible</div>
+                <div id="stock" class="info-stock">Consultando disponibilidad...</div>
 
                 <!-- Cantidad -->
                 <div class="qty-row">
                   <span class="qty-label">Cantidad:</span>
                   <div class="qty-control">
-                    <button
-                      id="decrement"
-                      class="qty-btn"
-                      aria-label="Disminuir"
-                    >
-                      -
-                    </button>
-                    <input
-                      id="quantity"
-                      type="text"
-                      value="1"
-                      readonly
-                      class="qty-input"
-                    />
-                    <button
-                      id="increment"
-                      class="qty-btn"
-                      aria-label="Aumentar"
-                    >
-                      +
-                    </button>
+                    <button id="decrement" class="qty-btn" aria-label="Disminuir">-</button>
+                    <input id="quantity" type="text" value="1" readonly class="qty-input" />
+                    <button id="increment" class="qty-btn" aria-label="Aumentar">+</button>
                   </div>
                 </div>
 
@@ -403,22 +335,9 @@
                   </button>
                 </div>
 
-                <div
-                  id="availability"
-                  class="info-availability"
-                  aria-live="polite"
-                >
-                  Pocas unidades (quedan 4)
-                </div>
-
-                <div id="description" class="info-description">
-                  Potente laptop para gaming con tarjeta gráfica dedicada,
-                  teclado RGB y sistema de refrigeración avanzada.
-                </div>
-
-                <div id="seller" class="info-seller">
-                  Vendido por: <strong>TEC RIVERA</strong>
-                </div>
+                <div id="availability" class="info-availability" aria-live="polite"></div>
+                <div id="description" class="info-description">Cargando descripción...</div>
+                <div id="seller" class="info-seller">Vendido por: <strong>TEC RIVERA</strong></div>
               </div>
             </div>
           </div>
@@ -426,60 +345,16 @@
           <!-- Especificaciones -->
           <div id="specs" class="detail-specs">
             <h3>Especificaciones</h3>
-            <div class="specs-grid" role="table" aria-label="Especificaciones">
-              <!-- Ejemplo de fila de specs (dinámico) -->
-              <div role="row" class="spec-row">
-                <div role="cell" class="spec-name">Color</div>
-                <div role="cell" class="spec-values">Rojo; Azul; Verde</div>
-              </div>
-              <div role="row" class="spec-row">
-                <div role="cell" class="spec-name">Capacidad</div>
-                <div role="cell" class="spec-values">32GB; 64GB; 128GB</div>
-              </div>
-              <!-- /Ejemplo -->
+            <div id="specsGrid" class="specs-grid" role="table" aria-label="Especificaciones">
+              <!-- Especificaciones se llenarán dinámicamente -->
             </div>
           </div>
 
           <!-- Relacionados -->
           <div id="related" class="detail-related">
             <h3>Recomendados</h3>
-            <div
-              id="recommendationGrid"
-              class="product-grid"
-              role="list"
-              aria-label="Productos recomendados"
-            >
-              <!-- ===== Ejemplo de card recomendado (dinámico) ===== -->
-              <article class="card-prod" role="listitem" data-id="r1">
-                <div class="header-prod">
-                  <img
-                    src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80&auto=format"
-                    alt="Mouse Gamer Ultra"
-                    class="product-image"
-                  />
-                  <div class="hover-image">
-                    <img
-                      src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80&auto=format"
-                      alt="Mouse Gamer Ultra (vista alternativa)"
-                      class="product-image-hover"
-                    />
-                  </div>
-                  <div class="wishlist-icon"><i class="bx bx-heart"></i></div>
-                </div>
-                <div class="body-prod">
-                  <div class="categoria-prod">
-                    <span class="pill-prod">Accesorios</span>
-                  </div>
-                  <h3 class="nombre-prod">Mouse Gamer Ultra</h3>
-                  <div class="precios-prod">
-                    <span class="precio-actual">S/ 129.00</span>
-                  </div>
-                  <div class="botones-prod">
-                    <button class="buy-now">Comprar ahora</button>
-                  </div>
-                </div>
-              </article>
-              <!-- /Ejemplo -->
+            <div id="recommendationGrid" class="product-grid" role="list" aria-label="Productos recomendados">
+              <!-- Productos recomendados se llenarán dinámicamente -->
             </div>
           </div>
         </div>
