@@ -60,6 +60,12 @@
   --bg-btn-secondary-details-hover: #f8fafc;
   --text-btn-secondary-details: #111827;
 
+  /* Hero (destacados) */
+  --hero-max-w: 1200px;
+  --hero-h-desktop: 520px;
+  --hero-h-tablet: 480px;
+  --hero-h-mobile: clamp(520px, 82vh, 680px);
+
   /* Detalle de productos */
   --tr-brand: #111344;
   --tr-accent: #126fa8;
@@ -159,14 +165,16 @@
 }
 
 /* ==========================================================================
-   1) HERO (Destacados)
+   HERO (Destacados) — Versión mejorada responsive
    ========================================================================== */
+
 .hero-slider {
   position: relative;
   overflow: hidden;
-  height: 400px;
+  height: var(--hero-h-desktop);
   color: var(--text-hero-prod);
 }
+
 .hero-video {
   position: absolute;
   inset: 0;
@@ -180,52 +188,64 @@
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
     to right,
     rgba(36, 36, 62, 0.85),
     rgba(48, 43, 99, 0.75),
     rgba(15, 12, 41, 0.85)
   );
-  z-index: 1;
 }
+
+/* Contenedor del slide */
 .slider-container {
   position: relative;
   height: 100%;
   z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
+
 .slider-track {
   display: flex;
   transition: transform 0.5s ease;
   width: 100%;
 }
+
 .slide {
   min-width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-}
-.slide-inner {
-  width: min(1200px, 92%);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: center;
+  padding: clamp(16px, 3vw, 24px);
 }
 
-/* Media (izquierda) + Info (derecha) */
+/* Layout del contenido del slide */
+.slide-inner {
+  width: min(var(--hero-max-w), 92vw);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr; /* imagen | info */
+  gap: clamp(16px, 4vw, 40px);
+  align-items: center;
+  justify-items: center; /* asegura centrado transversal */
+  overflow: hidden;
+}
+
+/* Media (izquierda) */
 .slide-media {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0; /* evita overflow en grid */
 }
 .slide-media .slide-image {
-  width: 86%;
-  max-width: 520px;
+  width: auto; /* manda el alto */
+  max-width: 96%;
+  max-height: clamp(260px, 52vh, 440px);
   height: auto;
+  object-fit: contain;
   animation: float 4s ease-in-out infinite;
   filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.25));
 }
@@ -241,10 +261,14 @@
   }
 }
 
+/* Info (derecha) */
 .slide-info {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  align-items: flex-start; /* desktop: alineado a la izquierda */
+  justify-content: center;
+  width: 100%;
 }
 .slide-pills {
   display: flex;
@@ -252,7 +276,7 @@
   gap: 8px;
 }
 .slide-title {
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
   font-weight: 800;
   line-height: 1.15;
   color: var(--text-hero-prod);
@@ -261,6 +285,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 .slide-prices .old {
   color: #c0c4d6;
@@ -268,9 +293,9 @@
   font-weight: 600;
 }
 .slide-prices .new {
-  color: #ffffff;
+  color: #fff;
   font-weight: 900;
-  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
 }
 .slide-prices .off {
   background: rgba(255, 255, 255, 0.12);
@@ -278,13 +303,15 @@
   padding: 0.2rem 0.5rem;
   border-radius: 8px;
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 .slide-cta {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
+/* Flechas + dots */
 .slider-btn {
   position: absolute;
   top: 50%;
@@ -347,27 +374,61 @@
   }
 }
 
-/* Responsive hero */
-@media (max-width: 1024px) {
+/* =======================
+   Breakpoints
+   ======================= */
+
+/* Laptops / tablets en horizontal */
+@media (max-width: 1200px) {
   .hero-slider {
-    height: 450px;
+    height: var(--hero-h-tablet);
+  }
+  .slide-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .slide-media .slide-image {
+    max-height: clamp(240px, 48vh, 400px);
+  }
+}
+
+/* <= 900px: pasa a 1 columna, todo centrado */
+@media (max-width: 900px) {
+  .hero-slider {
+    height: var(--hero-h-mobile);
   }
   .slide-inner {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+  }
+  .slide-info {
+    align-items: center;
+  } /* centra textos y CTAs */
+  .slide-cta {
+    justify-content: center;
   }
   .slide-media .slide-image {
-    width: 94%;
-    max-width: 520px;
+    max-height: clamp(220px, 38vh, 360px);
+    max-width: 88%;
   }
 }
+
+/* Móvil pequeño: ajusta tipografías y oculta flechas */
 @media (max-width: 768px) {
-  .hero-slider {
-    height: 82vh;
-  }
   .slider-btn.prev,
   .slider-btn.next {
     display: none;
+  }
+  .slide-title {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+  .slide-prices .new {
+    font-size: clamp(1.1rem, 5.5vw, 1.4rem);
+  }
+  .slide-cta button {
+    width: auto;
+    min-width: 46%;
   }
 }
 
@@ -641,31 +702,63 @@
   background-color: #fff;
   border-radius: 8px;
 }
-/* Más vendidos */
-.best-sellers-container {
-  background-color: #fff;
-  width: min(1400px, 100%);
-  padding: 20px;
+/* responsive para tablet  */
+@media (max-width: 900px) {
+  .flash-sale-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cont-ofertas {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .flash-sale-title {
+    min-width: auto;
+    border-radius: 8px;
+    background-position: top;
+    text-align: center;
+    min-height: 300px;
+  }
 }
-.product-grid-sales {
-  --col: 5;
-  display: grid;
-  grid-template-columns: repeat(var(--col), minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 20px);
-  padding: 20px;
+/* responsive para movil */
+@media (max-width: 520px) {
+  .product-grid-flash {
+    --col: 1;
+  }
+}
+/* ===== Más vendidos ===== */
+.best-sellers-container {
+  background: #fff;
   width: min(1400px, 100%);
-  margin: 0 auto;
-  background-color: rgb(204, 228, 238);
-  border-radius: 12px;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 .best-sellers-container h2 {
   margin: 0 20px 10px;
   color: var(--text);
 }
+
+/* Wrapper del slider  */
 .slider-best-sellers-timer {
   position: relative;
+  overflow: hidden;
+  background: #cce4ee;
+  border-radius: 12px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px;
 }
+
+/* Track: sólo se mueve con transform */
+.product-grid-sales {
+  display: flex;
+
+  width: 100%;
+  will-change: transform;
+  transition: transform 0.45s ease;
+  background: transparent;
+}
+
+/* Flechas */
 .slider-btn-seller {
   position: absolute;
   top: 50%;
@@ -674,7 +767,7 @@
   width: 40px;
   height: 40px;
   border-radius: 25px;
-  background: #ffffff;
+  background: #fff;
   color: #04082b;
   cursor: pointer;
 }
@@ -690,6 +783,20 @@
 .slider-btn-seller:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(-50%) scale(1.05);
+}
+.slider-btn-seller.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Responsive: el JS ya calcula “perView”, aquí no hace falta grid */
+@media (max-width: 768px) {
+  .slider-best-sellers-timer {
+    padding: 8px;
+  }
+  .product-grid-sales .card-prod {
+    flex: 0 0 100%;
+  }
 }
 
 /* ==========================================================================
@@ -976,6 +1083,12 @@
   background: var(--accent-prod);
   border-color: transparent;
   color: #fff;
+}
+.page-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
 }
 
 /* ==========================================================================
@@ -1265,6 +1378,7 @@
   margin-bottom: 18px;
 }
 .detail-specs h3 {
+  color: var(--text);
   margin: 0 0 12px;
 }
 .specs-grid {
@@ -1298,6 +1412,7 @@
   box-shadow: var(--shadow);
 }
 .detail-related h3 {
+  color: var(--text);
   margin: 0 0 12px;
 }
 
